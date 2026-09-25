@@ -430,16 +430,58 @@ export type SkillHealth = Readonly<{
   redundant_pairs: readonly (readonly [string, string])[]
   measured: Record<string, number>
   over_budget: readonly { dimension: string; ceiling: number; measured: number }[]
+  /** Pre-handoff review precision per lens, from recorded dispositions (one entry per revision). */
+  review_lenses: Readonly<Record<string, LensHealth>>
   limits: readonly string[]
 }>
+
+export type LensHealth = Readonly<{
+  fixed: number
+  ruled_invalid: number
+  out_of_scope: number
+  open: number
+  /** fixed / (fixed + ruled-invalid); null until a finding is closed either way. */
+  precision: number | null
+}>
+
+/**
+ * Per-lens review outcomes across document revisions. Only the latest entry for a revision counts,
+ * so revalidating a document does not multiply its findings. A lens below 50% precision is a rewrite
+ * candidate; one that never produces a finding is a consolidation candidate.
+ */
+export function reviewLenses(entries: readonly TelemetryEntry[]): Record<string, LensHealth> {
+  const latest = new Map<string, NonNullable<TelemetryEntry['review']>>()
+  for (const entry of entries) if (entry.review) latest.set(entry.sdd_sha, entry.review)
+  const totals: Record<
+    string,
+    { fixed: number; ruled_invalid: number; out_of_scope: number; open: number }
+  > = {}
+  for (const review of latest.values())
+    for (const [lens, counts] of Object.entries(review)) {
+      const total = (totals[lens] ??= { fixed: 0, ruled_invalid: 0, out_of_scope: 0, open: 0 })
+      for (const key of ['fixed', 'ruled_invalid', 'out_of_scope', 'open'] as const)
+        total[key] += counts[key] ?? 0
+    }
+  return Object.fromEntries(
+    Object.entries(totals).map(([lens, total]) => {
+      const closed = total.fixed + total.ruled_invalid
+      return [lens, { ...total, precision: closed ? total.fixed / closed : null }]
+    })
+  )
+}
 
 /**
  * The skill's unresolved improvement decisions, read-only and independent of SDD maturity.
  */
 /** Queue of defects observed in real runs, written by authors and hosts; settled by rounds. */
 const OBSERVED = join(ROOT, 'rsi', 'observed-defects.md')
-/** How a round settles an observation: a detector pinned by a case, a written ruling, or rejection. */
-const SETTLEMENTS = ['detector', 'ruling', 'rejected'] as const
+/**
+ * How a round settles an observation: a detector pinned by a case, a review lens accepted by the
+ * external review benchmark, a written ruling, or rejection. Semantic defects (clauses that cannot
+ * all hold, acceptance a wrong implementation passes) settle as lenses; only a mechanical criterion
+ * with no false positives becomes a detector.
+ */
+const SETTLEMENTS = ['detector', 'lens', 'ruling', 'rejected'] as const
 export type Settlement = Readonly<{
   id: string
   as: (typeof SETTLEMENTS)[number]
@@ -516,6 +558,7 @@ export function skillHealth(now = new Date()): SkillHealth {
     over_budget: Object.entries(ceilings)
       .filter(([key, limit]) => (measured[key] ?? 0) > limit)
       .map(([key, limit]) => ({ dimension: key, ceiling: limit, measured: measured[key] ?? 0 })),
+    review_lenses: reviewLenses(entries),
     limits: [
       'dormant means unfired in this corpus, not useless: a structural guard is dormant whenever documents are well formed',
       'debt is advisory until calibrated against repair outcomes; it does not gate SDD readiness or repair rounds',
@@ -869,6 +912,9 @@ export function measure(): Record<string, number> {
   return {
     'SKILL.md.characters': readFileSync(join(ROOT, 'SKILL.md'), 'utf8').length,
     'references.lines': lines(join(ROOT, 'references')),
+    'review.md.characters': existsSync(join(ROOT, 'references', 'review.md'))
+      ? readFileSync(join(ROOT, 'references', 'review.md'), 'utf8').length
+      : 0,
     'validator.lines': lines(join(ROOT, 'scripts', 'validator')),
     'scripts.lines': lines(join(ROOT, 'scripts')),
     'tests.lines': existsSync(join(ROOT, 'tests')) ? lines(join(ROOT, 'tests')) : 0,
@@ -1399,7 +1445,7 @@ function main(argv: readonly string[]): number {
     }
     if (!(SETTLEMENTS as readonly string[]).includes(String(as)) || !evidence?.trim()) {
       console.error(
-        'usage: rsi.ts settle --id <OD-n> --as detector|ruling|rejected --evidence <text>'
+        'usage: rsi.ts settle --id <OD-n> --as detector|lens|ruling|rejected --evidence <text> [--review-results <rounds.json>]'
       )
       return 1
     }
@@ -1411,6 +1457,26 @@ function main(argv: readonly string[]): number {
     ) {
       console.error('SETTLEMENT_CASE_REQUIRED: a detector settlement names its defect case')
       return 1
+    }
+    // A lens settlement names an accepted round of the external review benchmark, read from the
+    // `sdd-review-rounds/v1` file the author passes; the skill never locates the benchmark itself.
+    if (as === 'lens') {
+      const file = value('--review-results')
+      const rounds =
+        file && existsSync(file)
+          ? readJson<{ rounds?: Record<string, unknown>[] }>(file, {}).rounds
+          : []
+      const accepted = new Set(
+        (rounds ?? [])
+          .filter((entry) => /^ACCEPTED\b/.test(String(entry.verdict ?? '')))
+          .map((entry) => String(entry.id))
+      )
+      if (![...evidence.matchAll(/\bRR-[\w-]+/g)].some((m) => accepted.has(m[0]))) {
+        console.error(
+          'SETTLEMENT_LENS_ROUND_REQUIRED: a lens settlement names an ACCEPTED review round in --review-results'
+        )
+        return 1
+      }
     }
     const settles = [...(round.settles ?? []).filter((entry) => entry.id !== id)]
     settles.push({ id, as: as as Settlement['as'], evidence })

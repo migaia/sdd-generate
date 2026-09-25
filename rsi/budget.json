@@ -3,12 +3,13 @@
   "note": "A round freezes these ceilings and its measured starting size when it opens. For ordinary rounds, `prune` rejects growth beyond the higher of those two values; inherited overage remains visible in `health` and cannot be worsened. An explicit budget-change round may revise ceilings and is RECORDED after clean checks, never credited with a repair. Historical raises and ratchets remain records; close no longer ratchets automatically.",
   "set_at": "2026-09-23",
   "ceilings": {
-    "SKILL.md.characters": 10450,
-    "references.lines": 5050,
-    "validator.lines": 8750,
+    "SKILL.md.characters": 11000,
+    "references.lines": 1800,
+    "validator.lines": 4900,
     "behavior_cases": 46,
-    "scripts.lines": 16000,
-    "tests.lines": 5750
+    "scripts.lines": 8700,
+    "tests.lines": 2400,
+    "review.md.characters": 3500
   },
   "raises": [
     {
@@ -458,6 +459,14 @@
       "at": "2026-09-24",
       "round": "budget-change",
       "reason": "OD-39..OD-44 (migai plugin-host R3 delivery audit): deleted test titles without disposition, acceptances covering one of several enumerated operations, a new state squeezed into a single-valued enum, preservation claims not tied to the replaced branches, cross-variant capabilities never asked about, and a planned-broken base that made every FAIL→PASS vacuous. Two closure checks (title dispositions, shared baseline causes) and four authoring candidates."
+    },
+    {
+      "dimension": "SKILL.md.characters",
+      "from": 10450,
+      "to": 11150,
+      "at": "2026-09-25",
+      "round": "budget-change",
+      "reason": "Plan step 4 of the measured Review stage: SKILL.md gains a Review phase between Decompose and Report (fresh-context reviewer, references/review.md, one re-review of changed clauses) and a row for recording its dispositions. The lens passed the sdd-bench acceptance rule in round RR-2026-09-25-L2 before any wiring; measured size 10195 left 255 characters."
     }
   ],
   "introduced": [
@@ -469,6 +478,14 @@
       "at": "2026-09-23",
       "round": "R-20260923140423",
       "reason": "validator.lines covered one directory while repo-facts, lifecycle and rsi — over half the scripts — sat under no ceiling, so growth moved there. These are new ceilings at the measurement plus 1%, a tightening rather than a raise; the first consolidation ratchets them down with the rest."
+    },
+    {
+      "dimensions": [
+        "review.md.characters"
+      ],
+      "at": "2026-09-25",
+      "round": "budget-change",
+      "reason": "The review lens page is the part of this skill an RSI lens settlement grows, so it gets its own ceiling (3134 characters measured, ceiling 3500) instead of hiding inside references.lines. Review token cost is measured and bounded outside the skill, in sdd-bench/review/rounds.json (per-case median at most 1.2x the champion, at most 250k)."
     }
   ],
   "ratchets": [
@@ -491,6 +508,29 @@
         "scripts.lines": 11207,
         "tests.lines": 3768
       }
+    },
+    {
+      "at": "2026-09-25T11:11:50.474Z",
+      "round": "R-20260925111143",
+      "from": {
+        "SKILL.md.characters": 11150,
+        "references.lines": 5050,
+        "validator.lines": 8750,
+        "behavior_cases": 46,
+        "scripts.lines": 16000,
+        "tests.lines": 5750,
+        "review.md.characters": 3500
+      },
+      "to": {
+        "SKILL.md.characters": 11000,
+        "references.lines": 1800,
+        "validator.lines": 4900,
+        "behavior_cases": 46,
+        "scripts.lines": 8700,
+        "tests.lines": 2400,
+        "review.md.characters": 3500
+      },
+      "reason": "After the v1 format was retired (R-20260925105927), measured sizes are SKILL.md 10719 characters, references 1691 lines, validator 4665, scripts 8258, tests 2263, behavior cases 45 and review.md 3425; each ceiling is set to about 5% above that, and behavior_cases and review.md keep theirs."
     }
   ]
 }

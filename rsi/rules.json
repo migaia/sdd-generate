@@ -4,305 +4,6 @@
   "rules": [
     {
       "id": "RL-0001",
-      "asset": "code:ACCEPTANCE_ARTIFACT_CONSUMPTION_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/acceptance-execution.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 3,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0002",
-      "asset": "code:ACCEPTANCE_EVIDENCE_BOUNDARY_DUPLICATE",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/acceptance-execution.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0003",
-      "asset": "code:ACCEPTANCE_EXECUTION_BOUNDARY_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/acceptance-execution.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0004",
-      "asset": "code:ACCEPTANCE_EXECUTION_DEPENDENCIES_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/acceptance-execution.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0005",
-      "asset": "code:ACCEPTANCE_EXECUTION_DEPENDENCY_CYCLE",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/acceptance-execution.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0006",
-      "asset": "code:ACCEPTANCE_EXECUTION_DEPENDENCY_SCOPE_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/acceptance-execution.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0007",
-      "asset": "code:ACCEPTANCE_EXECUTION_ISOLATION_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/acceptance-execution.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0008",
-      "asset": "code:ACCEPTANCE_EXECUTION_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/acceptance-execution.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0009",
-      "asset": "code:ACCEPTANCE_EXECUTION_TIMEOUT_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/acceptance-execution.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0010",
-      "asset": "code:ACCEPTANCE_FAILURE_CONTAINMENT_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/acceptance-execution.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0011",
-      "asset": "code:ACCEPTANCE_INDEPENDENT_TARGET_REUSED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/acceptance-execution.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0012",
-      "asset": "code:ACCEPTANCE_METHOD_ZERO_OBSERVATION",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/repo-facts.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 4
-      }
-    },
-    {
-      "id": "RL-0013",
-      "asset": "code:AGENT_CONTEXT_BLOCK_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/helpers/context-routing.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0014",
-      "asset": "code:AGENT_CONTEXT_CLASS_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/helpers/context-routing.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0015",
-      "asset": "code:AGENT_CONTEXT_CLASS_OUTSIDE_BLOCK",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/helpers/context-routing.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0016",
-      "asset": "code:AGENT_CONTEXT_ENTRY_AMBIGUOUS",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/helpers/context-routing.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0017",
-      "asset": "code:AGENT_CONTEXT_ENTRY_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/helpers/context-routing.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0018",
-      "asset": "code:AGENT_CONTEXT_LINK_ESCAPES_ROOT",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/helpers/context-routing.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0019",
-      "asset": "code:AGENT_CONTEXT_LINK_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/helpers/context-routing.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0020",
-      "asset": "code:AGENT_CONTEXT_LINK_NOT_FOUND",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/helpers/context-routing.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0021",
-      "asset": "code:AGENT_CONTEXT_LINK_OUTSIDE_BLOCK",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/helpers/context-routing.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0022",
-      "asset": "code:AGENT_CONTEXT_MAP_EMPTY",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/helpers/context-routing.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0023",
-      "asset": "code:AGENT_CONTEXT_SOURCE_CLASS_CONFLICT",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/helpers/context-routing.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 2,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0024",
       "asset": "code:API_SURFACE_DEGENERATE_INPUT",
       "kind": "issue-code",
       "sites": [
@@ -315,582 +16,7 @@
       }
     },
     {
-      "id": "RL-0025",
-      "asset": "code:ARCHITECTURE_ADAPTERS_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/platform-architecture.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0026",
-      "asset": "code:ARCHITECTURE_ADAPTER_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/platform-architecture.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0027",
-      "asset": "code:ARCHITECTURE_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/platform-architecture.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0028",
-      "asset": "code:CHALLENGE_EVIDENCE_CITES_SUBJECT_ONLY",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/repo-facts.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 2
-      }
-    },
-    {
-      "id": "RL-0029",
-      "asset": "code:CHALLENGE_EVIDENCE_PATH_MISSING",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/repo-facts.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 3
-      }
-    },
-    {
-      "id": "RL-0030",
-      "asset": "code:CHALLENGE_REASONED_BUT_CLOSED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/repo-facts.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 1
-      }
-    },
-    {
-      "id": "RL-0031",
-      "asset": "code:COMMAND_PACKAGE_MANAGER_MISMATCH",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/repo-facts.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 15
-      }
-    },
-    {
-      "id": "RL-0032",
-      "asset": "code:CONJUNCTIVE_REQUIREMENT_SINGLE_ORACLE",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/repo-facts.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 4
-      }
-    },
-    {
-      "id": "RL-0033",
-      "asset": "code:CONTRACT_ACCEPTANCE_CLAIM_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/verification-scope.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0034",
-      "asset": "code:CONTRACT_ACCEPTANCE_DUPLICATE",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/contract.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0035",
-      "asset": "code:CONTRACT_ACCEPTANCE_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/contract.ts",
-        "scripts/validator/domain/policies/acceptance-execution.ts",
-        "scripts/validator/domain/policies/verification-scope.ts"
-      ],
-      "weight": {
-        "sites": 3,
-        "mentions": 5,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0036",
-      "asset": "code:CONTRACT_ACCEPTANCE_REFERENCE_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/contract.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0037",
-      "asset": "code:CONTRACT_ACCEPTANCE_REFERENCE_UNRESOLVED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/contract.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0038",
-      "asset": "code:CONTRACT_ACCEPTANCE_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/acceptance-execution.ts",
-        "scripts/validator/domain/policies/verification-scope.ts"
-      ],
-      "weight": {
-        "sites": 2,
-        "mentions": 2,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0039",
-      "asset": "code:CONTRACT_ACCEPTANCE_REQUIREMENT_LINK_MISMATCH",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/verification-scope.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 2,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0040",
-      "asset": "code:CONTRACT_ADMISSION_VERIFICATION_ACCEPTANCE_SCOPE_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/verification-scope.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 2,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0041",
-      "asset": "code:CONTRACT_ADMISSION_VERIFICATION_METHOD_MISMATCH",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/verification-scope.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0042",
-      "asset": "code:CONTRACT_ADMISSION_VERIFICATION_PACKAGE_SCOPE_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/verification-scope.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0043",
-      "asset": "code:CONTRACT_ADMISSION_VERIFICATION_REQUIREMENT_SCOPE_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/verification-scope.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 2,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0044",
-      "asset": "code:CONTRACT_ADMISSION_VERIFICATION_SCOPE_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/verification-scope.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0045",
-      "asset": "code:CONTRACT_ADMISSION_VERIFICATION_SURFACE_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/verification-scope.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0046",
-      "asset": "code:CONTRACT_ADMISSION_WORKSPACE_GATE_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/verification-scope.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0047",
-      "asset": "code:CONTRACT_BLOCK_COUNT",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/contract.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 2
-      }
-    },
-    {
-      "id": "RL-0048",
-      "asset": "code:CONTRACT_BLOCK_NOT_FOUND",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/derive/contract.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 1
-      }
-    },
-    {
-      "id": "RL-0049",
-      "asset": "code:CONTRACT_DECISION_METADATA_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/authoring-closure.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0050",
-      "asset": "code:CONTRACT_DECISION_RESOLUTION_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/authoring-closure.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0051",
-      "asset": "code:CONTRACT_DECISION_STATUS_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/authoring-closure.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0052",
-      "asset": "code:CONTRACT_DEFERRAL_METADATA_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/authoring-closure.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0053",
-      "asset": "code:CONTRACT_DEPENDENCY_CYCLE",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/contract.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0054",
-      "asset": "code:CONTRACT_DEPENDENCY_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/contract.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0055",
-      "asset": "code:CONTRACT_EMIT_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validate.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0056",
-      "asset": "code:CONTRACT_INVENTORY_AUTHORITIES_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/authoring-closure.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0057",
-      "asset": "code:CONTRACT_JSON_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/contract.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 3,
-        "test_mentions": 3
-      }
-    },
-    {
-      "id": "RL-0058",
-      "asset": "code:CONTRACT_PROTOCOL_UNSUPPORTED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/contract.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0059",
-      "asset": "code:CONTRACT_REFERENCE_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/helpers/contract-references.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 3,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0060",
-      "asset": "code:CONTRACT_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/repo-facts.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0061",
-      "asset": "code:CONTRACT_REQUIREMENTS_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/contract.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0062",
-      "asset": "code:CONTRACT_REQUIREMENT_DUPLICATE",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/contract.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0063",
-      "asset": "code:CONTRACT_REQUIREMENT_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/contract.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 2,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0064",
-      "asset": "code:CONTRACT_REQUIREMENT_TYPE_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/contract.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0065",
-      "asset": "code:CONTRACT_REVISION_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/contract.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0066",
-      "asset": "code:CONTRACT_RUNTIME_RESOLUTION_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/authoring-closure.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0067",
-      "asset": "code:CONTRACT_SOURCE_INVENTORY_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/authoring-closure.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0068",
-      "asset": "code:CONTRACT_UNIVERSAL_CLAIM_UNIVERSE_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/contract.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0069",
+      "id": "RL-0002",
       "asset": "code:DEFECT_CASE_DETECTOR_NOT_BUN",
       "kind": "issue-code",
       "sites": [
@@ -903,436 +29,7 @@
       }
     },
     {
-      "id": "RL-0070",
-      "asset": "code:DELIVERY_PLAN_BATCH_DUPLICATE",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/delivery-plan.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0071",
-      "asset": "code:DELIVERY_PLAN_BATCH_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/delivery-plan.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0072",
-      "asset": "code:DELIVERY_PLAN_DEPENDENCY_CYCLE",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/delivery-plan.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0073",
-      "asset": "code:DELIVERY_PLAN_DEPENDENCY_UNKNOWN",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/delivery-plan.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0074",
-      "asset": "code:DELIVERY_PLAN_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/delivery-plan.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 2,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0075",
-      "asset": "code:DELIVERY_PLAN_REQUIREMENT_UNKNOWN",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/delivery-plan.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 2
-      }
-    },
-    {
-      "id": "RL-0076",
-      "asset": "code:DELIVERY_PLAN_SHARDS_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/delivery-plan.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 2,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0077",
-      "asset": "code:DELIVERY_PLAN_SHARD_COVERAGE_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/delivery-plan.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0078",
-      "asset": "code:DELIVERY_PLATFORMS_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/platform-architecture.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0079",
-      "asset": "code:DESIGN_CONVERGENCE_INCONSISTENT",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/delivery-graph.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0080",
-      "asset": "code:DESIGN_CONVERGENCE_STALE",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/controllers/document.controller.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 2
-      }
-    },
-    {
-      "id": "RL-0081",
-      "asset": "code:DESIGN_DETAIL_APPLICABILITY_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/design-detail.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0082",
-      "asset": "code:DESIGN_DETAIL_DUPLICATE_FIELD",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/design-detail.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0083",
-      "asset": "code:DESIGN_DETAIL_FIELD_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/design-detail.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0084",
-      "asset": "code:DESIGN_DETAIL_HEADING_AMBIGUOUS",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/design-detail.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0085",
-      "asset": "code:DESIGN_DETAIL_INDEX_DRIFT",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/design-detail.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0086",
-      "asset": "code:DESIGN_DETAIL_OBJECT_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/design-detail.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0087",
-      "asset": "code:DESIGN_DETAIL_PATHS_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/design-detail.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0088",
-      "asset": "code:DESIGN_DETAIL_PROTOCOL_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/design-detail.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0089",
-      "asset": "code:DESIGN_DETAIL_PSEUDOCODE_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/design-detail.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0090",
-      "asset": "code:DESIGN_DETAIL_SECTION_REUSED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/design-detail.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0091",
-      "asset": "code:DESIGN_DETAIL_SOURCE_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/design-detail.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0092",
-      "asset": "code:DESIGN_DETAIL_STEPS_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/design-detail.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0093",
-      "asset": "code:DESIGN_DETAIL_STEP_KIND_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/design-detail.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0094",
-      "asset": "code:DESIGN_DETAIL_STEP_SOURCE_REUSED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/design-detail.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0095",
-      "asset": "code:DESIGN_GATE_ITEM_OPEN",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/repo-facts.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 1
-      }
-    },
-    {
-      "id": "RL-0096",
-      "asset": "code:DESIGN_GATE_LENS_DUPLICATED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/repo-facts.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 1
-      }
-    },
-    {
-      "id": "RL-0097",
-      "asset": "code:DESIGN_GATE_LENS_MISSING",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/repo-facts.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 2
-      }
-    },
-    {
-      "id": "RL-0098",
-      "asset": "code:DESIGN_GATE_LENS_NOT_CURRENT",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/repo-facts.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 1
-      }
-    },
-    {
-      "id": "RL-0099",
-      "asset": "code:DESIGN_GATE_LENS_NOT_PASSED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/repo-facts.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 1
-      }
-    },
-    {
-      "id": "RL-0100",
-      "asset": "code:DESIGN_GATE_LENS_REVISION_MISSING",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/repo-facts.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 1
-      }
-    },
-    {
-      "id": "RL-0101",
-      "asset": "code:DESIGN_GATE_UNSTABLE",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/repo-facts.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 1
-      }
-    },
-    {
-      "id": "RL-0102",
-      "asset": "code:DESIGN_NOT_CONVERGED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/repo-facts.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 2
-      }
-    },
-    {
-      "id": "RL-0103",
+      "id": "RL-0003",
       "asset": "code:DOCUMENT_ID_EXHAUSTED",
       "kind": "issue-code",
       "sites": [
@@ -1345,7 +42,7 @@
       }
     },
     {
-      "id": "RL-0104",
+      "id": "RL-0004",
       "asset": "code:DOCUMENT_PREFIX_INVALID",
       "kind": "issue-code",
       "sites": [
@@ -1358,7 +55,7 @@
       }
     },
     {
-      "id": "RL-0105",
+      "id": "RL-0005",
       "asset": "code:DRAFT_DOCUMENTS_ARGS_INVALID",
       "kind": "issue-code",
       "sites": [
@@ -1371,7 +68,7 @@
       }
     },
     {
-      "id": "RL-0106",
+      "id": "RL-0006",
       "asset": "code:DRAFT_DOCUMENTS_ARRAY_REQUIRED",
       "kind": "issue-code",
       "sites": [
@@ -1384,7 +81,7 @@
       }
     },
     {
-      "id": "RL-0107",
+      "id": "RL-0007",
       "asset": "code:DRAFT_DOCUMENT_DUPLICATE",
       "kind": "issue-code",
       "sites": [
@@ -1397,7 +94,7 @@
       }
     },
     {
-      "id": "RL-0108",
+      "id": "RL-0008",
       "asset": "code:DRAFT_DOCUMENT_INVALID",
       "kind": "issue-code",
       "sites": [
@@ -1410,33 +107,7 @@
       }
     },
     {
-      "id": "RL-0109",
-      "asset": "code:DRAFT_ROOT_CONTENT_CONFLICT",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/services/contract-document.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0110",
-      "asset": "code:DRAFT_ROOT_PATH_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/controllers/document.controller.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0111",
+      "id": "RL-0009",
       "asset": "code:DRAFT_ROOT_REQUIRED",
       "kind": "issue-code",
       "sites": [
@@ -1449,72 +120,7 @@
       }
     },
     {
-      "id": "RL-0112",
-      "asset": "code:EARLY_FALSIFIER_CLAIM_BINDING_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/verification-scope.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 2,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0113",
-      "asset": "code:EARLY_FALSIFIER_FACT_SCOPE_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/verification-scope.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 3,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0114",
-      "asset": "code:EARLY_FALSIFIER_METHOD_NOT_ACCEPTANCE_ORACLE",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/verification-scope.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0115",
-      "asset": "code:EARLY_FALSIFIER_ROUTE_INSPECTION_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/verification-scope.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0116",
-      "asset": "code:EARLY_FALSIFIER_SCOPE_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/verification-scope.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 2,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0117",
+      "id": "RL-0010",
       "asset": "code:EVIDENCE_REQUIRES_V2_LEAF",
       "kind": "issue-code",
       "sites": [
@@ -1527,7 +133,7 @@
       }
     },
     {
-      "id": "RL-0118",
+      "id": "RL-0011",
       "asset": "code:EXAMPLE_CONTRACT_BLOCK_MISSING",
       "kind": "issue-code",
       "sites": [
@@ -1540,7 +146,7 @@
       }
     },
     {
-      "id": "RL-0119",
+      "id": "RL-0012",
       "asset": "code:EXAMPLE_OVERLAY_MERGE_TARGET_NOT_ARRAY",
       "kind": "issue-code",
       "sites": [
@@ -1553,319 +159,7 @@
       }
     },
     {
-      "id": "RL-0120",
-      "asset": "code:EXECUTION_PACKETS_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/execution-packets.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0121",
-      "asset": "code:EXECUTION_PACKET_ACCEPTANCE_SCOPE_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/execution-packets.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0122",
-      "asset": "code:EXECUTION_PACKET_DEPENDENCIES_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/execution-packets.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0123",
-      "asset": "code:EXECUTION_PACKET_DEPENDENCY_CYCLE",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/execution-packets.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0124",
-      "asset": "code:EXECUTION_PACKET_DEPENDENCY_SCOPE_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/execution-packets.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0125",
-      "asset": "code:EXECUTION_PACKET_ID_DUPLICATE",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/execution-packets.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0126",
-      "asset": "code:EXECUTION_PACKET_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/execution-packets.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 2,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0127",
-      "asset": "code:EXECUTION_PACKET_REQUIREMENT_SCOPE_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/execution-packets.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0128",
-      "asset": "code:EXPERIENCE_COMPONENT_HOOK_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/experience-contract.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0129",
-      "asset": "code:EXPERIENCE_CONTRACT_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/experience-contract.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0130",
-      "asset": "code:EXPERIENCE_DELTA_PRODUCT_CONTRACT_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/experience-contract.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0131",
-      "asset": "code:EXPERIENCE_JOURNEYS_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/experience-contract.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0132",
-      "asset": "code:EXPERIENCE_JOURNEY_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/experience-contract.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0133",
-      "asset": "code:EXPERIENCE_READABILITY_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/experience-contract.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0134",
-      "asset": "code:EXPERIENCE_READING_CONTINUATION_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/experience-contract.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0135",
-      "asset": "code:EXPERIENCE_ROUTES_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/experience-contract.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0136",
-      "asset": "code:EXPERIENCE_ROUTE_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/experience-contract.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0137",
-      "asset": "code:EXPERIENCE_SCOPE_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/experience-contract.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0138",
-      "asset": "code:EXPERIENCE_STYLE_HOOKS_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/experience-contract.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0139",
-      "asset": "code:EXPERIENCE_STYLE_TOKEN_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/experience-contract.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0140",
-      "asset": "code:EXPERIENCE_TEMPLATES_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/experience-contract.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0141",
-      "asset": "code:EXPERIENCE_TEMPLATE_DUPLICATE",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/experience-contract.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0142",
-      "asset": "code:EXPERIENCE_TEMPLATE_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/experience-contract.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0143",
-      "asset": "code:IMPLEMENTATION_LOGIC_PATH_CYCLE",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/delivery-graph.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0144",
+      "id": "RL-0013",
       "asset": "code:INIT_BRANCH_REQUIRES_GIT",
       "kind": "issue-code",
       "sites": [
@@ -1878,7 +172,7 @@
       }
     },
     {
-      "id": "RL-0145",
+      "id": "RL-0014",
       "asset": "code:INIT_EVIDENCE_REQUIRES_V2_LEAF",
       "kind": "issue-code",
       "sites": [
@@ -1891,7 +185,7 @@
       }
     },
     {
-      "id": "RL-0146",
+      "id": "RL-0015",
       "asset": "code:INIT_OUT_ABSOLUTE_REQUIRED",
       "kind": "issue-code",
       "sites": [
@@ -1904,7 +198,7 @@
       }
     },
     {
-      "id": "RL-0147",
+      "id": "RL-0016",
       "asset": "code:INIT_SDD_ABSOLUTE_REQUIRED",
       "kind": "issue-code",
       "sites": [
@@ -1917,7 +211,7 @@
       }
     },
     {
-      "id": "RL-0148",
+      "id": "RL-0017",
       "asset": "code:INIT_STUBS_REQUIRE_REPOSITORY",
       "kind": "issue-code",
       "sites": [
@@ -1930,7 +224,7 @@
       }
     },
     {
-      "id": "RL-0149",
+      "id": "RL-0018",
       "asset": "code:INIT_TEMPLATE_UNRECOGNIZED",
       "kind": "issue-code",
       "sites": [
@@ -1943,488 +237,7 @@
       }
     },
     {
-      "id": "RL-0150",
-      "asset": "code:MIGRATION_APPLICABILITY_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/migration-admission.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0151",
-      "asset": "code:MIGRATION_CANDIDATE_UNDISPOSED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/repo-facts.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 2
-      }
-    },
-    {
-      "id": "RL-0152",
-      "asset": "code:MIGRATION_CLOSURE_NOT_APPLICABLE_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/migration-admission.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0153",
-      "asset": "code:MIGRATION_CLOSURE_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/migration-admission.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0154",
-      "asset": "code:MIGRATION_CONTRACT_SCOPE_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/migration-admission.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 3,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0155",
-      "asset": "code:MIGRATION_CUTOVER_MODE_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/migration-admission.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0156",
-      "asset": "code:MIGRATION_DISMISSED_CANDIDATE_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/migration-admission.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 2,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0157",
-      "asset": "code:MIGRATION_DISMISSED_CANDIDATE_IS_READER",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/migration-admission.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0158",
-      "asset": "code:MIGRATION_EARLY_FALSIFIER_MISMATCH",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/migration-admission.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0159",
-      "asset": "code:MIGRATION_INVENTORY_FACT_NOT_PASS",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/migration-admission.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0160",
-      "asset": "code:MIGRATION_LEGACY_RUNTIME_ACCEPTANCE_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/migration-admission.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0161",
-      "asset": "code:MIGRATION_LEGACY_RUNTIME_ACCEPTANCE_SCOPE_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/migration-admission.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0162",
-      "asset": "code:MIGRATION_LEGACY_RUNTIME_AUTHORITY_SCOPE_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/migration-admission.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0163",
-      "asset": "code:MIGRATION_LEGACY_RUNTIME_NOT_APPLICABLE_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/migration-admission.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0164",
-      "asset": "code:MIGRATION_LEGACY_RUNTIME_PROBE_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/migration-admission.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0165",
-      "asset": "code:MIGRATION_READER_CLOSURE_UNRESOLVED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/migration-admission.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0166",
-      "asset": "code:MIGRATION_READER_MODULE_DUPLICATE",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/migration-admission.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0167",
-      "asset": "code:MIGRATION_READER_NOT_ORDERED_BEFORE_REMOVAL",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/migration-admission.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0168",
-      "asset": "code:MIGRATION_READER_PACKET_COVERAGE_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/migration-admission.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0169",
-      "asset": "code:MIGRATION_READER_PACKET_SCOPE_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/migration-admission.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0170",
-      "asset": "code:MIGRATION_READER_RETAINS_REMOVED_SURFACE",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/migration-admission.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0171",
-      "asset": "code:MIGRATION_REFINED_ZERO_READER_INVENTORY_INCOMPLETE",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/migration-admission.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0172",
-      "asset": "code:MIGRATION_REFINED_ZERO_READER_RUNTIME_PROOF_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/migration-admission.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0173",
-      "asset": "code:MIGRATION_REMOVAL_PACKET_COVERAGE_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/migration-admission.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0174",
-      "asset": "code:MIGRATION_REMOVAL_PACKET_SCOPE_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/migration-admission.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0175",
-      "asset": "code:MIGRATION_SYMBOL_TOO_GENERIC",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/repo-facts.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 1
-      }
-    },
-    {
-      "id": "RL-0176",
-      "asset": "code:MIGRATION_SYMBOL_UNSCANNABLE",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/repo-facts.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 1
-      }
-    },
-    {
-      "id": "RL-0177",
-      "asset": "code:MIGRATION_ZERO_READER_CLAIM_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/migration-admission.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 2,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0178",
-      "asset": "code:MUST_SHIP_DEFERRAL_REQUIRES_USER",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/authoring-closure.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0179",
-      "asset": "code:ORACLE_SENSITIVITY_EVIDENCE_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/acceptance-execution.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0180",
-      "asset": "code:ORACLE_SENSITIVITY_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/acceptance-execution.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 2,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0181",
-      "asset": "code:ORACLE_SENSITIVITY_PROCEDURE_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/acceptance-execution.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0182",
-      "asset": "code:ORACLE_SENSITIVITY_REASON_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/acceptance-execution.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0183",
-      "asset": "code:ORACLE_SENSITIVITY_RESULTS_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/acceptance-execution.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 2,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0184",
-      "asset": "code:ORACLE_SENSITIVITY_RESULT_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/acceptance-execution.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0185",
-      "asset": "code:ORACLE_SENSITIVITY_RESULT_SCOPE_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/acceptance-execution.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 2,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0186",
-      "asset": "code:ORACLE_SENSITIVITY_TIMING_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/acceptance-execution.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0187",
+      "id": "RL-0019",
       "asset": "code:PRESET_PATH_ABSOLUTE_REQUIRED",
       "kind": "issue-code",
       "sites": [
@@ -2437,88 +250,34 @@
       }
     },
     {
-      "id": "RL-0188",
-      "asset": "code:PRODUCT_ARCHETYPE_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/experience-contract.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0189",
-      "asset": "code:PRODUCT_ARCHETYPE_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/platform-architecture.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0190",
-      "asset": "code:PROGRAM_CHILD_NOT_FOUND",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/repo-facts.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0191",
-      "asset": "code:PROSE_TOTAL_DISAGREES_WITH_CONTRACT",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/repo-facts.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0192",
+      "id": "RL-0020",
       "asset": "code:PSEUDOCODE_SYMBOL_UNRESOLVED",
       "kind": "issue-code",
       "sites": [
-        "scripts/repo-facts.ts",
         "scripts/validator/domain/v2-symbols.ts"
       ],
       "weight": {
-        "sites": 2,
-        "mentions": 2,
-        "test_mentions": 3
-      }
-    },
-    {
-      "id": "RL-0193",
-      "asset": "code:REPOSITORY_NOT_FOUND",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/init.ts",
-        "scripts/repo-facts.ts",
-        "scripts/validator/domain/v2-document.ts"
-      ],
-      "weight": {
-        "sites": 3,
-        "mentions": 3,
+        "sites": 1,
+        "mentions": 1,
         "test_mentions": 1
       }
     },
     {
-      "id": "RL-0194",
+      "id": "RL-0021",
+      "asset": "code:REPOSITORY_NOT_FOUND",
+      "kind": "issue-code",
+      "sites": [
+        "scripts/init.ts",
+        "scripts/validator/domain/v2-document.ts"
+      ],
+      "weight": {
+        "sites": 2,
+        "mentions": 2,
+        "test_mentions": 1
+      }
+    },
+    {
+      "id": "RL-0022",
       "asset": "code:REPOSITORY_PATH_ABSOLUTE_REQUIRED",
       "kind": "issue-code",
       "sites": [
@@ -2531,7 +290,7 @@
       }
     },
     {
-      "id": "RL-0195",
+      "id": "RL-0023",
       "asset": "code:RSI_NO_OPEN_ROUND",
       "kind": "issue-code",
       "sites": [
@@ -2544,72 +303,7 @@
       }
     },
     {
-      "id": "RL-0196",
-      "asset": "code:SCOPE_GROWTH_UNAUTHORIZED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/repo-facts.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 1
-      }
-    },
-    {
-      "id": "RL-0197",
-      "asset": "code:SCOPE_LEDGER_BROKEN_CHAIN",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/repo-facts.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 1
-      }
-    },
-    {
-      "id": "RL-0198",
-      "asset": "code:SCOPE_LEDGER_CLAIM_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/repo-facts.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 2,
-        "test_mentions": 1
-      }
-    },
-    {
-      "id": "RL-0199",
-      "asset": "code:SCOPE_LEDGER_MISSING",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/repo-facts.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 2
-      }
-    },
-    {
-      "id": "RL-0200",
-      "asset": "code:SCOPE_LEDGER_NOT_CURRENT",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/repo-facts.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 1
-      }
-    },
-    {
-      "id": "RL-0201",
+      "id": "RL-0024",
       "asset": "code:SDD_AND_PREFIX_REQUIRED",
       "kind": "issue-code",
       "sites": [
@@ -2622,46 +316,18 @@
       }
     },
     {
-      "id": "RL-0202",
-      "asset": "code:SDD_CONTRACT_ID_DUPLICATE",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/document-presentation.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0203",
+      "id": "RL-0025",
       "asset": "code:SDD_CONTRACT_INVALID",
       "kind": "issue-code",
-      "sites": [
-        "scripts/validator/controllers/document.controller.ts"
-      ],
+      "sites": [],
       "weight": {
-        "sites": 1,
-        "mentions": 2,
-        "test_mentions": 2
+        "sites": 0,
+        "mentions": 0,
+        "test_mentions": 1
       }
     },
     {
-      "id": "RL-0204",
-      "asset": "code:SDD_CONTRACT_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/controllers/document.controller.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0205",
+      "id": "RL-0026",
       "asset": "code:SDD_DESCRIPTION_EMPTY",
       "kind": "issue-code",
       "sites": [
@@ -2674,33 +340,7 @@
       }
     },
     {
-      "id": "RL-0206",
-      "asset": "code:SDD_DOCUMENT_POLICY_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/document-presentation.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0207",
-      "asset": "code:SDD_DOCUMENT_POLICY_UNSUPPORTED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/document-presentation.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0208",
+      "id": "RL-0027",
       "asset": "code:SDD_ID_DANGLING",
       "kind": "issue-code",
       "sites": [
@@ -2713,7 +353,7 @@
       }
     },
     {
-      "id": "RL-0209",
+      "id": "RL-0028",
       "asset": "code:SDD_ID_DUPLICATE",
       "kind": "issue-code",
       "sites": [
@@ -2726,7 +366,7 @@
       }
     },
     {
-      "id": "RL-0210",
+      "id": "RL-0029",
       "asset": "code:SDD_ID_INVALID",
       "kind": "issue-code",
       "sites": [
@@ -2739,267 +379,7 @@
       }
     },
     {
-      "id": "RL-0211",
-      "asset": "code:SDD_ID_OR_PREFIX_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/document-presentation.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0212",
-      "asset": "code:SDD_ID_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/document-presentation.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0213",
-      "asset": "code:SDD_IMPLEMENTATION_PLACEHOLDER",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/controllers/document.controller.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0214",
-      "asset": "code:SDD_PREFIXES_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/document-presentation.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0215",
-      "asset": "code:SDD_PREFIX_CONFLICT",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/document-presentation.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0216",
-      "asset": "code:SDD_PRESENTATION_BATCH_SCOPE_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/document-presentation.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0217",
-      "asset": "code:SDD_PRESENTATION_DESCRIPTION_DRIFT",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/document-presentation.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0218",
-      "asset": "code:SDD_PRESENTATION_GATE_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/document-presentation.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0219",
-      "asset": "code:SDD_PRESENTATION_ITEMS_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/document-presentation.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0220",
-      "asset": "code:SDD_PRESENTATION_ITEM_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/document-presentation.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0221",
-      "asset": "code:SDD_PRESENTATION_LINK_COLUMNS_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/document-presentation.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0222",
-      "asset": "code:SDD_PRESENTATION_OBJECT_UNINDEXED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/document-presentation.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0223",
-      "asset": "code:SDD_PRESENTATION_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/document-presentation.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0224",
-      "asset": "code:SDD_PRESENTATION_ROW_MISSING_OR_DUPLICATE",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/document-presentation.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0225",
-      "asset": "code:SDD_PRESENTATION_SCHEMA_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/document-presentation.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0226",
-      "asset": "code:SDD_PRESENTATION_SCOPE_EXPANSION",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/document-presentation.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0227",
-      "asset": "code:SDD_PRESENTATION_SECOND_GRAPH_FORBIDDEN",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/document-presentation.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0228",
-      "asset": "code:SDD_PRESENTATION_SHIP_COVERAGE_INCOMPLETE",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/document-presentation.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0229",
-      "asset": "code:SDD_PRESENTATION_SOURCE_DRIFT",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/document-presentation.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0230",
-      "asset": "code:SDD_PROGRAM_ROOT",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/controllers/document.controller.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 1
-      }
-    },
-    {
-      "id": "RL-0231",
+      "id": "RL-0030",
       "asset": "code:SDD_REQUIRED",
       "kind": "issue-code",
       "sites": [
@@ -3007,64 +387,12 @@
       ],
       "weight": {
         "sites": 1,
-        "mentions": 3,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0232",
-      "asset": "code:SDD_REQUIRED_SECTION_EMPTY",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/controllers/document.controller.ts"
-      ],
-      "weight": {
-        "sites": 1,
         "mentions": 1,
         "test_mentions": 0
       }
     },
     {
-      "id": "RL-0233",
-      "asset": "code:SDD_REQUIRED_SECTION_MISSING",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/controllers/document.controller.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0234",
-      "asset": "code:SDD_RETIRED_IDS_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/document-presentation.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0235",
-      "asset": "code:SDD_RETIRED_ID_REUSED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/document-presentation.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0236",
+      "id": "RL-0031",
       "asset": "code:SDD_TABLE_COLUMNS_MISMATCH",
       "kind": "issue-code",
       "sites": [
@@ -3077,7 +405,7 @@
       }
     },
     {
-      "id": "RL-0237",
+      "id": "RL-0032",
       "asset": "code:SDD_TABLE_DESCRIPTION_MISSING",
       "kind": "issue-code",
       "sites": [
@@ -3090,7 +418,20 @@
       }
     },
     {
-      "id": "RL-0238",
+      "id": "RL-0033",
+      "asset": "code:SDD_V1_UNSUPPORTED",
+      "kind": "issue-code",
+      "sites": [
+        "scripts/validator/controllers/document.controller.ts"
+      ],
+      "weight": {
+        "sites": 1,
+        "mentions": 1,
+        "test_mentions": 0
+      }
+    },
+    {
+      "id": "RL-0034",
       "asset": "code:SDD_V2_ACCEPTANCE_BASELINE_UNFALSIFIABLE",
       "kind": "issue-code",
       "sites": [
@@ -3103,7 +444,7 @@
       }
     },
     {
-      "id": "RL-0239",
+      "id": "RL-0035",
       "asset": "code:SDD_V2_ACCEPTANCE_FORWARD_DEPENDENCY",
       "kind": "issue-code",
       "sites": [
@@ -3116,7 +457,7 @@
       }
     },
     {
-      "id": "RL-0240",
+      "id": "RL-0036",
       "asset": "code:SDD_V2_ACCEPTANCE_SUBJECT_UNOBSERVABLE",
       "kind": "issue-code",
       "sites": [
@@ -3129,7 +470,7 @@
       }
     },
     {
-      "id": "RL-0241",
+      "id": "RL-0037",
       "asset": "code:SDD_V2_BUDGET_GATE_UNOWNED",
       "kind": "issue-code",
       "sites": [
@@ -3142,7 +483,7 @@
       }
     },
     {
-      "id": "RL-0242",
+      "id": "RL-0038",
       "asset": "code:SDD_V2_CAUSE_OVERWRITE_PRESCRIBED",
       "kind": "issue-code",
       "sites": [
@@ -3155,7 +496,7 @@
       }
     },
     {
-      "id": "RL-0243",
+      "id": "RL-0039",
       "asset": "code:SDD_V2_CLARIFICATION_UNTRACKED",
       "kind": "issue-code",
       "sites": [
@@ -3168,7 +509,7 @@
       }
     },
     {
-      "id": "RL-0244",
+      "id": "RL-0040",
       "asset": "code:SDD_V2_CLOSURE_FAILED",
       "kind": "issue-code",
       "sites": [
@@ -3181,7 +522,7 @@
       }
     },
     {
-      "id": "RL-0245",
+      "id": "RL-0041",
       "asset": "code:SDD_V2_CLOSURE_OPEN",
       "kind": "issue-code",
       "sites": [
@@ -3194,7 +535,7 @@
       }
     },
     {
-      "id": "RL-0246",
+      "id": "RL-0042",
       "asset": "code:SDD_V2_COUNT_ONLY_PRESERVATION",
       "kind": "issue-code",
       "sites": [
@@ -3207,7 +548,7 @@
       }
     },
     {
-      "id": "RL-0247",
+      "id": "RL-0043",
       "asset": "code:SDD_V2_COVERAGE_MISSING",
       "kind": "issue-code",
       "sites": [
@@ -3221,7 +562,7 @@
       }
     },
     {
-      "id": "RL-0248",
+      "id": "RL-0044",
       "asset": "code:SDD_V2_DELEGATION_INCOMPLETE",
       "kind": "issue-code",
       "sites": [
@@ -3234,7 +575,7 @@
       }
     },
     {
-      "id": "RL-0249",
+      "id": "RL-0045",
       "asset": "code:SDD_V2_DELEGATION_UNDECLARED",
       "kind": "issue-code",
       "sites": [
@@ -3247,7 +588,7 @@
       }
     },
     {
-      "id": "RL-0250",
+      "id": "RL-0046",
       "asset": "code:SDD_V2_DEPENDENCY_CYCLE",
       "kind": "issue-code",
       "sites": [
@@ -3261,7 +602,7 @@
       }
     },
     {
-      "id": "RL-0251",
+      "id": "RL-0047",
       "asset": "code:SDD_V2_ENUMERATED_OPERATION_UNCOVERED",
       "kind": "issue-code",
       "sites": [
@@ -3274,7 +615,7 @@
       }
     },
     {
-      "id": "RL-0252",
+      "id": "RL-0048",
       "asset": "code:SDD_V2_ERROR_CODE_UNREACHABLE",
       "kind": "issue-code",
       "sites": [
@@ -3287,7 +628,7 @@
       }
     },
     {
-      "id": "RL-0253",
+      "id": "RL-0049",
       "asset": "code:SDD_V2_ERROR_POSITION_UNSTATED",
       "kind": "issue-code",
       "sites": [
@@ -3300,7 +641,7 @@
       }
     },
     {
-      "id": "RL-0254",
+      "id": "RL-0050",
       "asset": "code:SDD_V2_ERROR_TEXT_READER_UNDECLARED",
       "kind": "issue-code",
       "sites": [
@@ -3313,7 +654,7 @@
       }
     },
     {
-      "id": "RL-0255",
+      "id": "RL-0051",
       "asset": "code:SDD_V2_EXPORT_FINGERPRINT_STALE",
       "kind": "issue-code",
       "sites": [
@@ -3326,7 +667,7 @@
       }
     },
     {
-      "id": "RL-0256",
+      "id": "RL-0052",
       "asset": "code:SDD_V2_FAILURE_CLAUSE_UNBOUND",
       "kind": "issue-code",
       "sites": [
@@ -3339,7 +680,7 @@
       }
     },
     {
-      "id": "RL-0257",
+      "id": "RL-0053",
       "asset": "code:SDD_V2_ID_DUPLICATE",
       "kind": "issue-code",
       "sites": [
@@ -3354,7 +695,7 @@
       }
     },
     {
-      "id": "RL-0258",
+      "id": "RL-0054",
       "asset": "code:SDD_V2_INDEX_ORACLE_DIRTY_TREE",
       "kind": "issue-code",
       "sites": [
@@ -3367,7 +708,7 @@
       }
     },
     {
-      "id": "RL-0259",
+      "id": "RL-0055",
       "asset": "code:SDD_V2_INDEX_SHAPE_INVALID",
       "kind": "issue-code",
       "sites": [
@@ -3382,7 +723,7 @@
       }
     },
     {
-      "id": "RL-0260",
+      "id": "RL-0056",
       "asset": "code:SDD_V2_INTEGRATION_OWNER_REQUIRED",
       "kind": "issue-code",
       "sites": [
@@ -3395,7 +736,7 @@
       }
     },
     {
-      "id": "RL-0261",
+      "id": "RL-0057",
       "asset": "code:SDD_V2_INTERFACE_MISMATCH",
       "kind": "issue-code",
       "sites": [
@@ -3410,7 +751,7 @@
       }
     },
     {
-      "id": "RL-0262",
+      "id": "RL-0058",
       "asset": "code:SDD_V2_INVARIANT_INVENTORY_MISSING",
       "kind": "issue-code",
       "sites": [
@@ -3423,7 +764,7 @@
       }
     },
     {
-      "id": "RL-0263",
+      "id": "RL-0059",
       "asset": "code:SDD_V2_INVENTORY_ENTRY_UNCOVERED",
       "kind": "issue-code",
       "sites": [
@@ -3436,7 +777,7 @@
       }
     },
     {
-      "id": "RL-0264",
+      "id": "RL-0060",
       "asset": "code:SDD_V2_META_SOURCE_MISMATCH",
       "kind": "issue-code",
       "sites": [
@@ -3450,7 +791,7 @@
       }
     },
     {
-      "id": "RL-0265",
+      "id": "RL-0061",
       "asset": "code:SDD_V2_MUST_SHIP_CHAIN_INCOMPLETE",
       "kind": "issue-code",
       "sites": [
@@ -3464,7 +805,7 @@
       }
     },
     {
-      "id": "RL-0266",
+      "id": "RL-0062",
       "asset": "code:SDD_V2_NEGATIVE_SEARCH_GENERIC_TOKEN",
       "kind": "issue-code",
       "sites": [
@@ -3477,7 +818,7 @@
       }
     },
     {
-      "id": "RL-0267",
+      "id": "RL-0063",
       "asset": "code:SDD_V2_ORACLE_BELOW_BOUNDARY",
       "kind": "issue-code",
       "sites": [
@@ -3490,7 +831,7 @@
       }
     },
     {
-      "id": "RL-0268",
+      "id": "RL-0064",
       "asset": "code:SDD_V2_ORACLE_PROCEDURE_UNSCRIPTED",
       "kind": "issue-code",
       "sites": [
@@ -3503,7 +844,7 @@
       }
     },
     {
-      "id": "RL-0269",
+      "id": "RL-0065",
       "asset": "code:SDD_V2_OWNER_CONFLICT",
       "kind": "issue-code",
       "sites": [
@@ -3517,7 +858,7 @@
       }
     },
     {
-      "id": "RL-0270",
+      "id": "RL-0066",
       "asset": "code:SDD_V2_PATH_ESCAPE",
       "kind": "issue-code",
       "sites": [
@@ -3531,7 +872,7 @@
       }
     },
     {
-      "id": "RL-0271",
+      "id": "RL-0067",
       "asset": "code:SDD_V2_PATH_GIT_IGNORED",
       "kind": "issue-code",
       "sites": [
@@ -3544,7 +885,7 @@
       }
     },
     {
-      "id": "RL-0272",
+      "id": "RL-0068",
       "asset": "code:SDD_V2_PATH_INVALID",
       "kind": "issue-code",
       "sites": [
@@ -3559,7 +900,7 @@
       }
     },
     {
-      "id": "RL-0273",
+      "id": "RL-0069",
       "asset": "code:SDD_V2_PATH_NOT_FOUND",
       "kind": "issue-code",
       "sites": [
@@ -3574,7 +915,7 @@
       }
     },
     {
-      "id": "RL-0274",
+      "id": "RL-0070",
       "asset": "code:SDD_V2_PRESERVATION_CLAIM_UNCHECKED",
       "kind": "issue-code",
       "sites": [
@@ -3587,7 +928,7 @@
       }
     },
     {
-      "id": "RL-0275",
+      "id": "RL-0071",
       "asset": "code:SDD_V2_PRESERVATION_UNPINNED",
       "kind": "issue-code",
       "sites": [
@@ -3600,7 +941,7 @@
       }
     },
     {
-      "id": "RL-0276",
+      "id": "RL-0072",
       "asset": "code:SDD_V2_PRESET_BLOCKED",
       "kind": "issue-code",
       "sites": [
@@ -3613,7 +954,7 @@
       }
     },
     {
-      "id": "RL-0277",
+      "id": "RL-0073",
       "asset": "code:SDD_V2_PRESET_INVALID",
       "kind": "issue-code",
       "sites": [
@@ -3626,7 +967,7 @@
       }
     },
     {
-      "id": "RL-0278",
+      "id": "RL-0074",
       "asset": "code:SDD_V2_PRINCIPLE_CHECK_UNBOUND",
       "kind": "issue-code",
       "sites": [
@@ -3639,7 +980,7 @@
       }
     },
     {
-      "id": "RL-0279",
+      "id": "RL-0075",
       "asset": "code:SDD_V2_PRODUCER_SEMANTICS_RESTATED",
       "kind": "issue-code",
       "sites": [
@@ -3652,7 +993,7 @@
       }
     },
     {
-      "id": "RL-0280",
+      "id": "RL-0076",
       "asset": "code:SDD_V2_PROGRAM_LINK_INVALID",
       "kind": "issue-code",
       "sites": [
@@ -3665,7 +1006,7 @@
       }
     },
     {
-      "id": "RL-0281",
+      "id": "RL-0077",
       "asset": "code:SDD_V2_PROSE_DEFINITION_DUPLICATE",
       "kind": "issue-code",
       "sites": [
@@ -3678,7 +1019,7 @@
       }
     },
     {
-      "id": "RL-0282",
+      "id": "RL-0078",
       "asset": "code:SDD_V2_PROSE_DEFINITION_MISSING",
       "kind": "issue-code",
       "sites": [
@@ -3691,7 +1032,7 @@
       }
     },
     {
-      "id": "RL-0283",
+      "id": "RL-0079",
       "asset": "code:SDD_V2_QUANTIFIER_FIXTURE_UNDISCRIMINATING",
       "kind": "issue-code",
       "sites": [
@@ -3704,7 +1045,7 @@
       }
     },
     {
-      "id": "RL-0284",
+      "id": "RL-0080",
       "asset": "code:SDD_V2_REFERENCE_MISSING",
       "kind": "issue-code",
       "sites": [
@@ -3722,7 +1063,7 @@
       }
     },
     {
-      "id": "RL-0285",
+      "id": "RL-0081",
       "asset": "code:SDD_V2_REMOVED_EXPORT_ASSERTED_UNCHANGED",
       "kind": "issue-code",
       "sites": [
@@ -3735,7 +1076,7 @@
       }
     },
     {
-      "id": "RL-0286",
+      "id": "RL-0082",
       "asset": "code:SDD_V2_REPO_GATE_NO_DISPOSITION",
       "kind": "issue-code",
       "sites": [
@@ -3748,7 +1089,7 @@
       }
     },
     {
-      "id": "RL-0287",
+      "id": "RL-0083",
       "asset": "code:SDD_V2_REQUIRED_FIELD_EMPTY",
       "kind": "issue-code",
       "sites": [
@@ -3764,7 +1105,7 @@
       }
     },
     {
-      "id": "RL-0288",
+      "id": "RL-0084",
       "asset": "code:SDD_V2_REQUIREMENT_OUTCOME_UNCOVERED",
       "kind": "issue-code",
       "sites": [
@@ -3777,7 +1118,59 @@
       }
     },
     {
-      "id": "RL-0289",
+      "id": "RL-0085",
+      "asset": "code:SDD_V2_REVIEW_CLAUSE_UNKNOWN",
+      "kind": "issue-code",
+      "sites": [
+        "scripts/validator/domain/v2-review.ts"
+      ],
+      "weight": {
+        "sites": 1,
+        "mentions": 1,
+        "test_mentions": 1
+      }
+    },
+    {
+      "id": "RL-0086",
+      "asset": "code:SDD_V2_REVIEW_FINDINGS_MISSING",
+      "kind": "issue-code",
+      "sites": [
+        "scripts/validator/domain/v2-review.ts"
+      ],
+      "weight": {
+        "sites": 1,
+        "mentions": 1,
+        "test_mentions": 1
+      }
+    },
+    {
+      "id": "RL-0087",
+      "asset": "code:SDD_V2_REVIEW_RECOMMENDED",
+      "kind": "issue-code",
+      "sites": [
+        "scripts/validator/domain/v2-review.ts"
+      ],
+      "weight": {
+        "sites": 1,
+        "mentions": 1,
+        "test_mentions": 0
+      }
+    },
+    {
+      "id": "RL-0088",
+      "asset": "code:SDD_V2_REVIEW_UNDISPOSED",
+      "kind": "issue-code",
+      "sites": [
+        "scripts/validator/domain/v2-review.ts"
+      ],
+      "weight": {
+        "sites": 1,
+        "mentions": 1,
+        "test_mentions": 1
+      }
+    },
+    {
+      "id": "RL-0089",
       "asset": "code:SDD_V2_ROOT_RESTATES_CHILD",
       "kind": "issue-code",
       "sites": [
@@ -3790,7 +1183,7 @@
       }
     },
     {
-      "id": "RL-0290",
+      "id": "RL-0090",
       "asset": "code:SDD_V2_SCALING_ORACLE_UNSCOPED",
       "kind": "issue-code",
       "sites": [
@@ -3803,7 +1196,7 @@
       }
     },
     {
-      "id": "RL-0291",
+      "id": "RL-0091",
       "asset": "code:SDD_V2_SECTION_MISSING",
       "kind": "issue-code",
       "sites": [
@@ -3818,7 +1211,7 @@
       }
     },
     {
-      "id": "RL-0292",
+      "id": "RL-0092",
       "asset": "code:SDD_V2_SHAPE_READER_UNDECLARED",
       "kind": "issue-code",
       "sites": [
@@ -3831,7 +1224,7 @@
       }
     },
     {
-      "id": "RL-0293",
+      "id": "RL-0093",
       "asset": "code:SDD_V2_STATE_SPACE_UNSTATED",
       "kind": "issue-code",
       "sites": [
@@ -3844,7 +1237,7 @@
       }
     },
     {
-      "id": "RL-0294",
+      "id": "RL-0094",
       "asset": "code:SDD_V2_SURFACE_INVENTORY_INCOMPLETE",
       "kind": "issue-code",
       "sites": [
@@ -3857,7 +1250,7 @@
       }
     },
     {
-      "id": "RL-0295",
+      "id": "RL-0095",
       "asset": "code:SDD_V2_VARIANT_MATRIX_MISSING",
       "kind": "issue-code",
       "sites": [
@@ -3870,7 +1263,7 @@
       }
     },
     {
-      "id": "RL-0296",
+      "id": "RL-0096",
       "asset": "code:SDD_V2_WRITES_OWNED_ELSEWHERE",
       "kind": "issue-code",
       "sites": [
@@ -3883,137 +1276,7 @@
       }
     },
     {
-      "id": "RL-0297",
-      "asset": "code:SENSITIVITY_WRITES_UNDECLARED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/repo-facts.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 2
-      }
-    },
-    {
-      "id": "RL-0298",
-      "asset": "code:SHARED_MECHANISM_WRITE_INVALID",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/delivery-graph.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 2,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0299",
-      "asset": "code:SHARED_MECHANISM_WRITE_POINT_NOT_FOUND",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/repo-facts.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0300",
-      "asset": "code:SHARED_MECHANISM_WRITE_POINT_UNDECLARED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/repo-facts.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 1
-      }
-    },
-    {
-      "id": "RL-0301",
-      "asset": "code:SPLIT_DECISION_UNRECORDED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/repo-facts.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 2
-      }
-    },
-    {
-      "id": "RL-0302",
-      "asset": "code:STEP_THRESHOLD_NOT_IN_ACCEPTANCE",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/repo-facts.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 3
-      }
-    },
-    {
-      "id": "RL-0303",
-      "asset": "code:STEP_WRITE_OUTSIDE_AUTHORITY",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/repo-facts.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 2
-      }
-    },
-    {
-      "id": "RL-0304",
-      "asset": "code:TEST_FILE_BUSINESS_NAME_REQUIRED",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/test-naming.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0305",
-      "asset": "code:TEST_FILE_DELIVERY_METADATA_NAME_FORBIDDEN",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/validator/domain/policies/test-naming.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 0
-      }
-    },
-    {
-      "id": "RL-0306",
-      "asset": "code:TOOLCHAIN_VERSION_CONFLICT",
-      "kind": "issue-code",
-      "sites": [
-        "scripts/repo-facts.ts"
-      ],
-      "weight": {
-        "sites": 1,
-        "mentions": 1,
-        "test_mentions": 2
-      }
-    },
-    {
-      "id": "RL-0307",
+      "id": "RL-0097",
       "asset": "code:TYPE_PROBE_MODULE_UNAVAILABLE",
       "kind": "issue-code",
       "sites": [
@@ -4026,7 +1289,7 @@
       }
     },
     {
-      "id": "RL-0308",
+      "id": "RL-0098",
       "asset": "code:TYPE_PROBE_PROJECT_UNAVAILABLE",
       "kind": "issue-code",
       "sites": [
@@ -4039,7 +1302,7 @@
       }
     },
     {
-      "id": "RL-0309",
+      "id": "RL-0099",
       "asset": "code:TYPE_PROBE_SOURCE_UNAVAILABLE",
       "kind": "issue-code",
       "sites": [

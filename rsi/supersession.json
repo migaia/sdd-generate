@@ -862,6 +862,56 @@
       "counterexample": "CSDD-V2-COST-101: R1 promises install cost proportional to the affected region; A1 reads only metrics().visits, so N sequential use calls ran in O(N^2) wall time while A1 reported 2N.",
       "scope": "Candidate on a must-ship requirement line stating proportional/linear/scaling/O(...)/成正比/线性/复杂度 whose linked acceptance has no end-to-end timing at two or more sizes, or which has no cost-path inventory.",
       "tradeoff": "Keyword-based: a scaling outcome worded otherwise is missed, and the end-to-end check reads wording, not the oracle's code."
+    },
+    {
+      "asset": "code:SDD_V2_REVIEW_UNDISPOSED",
+      "added_at": "2026-09-25",
+      "round": "R-20260925100137",
+      "supersedes": [],
+      "supersedes_nothing_because": "Before this round nothing read a pre-handoff review at all; the review stage itself was only measured outside the skill (sdd-bench round RR-2026-09-25-L2).",
+      "counterexample": "CSDD-V2-REVIEW-101: a recorded review's finding F2 has no disposition, and the SDD reaches the host with an open finding.",
+      "scope": "Candidate when index.review names a findings file that is missing, or any finding in it lacks fixed, ruled-invalid:<reason> or out-of-scope in review.dispositions.",
+      "tradeoff": "Advisory, never a gate: an author can still hand off with open findings; the count reaches telemetry as lens precision."
+    },
+    {
+      "asset": "code:SDD_V2_REVIEW_CLAUSE_UNKNOWN",
+      "added_at": "2026-09-25",
+      "round": "R-20260925100137",
+      "supersedes": [],
+      "supersedes_nothing_because": "Before this round nothing read a pre-handoff review at all; the review stage itself was only measured outside the skill (sdd-bench round RR-2026-09-25-L2).",
+      "counterexample": "A reviewer's finding cites a clause ID the document does not define (renamed after review, or invented), so its disposition cannot be checked against the clause (tests/v2-review.test.ts).",
+      "scope": "Candidate for each finding whose clauses include an ID with no definition in the selected leaf's prose.",
+      "tradeoff": "Only definition by ID is checked, not that the finding's claim is about that clause."
+    },
+    {
+      "asset": "code:SDD_V2_REVIEW_RECOMMENDED",
+      "added_at": "2026-09-25",
+      "round": "R-20260925104755",
+      "supersedes": [],
+      "supersedes_nothing_because": "Before this round the review phase applied to every design with a must-ship requirement; nothing assessed when a review is worth its 100-250k tokens, so there was no rule to replace.",
+      "counterexample": "A design with behaviour change BC1 reaches handoff with no review recorded and nothing recommends one (CSDD-V2-REVIEW-102), while a one-requirement design without a behaviour change is not told to review.",
+      "scope": "Candidate on the selected leaf when no review is recorded and it defines a BC<n> clause, consumes an export, or has five or more must-ship requirements.",
+      "tradeoff": "The three signals are the defect classes the review lenses were measured on; a design that needs review for another reason gets it only through the review subcommand."
+    },
+    {
+      "asset": "code:SDD_V2_REVIEW_FINDINGS_MISSING",
+      "added_at": "2026-09-25",
+      "round": "R-20260925104755",
+      "supersedes": [],
+      "supersedes_nothing_because": "SDD_V2_REVIEW_UNDISPOSED keeps its meaning (a finding without a disposition); only the missing-file case moves to its own code, so no rule is removed.",
+      "counterexample": "review.findings names a file that does not exist and the diagnostic said a finding was undisposed (CSDD-V2-REVIEW-103, tests/v2-review.test.ts).",
+      "scope": "Candidate when the recorded review's findings file is not found relative to the SDD.",
+      "tradeoff": "A findings file that exists but does not parse is still read as empty and reported through its dispositions."
+    },
+    {
+      "asset": "code:SDD_V1_UNSUPPORTED",
+      "added_at": "2026-09-25",
+      "round": "R-20260925105927",
+      "supersedes": [],
+      "supersedes_nothing_because": "It replaces no single rule: the whole v1 rule family was deleted in this round (rsi/dispositions.json, decided_in R-20260925105927), and this one diagnostic tells a v1 document why it is no longer checked.",
+      "counterexample": "A v1 document passed to validate after the v1 validator was removed would otherwise be reported as not an SDD at all.",
+      "scope": "validate, validate-draft and document-check on a document that carries a contract or program block without the sdd/v2 protocol.",
+      "tradeoff": "No v1 check runs, so a v1 document's defects are not reported until it is rewritten."
     }
   ]
 }

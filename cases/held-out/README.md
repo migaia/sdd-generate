@@ -12,6 +12,5 @@ one. The defence that does not depend on trust is somewhere else entirely: a mec
 decided by running a command, so "optimising for the test" and "fixing the defect" are the same
 action, and there is nothing to gain by cheating.
 
-The directory is empty of cases today. The mechanism is in place and tested; populating it is a
-decision about which cases to spend, and spending one before there are enough to spare would buy
-nothing.
+`cases.json` holds two sdd/v2 cases (export fingerprint and consumer pin), chosen because current
+work does not touch what they check; `cases.json`'s note says why each is held out.

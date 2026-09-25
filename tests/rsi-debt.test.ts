@@ -138,6 +138,7 @@ test('update suggests consolidation under debt but never withholds enhancement',
     signals: [],
     undisposed_dormant: [],
     redundant_pairs: [],
+    review_lenses: {},
     measured: {},
     over_budget: [],
     limits: []

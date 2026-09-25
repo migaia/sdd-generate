@@ -1,74 +1,52 @@
 {
   "protocol": "skill-defect-cases/v1",
-  "note": "Held out of the visible suite. These two were chosen because nothing in the current work touches what they check — a batch's test budget and an acceptance's link to its requirement — so holding them back costs day-to-day feedback nothing and still gives each round a result it was not aiming at.",
+  "note": "Held out of the visible suite. The two v1 cases that used to sit here were retired with the v1 format on 2026-09-25; these two sdd/v2 cases replace them because nothing in current work touches export fingerprints or consumer pins, so holding them back still gives each round a result it was not aiming at.",
   "cases": [
     {
-      "id": "CSDD-LINK-101",
-      "defect_class": "acceptance-points-at-a-requirement-that-does-not-exist",
-      "source_delivery": "create-sdd worked example, perturbed",
-      "observed_at": "2026-09-23",
-      "statement": "An acceptance case references a requirement ID no requirement defines.",
-      "fixture": {
-        "base": "references/examples/loop-ready-example.md",
-        "overlay": {
-          "acceptance": {
-            "merge_by_id": [
-              {
-                "id": "YS01",
-                "requirement_ids": [
-                  "XQ99"
-                ]
-              }
-            ]
-          }
-        }
+      "id": "CSDD-V2-FINGERPRINT-101",
+      "defect_class": "producer-semantics-edited-without-version",
+      "statement": "The producer's exported semantics (R9) no longer match the fingerprint recorded with export version 1, so a consumer pinned to v1 cannot tell which text it agreed to.",
+      "root_cause": "Export versions are free text; nothing binds them to the clauses a consumer relies on.",
+      "evidence": {
+        "file": "scripts/validator/domain/v2-document.ts",
+        "line": 1,
+        "quote": "exports"
       },
-      "negative_fixture": {
-        "base": "references/examples/loop-ready-example.md",
-        "overlay": {}
-      },
+      "fixture": "cases/fixtures/v2-consume/producer-stale/capability.sdd.md",
+      "negative_fixture": "cases/fixtures/v2-consume/ok/capability.sdd.md",
       "detector": {
-        "command": "bun scripts/validate.ts validate-draft --draft-file <fixture>",
-        "expected_code": "CONTRACT_ACCEPTANCE_REQUIREMENT_LINK_MISMATCH",
+        "command": "bun scripts/validate.ts validate --sdd <fixture> --repository <repository>",
+        "expected_code": "SDD_V2_EXPORT_FINGERPRINT_STALE",
         "must_fire": true
       },
-      "negative_expectation": {
-        "must_fire": false
-      }
+      "observed_at": "2026-09-24",
+      "owning_test": "tests/v2-consume.test.ts",
+      "introduced_detector_at": "2026-09-24",
+      "source_delivery": "migai plugin-host R3 delivery, OD-37",
+      "repository": "cases/fixtures/v2-consume/repo"
     },
     {
-      "id": "CSDD-PLAN-102",
-      "defect_class": "batch-without-a-test-budget",
-      "source_delivery": "create-sdd worked example, perturbed",
-      "observed_at": "2026-09-23",
-      "statement": "A batch carries no test_budget, so nothing bounds what it may run.",
-      "fixture": {
-        "base": "references/examples/loop-ready-example.md",
-        "overlay": {
-          "delivery_plan": {
-            "batches": {
-              "merge_by_id": [
-                {
-                  "id": "PC01",
-                  "test_budget": null
-                }
-              ]
-            }
-          }
-        }
+      "id": "CSDD-V2-PIN-101",
+      "defect_class": "consumer-pin-stale",
+      "statement": "The consumer pins dependency-planner v1 with a fingerprint that predates the producer's current semantics.",
+      "root_cause": "A consumer pin carries no fingerprint check.",
+      "evidence": {
+        "file": "scripts/validator/domain/v2-document.ts",
+        "line": 1,
+        "quote": "consumes"
       },
-      "negative_fixture": {
-        "base": "references/examples/loop-ready-example.md",
-        "overlay": {}
-      },
+      "fixture": "cases/fixtures/v2-consume/pin-stale/host.sdd.md",
+      "negative_fixture": "cases/fixtures/v2-consume/ok/host.sdd.md",
       "detector": {
-        "command": "bun scripts/validate.ts validate-draft --draft-file <fixture>",
-        "expected_code": "DELIVERY_PLAN_TEST_BUDGET_INVALID",
+        "command": "bun scripts/validate.ts validate --sdd <fixture> --repository <repository>",
+        "expected_code": "SDD_V2_INTERFACE_MISMATCH",
         "must_fire": true
       },
-      "negative_expectation": {
-        "must_fire": false
-      }
+      "observed_at": "2026-09-24",
+      "owning_test": "tests/v2-consume.test.ts",
+      "introduced_detector_at": "2026-09-24",
+      "source_delivery": "migai plugin-host R3 delivery, OD-37",
+      "repository": "cases/fixtures/v2-consume/repo"
     }
   ]
 }

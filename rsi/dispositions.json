@@ -9,6 +9,1726 @@
       "counterexample": "With debt advisory every level admits every round kind, so the refusal could never fire; the code already left the sources and the constant ADMITTED_KINDS table that stood in for it is deleted in this round.",
       "scope": "rsi.ts open.",
       "tradeoff": "A high debt no longer blocks rounds; it is reported by health and update and settled by consolidation rounds like this one."
+    },
+    {
+      "asset": "code:ACCEPTANCE_ARTIFACT_CONSUMPTION_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "ACCEPTANCE_ARTIFACT_CONSUMPTION_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/acceptance-execution.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:ACCEPTANCE_EVIDENCE_BOUNDARY_DUPLICATE",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "ACCEPTANCE_EVIDENCE_BOUNDARY_DUPLICATE was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/acceptance-execution.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:ACCEPTANCE_EXECUTION_BOUNDARY_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "ACCEPTANCE_EXECUTION_BOUNDARY_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/acceptance-execution.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:ACCEPTANCE_EXECUTION_DEPENDENCIES_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "ACCEPTANCE_EXECUTION_DEPENDENCIES_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/acceptance-execution.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:ACCEPTANCE_EXECUTION_DEPENDENCY_CYCLE",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "ACCEPTANCE_EXECUTION_DEPENDENCY_CYCLE was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/acceptance-execution.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:ACCEPTANCE_EXECUTION_DEPENDENCY_SCOPE_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "ACCEPTANCE_EXECUTION_DEPENDENCY_SCOPE_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/acceptance-execution.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:ACCEPTANCE_EXECUTION_ISOLATION_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "ACCEPTANCE_EXECUTION_ISOLATION_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/acceptance-execution.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:ACCEPTANCE_EXECUTION_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "ACCEPTANCE_EXECUTION_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/acceptance-execution.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:ACCEPTANCE_EXECUTION_TIMEOUT_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "ACCEPTANCE_EXECUTION_TIMEOUT_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/acceptance-execution.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:ACCEPTANCE_FAILURE_CONTAINMENT_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "ACCEPTANCE_FAILURE_CONTAINMENT_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/acceptance-execution.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:ACCEPTANCE_INDEPENDENT_TARGET_REUSED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "ACCEPTANCE_INDEPENDENT_TARGET_REUSED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/acceptance-execution.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:ACCEPTANCE_METHOD_ZERO_OBSERVATION",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "ACCEPTANCE_METHOD_ZERO_OBSERVATION was raised only while validating an sdd-loop-delivery/v1 document (scripts/repo-facts.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:AGENT_CONTEXT_BLOCK_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "AGENT_CONTEXT_BLOCK_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/helpers/context-routing.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:AGENT_CONTEXT_CLASS_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "AGENT_CONTEXT_CLASS_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/helpers/context-routing.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:AGENT_CONTEXT_CLASS_OUTSIDE_BLOCK",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "AGENT_CONTEXT_CLASS_OUTSIDE_BLOCK was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/helpers/context-routing.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:AGENT_CONTEXT_ENTRY_AMBIGUOUS",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "AGENT_CONTEXT_ENTRY_AMBIGUOUS was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/helpers/context-routing.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:AGENT_CONTEXT_ENTRY_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "AGENT_CONTEXT_ENTRY_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/helpers/context-routing.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:AGENT_CONTEXT_LINK_ESCAPES_ROOT",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "AGENT_CONTEXT_LINK_ESCAPES_ROOT was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/helpers/context-routing.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:AGENT_CONTEXT_LINK_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "AGENT_CONTEXT_LINK_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/helpers/context-routing.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:AGENT_CONTEXT_LINK_NOT_FOUND",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "AGENT_CONTEXT_LINK_NOT_FOUND was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/helpers/context-routing.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:AGENT_CONTEXT_LINK_OUTSIDE_BLOCK",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "AGENT_CONTEXT_LINK_OUTSIDE_BLOCK was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/helpers/context-routing.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:AGENT_CONTEXT_MAP_EMPTY",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "AGENT_CONTEXT_MAP_EMPTY was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/helpers/context-routing.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:AGENT_CONTEXT_SOURCE_CLASS_CONFLICT",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "AGENT_CONTEXT_SOURCE_CLASS_CONFLICT was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/helpers/context-routing.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:ARCHITECTURE_ADAPTERS_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "ARCHITECTURE_ADAPTERS_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/platform-architecture.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:ARCHITECTURE_ADAPTER_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "ARCHITECTURE_ADAPTER_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/platform-architecture.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:ARCHITECTURE_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "ARCHITECTURE_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/platform-architecture.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:CHALLENGE_EVIDENCE_CITES_SUBJECT_ONLY",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "CHALLENGE_EVIDENCE_CITES_SUBJECT_ONLY was raised only while validating an sdd-loop-delivery/v1 document (scripts/repo-facts.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:CHALLENGE_EVIDENCE_PATH_MISSING",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "CHALLENGE_EVIDENCE_PATH_MISSING was raised only while validating an sdd-loop-delivery/v1 document (scripts/repo-facts.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:CHALLENGE_REASONED_BUT_CLOSED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "CHALLENGE_REASONED_BUT_CLOSED was raised only while validating an sdd-loop-delivery/v1 document (scripts/repo-facts.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:COMMAND_PACKAGE_MANAGER_MISMATCH",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "COMMAND_PACKAGE_MANAGER_MISMATCH was raised only while validating an sdd-loop-delivery/v1 document (scripts/repo-facts.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:CONJUNCTIVE_REQUIREMENT_SINGLE_ORACLE",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "CONJUNCTIVE_REQUIREMENT_SINGLE_ORACLE was raised only while validating an sdd-loop-delivery/v1 document (scripts/repo-facts.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:CONTRACT_ACCEPTANCE_CLAIM_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "CONTRACT_ACCEPTANCE_CLAIM_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/verification-scope.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:CONTRACT_ACCEPTANCE_DUPLICATE",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "CONTRACT_ACCEPTANCE_DUPLICATE was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/contract.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:CONTRACT_ACCEPTANCE_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "CONTRACT_ACCEPTANCE_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/contract.ts, scripts/validator/domain/policies/acceptance-execution.ts, scripts/validator/domain/policies/verification-scope.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:CONTRACT_ACCEPTANCE_REFERENCE_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "CONTRACT_ACCEPTANCE_REFERENCE_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/contract.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:CONTRACT_ACCEPTANCE_REFERENCE_UNRESOLVED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "CONTRACT_ACCEPTANCE_REFERENCE_UNRESOLVED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/contract.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:CONTRACT_ACCEPTANCE_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "CONTRACT_ACCEPTANCE_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/acceptance-execution.ts, scripts/validator/domain/policies/verification-scope.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:CONTRACT_ACCEPTANCE_REQUIREMENT_LINK_MISMATCH",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "CONTRACT_ACCEPTANCE_REQUIREMENT_LINK_MISMATCH was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/verification-scope.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:CONTRACT_ADMISSION_VERIFICATION_ACCEPTANCE_SCOPE_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "CONTRACT_ADMISSION_VERIFICATION_ACCEPTANCE_SCOPE_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/verification-scope.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:CONTRACT_ADMISSION_VERIFICATION_METHOD_MISMATCH",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "CONTRACT_ADMISSION_VERIFICATION_METHOD_MISMATCH was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/verification-scope.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:CONTRACT_ADMISSION_VERIFICATION_PACKAGE_SCOPE_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "CONTRACT_ADMISSION_VERIFICATION_PACKAGE_SCOPE_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/verification-scope.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:CONTRACT_ADMISSION_VERIFICATION_REQUIREMENT_SCOPE_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "CONTRACT_ADMISSION_VERIFICATION_REQUIREMENT_SCOPE_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/verification-scope.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:CONTRACT_ADMISSION_VERIFICATION_SCOPE_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "CONTRACT_ADMISSION_VERIFICATION_SCOPE_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/verification-scope.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:CONTRACT_ADMISSION_VERIFICATION_SURFACE_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "CONTRACT_ADMISSION_VERIFICATION_SURFACE_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/verification-scope.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:CONTRACT_ADMISSION_WORKSPACE_GATE_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "CONTRACT_ADMISSION_WORKSPACE_GATE_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/verification-scope.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:CONTRACT_BLOCK_COUNT",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "CONTRACT_BLOCK_COUNT was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/contract.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:CONTRACT_BLOCK_NOT_FOUND",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "CONTRACT_BLOCK_NOT_FOUND was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/derive/contract.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:CONTRACT_DECISION_METADATA_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "CONTRACT_DECISION_METADATA_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/authoring-closure.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:CONTRACT_DECISION_RESOLUTION_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "CONTRACT_DECISION_RESOLUTION_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/authoring-closure.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:CONTRACT_DECISION_STATUS_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "CONTRACT_DECISION_STATUS_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/authoring-closure.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:CONTRACT_DEFERRAL_METADATA_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "CONTRACT_DEFERRAL_METADATA_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/authoring-closure.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:CONTRACT_DEPENDENCY_CYCLE",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "CONTRACT_DEPENDENCY_CYCLE was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/contract.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:CONTRACT_DEPENDENCY_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "CONTRACT_DEPENDENCY_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/contract.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:CONTRACT_EMIT_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "CONTRACT_EMIT_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validate.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:CONTRACT_INVENTORY_AUTHORITIES_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "CONTRACT_INVENTORY_AUTHORITIES_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/authoring-closure.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:CONTRACT_JSON_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "CONTRACT_JSON_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/contract.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:CONTRACT_PROTOCOL_UNSUPPORTED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "CONTRACT_PROTOCOL_UNSUPPORTED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/contract.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:CONTRACT_REFERENCE_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "CONTRACT_REFERENCE_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/helpers/contract-references.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:CONTRACT_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "CONTRACT_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/repo-facts.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:CONTRACT_REQUIREMENTS_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "CONTRACT_REQUIREMENTS_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/contract.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:CONTRACT_REQUIREMENT_DUPLICATE",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "CONTRACT_REQUIREMENT_DUPLICATE was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/contract.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:CONTRACT_REQUIREMENT_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "CONTRACT_REQUIREMENT_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/contract.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:CONTRACT_REQUIREMENT_TYPE_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "CONTRACT_REQUIREMENT_TYPE_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/contract.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:CONTRACT_REVISION_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "CONTRACT_REVISION_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/contract.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:CONTRACT_RUNTIME_RESOLUTION_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "CONTRACT_RUNTIME_RESOLUTION_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/authoring-closure.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:CONTRACT_SOURCE_INVENTORY_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "CONTRACT_SOURCE_INVENTORY_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/authoring-closure.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:CONTRACT_UNIVERSAL_CLAIM_UNIVERSE_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "CONTRACT_UNIVERSAL_CLAIM_UNIVERSE_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/contract.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:DELIVERY_PLAN_BATCH_DUPLICATE",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "DELIVERY_PLAN_BATCH_DUPLICATE was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/delivery-plan.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:DELIVERY_PLAN_BATCH_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "DELIVERY_PLAN_BATCH_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/delivery-plan.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:DELIVERY_PLAN_DEPENDENCY_CYCLE",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "DELIVERY_PLAN_DEPENDENCY_CYCLE was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/delivery-plan.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:DELIVERY_PLAN_DEPENDENCY_UNKNOWN",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "DELIVERY_PLAN_DEPENDENCY_UNKNOWN was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/delivery-plan.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:DELIVERY_PLAN_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "DELIVERY_PLAN_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/delivery-plan.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:DELIVERY_PLAN_REQUIREMENT_UNKNOWN",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "DELIVERY_PLAN_REQUIREMENT_UNKNOWN was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/delivery-plan.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:DELIVERY_PLAN_SHARDS_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "DELIVERY_PLAN_SHARDS_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/delivery-plan.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:DELIVERY_PLAN_SHARD_COVERAGE_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "DELIVERY_PLAN_SHARD_COVERAGE_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/delivery-plan.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:DELIVERY_PLATFORMS_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "DELIVERY_PLATFORMS_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/platform-architecture.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:DESIGN_CONVERGENCE_INCONSISTENT",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "DESIGN_CONVERGENCE_INCONSISTENT was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/delivery-graph.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:DESIGN_CONVERGENCE_STALE",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "DESIGN_CONVERGENCE_STALE was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/controllers/document.controller.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:DESIGN_DETAIL_APPLICABILITY_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "DESIGN_DETAIL_APPLICABILITY_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/design-detail.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:DESIGN_DETAIL_DUPLICATE_FIELD",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "DESIGN_DETAIL_DUPLICATE_FIELD was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/design-detail.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:DESIGN_DETAIL_FIELD_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "DESIGN_DETAIL_FIELD_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/design-detail.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:DESIGN_DETAIL_HEADING_AMBIGUOUS",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "DESIGN_DETAIL_HEADING_AMBIGUOUS was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/design-detail.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:DESIGN_DETAIL_INDEX_DRIFT",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "DESIGN_DETAIL_INDEX_DRIFT was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/design-detail.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:DESIGN_DETAIL_OBJECT_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "DESIGN_DETAIL_OBJECT_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/design-detail.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:DESIGN_DETAIL_PATHS_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "DESIGN_DETAIL_PATHS_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/design-detail.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:DESIGN_DETAIL_PROTOCOL_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "DESIGN_DETAIL_PROTOCOL_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/design-detail.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:DESIGN_DETAIL_PSEUDOCODE_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "DESIGN_DETAIL_PSEUDOCODE_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/design-detail.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:DESIGN_DETAIL_SECTION_REUSED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "DESIGN_DETAIL_SECTION_REUSED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/design-detail.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:DESIGN_DETAIL_SOURCE_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "DESIGN_DETAIL_SOURCE_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/design-detail.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:DESIGN_DETAIL_STEPS_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "DESIGN_DETAIL_STEPS_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/design-detail.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:DESIGN_DETAIL_STEP_KIND_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "DESIGN_DETAIL_STEP_KIND_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/design-detail.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:DESIGN_DETAIL_STEP_SOURCE_REUSED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "DESIGN_DETAIL_STEP_SOURCE_REUSED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/design-detail.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:DESIGN_GATE_ITEM_OPEN",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "DESIGN_GATE_ITEM_OPEN was raised only while validating an sdd-loop-delivery/v1 document (scripts/repo-facts.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:DESIGN_GATE_LENS_DUPLICATED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "DESIGN_GATE_LENS_DUPLICATED was raised only while validating an sdd-loop-delivery/v1 document (scripts/repo-facts.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:DESIGN_GATE_LENS_MISSING",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "DESIGN_GATE_LENS_MISSING was raised only while validating an sdd-loop-delivery/v1 document (scripts/repo-facts.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:DESIGN_GATE_LENS_NOT_CURRENT",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "DESIGN_GATE_LENS_NOT_CURRENT was raised only while validating an sdd-loop-delivery/v1 document (scripts/repo-facts.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:DESIGN_GATE_LENS_NOT_PASSED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "DESIGN_GATE_LENS_NOT_PASSED was raised only while validating an sdd-loop-delivery/v1 document (scripts/repo-facts.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:DESIGN_GATE_LENS_REVISION_MISSING",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "DESIGN_GATE_LENS_REVISION_MISSING was raised only while validating an sdd-loop-delivery/v1 document (scripts/repo-facts.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:DESIGN_GATE_UNSTABLE",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "DESIGN_GATE_UNSTABLE was raised only while validating an sdd-loop-delivery/v1 document (scripts/repo-facts.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:DESIGN_NOT_CONVERGED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "DESIGN_NOT_CONVERGED was raised only while validating an sdd-loop-delivery/v1 document (scripts/repo-facts.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:DRAFT_ROOT_CONTENT_CONFLICT",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "DRAFT_ROOT_CONTENT_CONFLICT was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/services/contract-document.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:DRAFT_ROOT_PATH_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "DRAFT_ROOT_PATH_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/controllers/document.controller.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:EARLY_FALSIFIER_CLAIM_BINDING_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "EARLY_FALSIFIER_CLAIM_BINDING_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/verification-scope.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:EARLY_FALSIFIER_FACT_SCOPE_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "EARLY_FALSIFIER_FACT_SCOPE_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/verification-scope.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:EARLY_FALSIFIER_METHOD_NOT_ACCEPTANCE_ORACLE",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "EARLY_FALSIFIER_METHOD_NOT_ACCEPTANCE_ORACLE was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/verification-scope.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:EARLY_FALSIFIER_ROUTE_INSPECTION_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "EARLY_FALSIFIER_ROUTE_INSPECTION_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/verification-scope.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:EARLY_FALSIFIER_SCOPE_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "EARLY_FALSIFIER_SCOPE_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/verification-scope.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:EXECUTION_PACKETS_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "EXECUTION_PACKETS_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/execution-packets.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:EXECUTION_PACKET_ACCEPTANCE_SCOPE_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "EXECUTION_PACKET_ACCEPTANCE_SCOPE_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/execution-packets.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:EXECUTION_PACKET_DEPENDENCIES_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "EXECUTION_PACKET_DEPENDENCIES_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/execution-packets.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:EXECUTION_PACKET_DEPENDENCY_CYCLE",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "EXECUTION_PACKET_DEPENDENCY_CYCLE was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/execution-packets.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:EXECUTION_PACKET_DEPENDENCY_SCOPE_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "EXECUTION_PACKET_DEPENDENCY_SCOPE_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/execution-packets.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:EXECUTION_PACKET_ID_DUPLICATE",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "EXECUTION_PACKET_ID_DUPLICATE was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/execution-packets.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:EXECUTION_PACKET_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "EXECUTION_PACKET_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/execution-packets.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:EXECUTION_PACKET_REQUIREMENT_SCOPE_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "EXECUTION_PACKET_REQUIREMENT_SCOPE_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/execution-packets.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:EXPERIENCE_COMPONENT_HOOK_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "EXPERIENCE_COMPONENT_HOOK_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/experience-contract.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:EXPERIENCE_CONTRACT_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "EXPERIENCE_CONTRACT_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/experience-contract.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:EXPERIENCE_DELTA_PRODUCT_CONTRACT_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "EXPERIENCE_DELTA_PRODUCT_CONTRACT_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/experience-contract.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:EXPERIENCE_JOURNEYS_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "EXPERIENCE_JOURNEYS_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/experience-contract.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:EXPERIENCE_JOURNEY_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "EXPERIENCE_JOURNEY_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/experience-contract.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:EXPERIENCE_READABILITY_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "EXPERIENCE_READABILITY_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/experience-contract.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:EXPERIENCE_READING_CONTINUATION_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "EXPERIENCE_READING_CONTINUATION_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/experience-contract.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:EXPERIENCE_ROUTES_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "EXPERIENCE_ROUTES_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/experience-contract.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:EXPERIENCE_ROUTE_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "EXPERIENCE_ROUTE_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/experience-contract.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:EXPERIENCE_SCOPE_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "EXPERIENCE_SCOPE_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/experience-contract.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:EXPERIENCE_STYLE_HOOKS_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "EXPERIENCE_STYLE_HOOKS_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/experience-contract.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:EXPERIENCE_STYLE_TOKEN_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "EXPERIENCE_STYLE_TOKEN_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/experience-contract.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:EXPERIENCE_TEMPLATES_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "EXPERIENCE_TEMPLATES_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/experience-contract.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:EXPERIENCE_TEMPLATE_DUPLICATE",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "EXPERIENCE_TEMPLATE_DUPLICATE was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/experience-contract.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:EXPERIENCE_TEMPLATE_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "EXPERIENCE_TEMPLATE_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/experience-contract.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:IMPLEMENTATION_LOGIC_PATH_CYCLE",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "IMPLEMENTATION_LOGIC_PATH_CYCLE was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/delivery-graph.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:MIGRATION_APPLICABILITY_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "MIGRATION_APPLICABILITY_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/migration-admission.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:MIGRATION_CANDIDATE_UNDISPOSED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "MIGRATION_CANDIDATE_UNDISPOSED was raised only while validating an sdd-loop-delivery/v1 document (scripts/repo-facts.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:MIGRATION_CLOSURE_NOT_APPLICABLE_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "MIGRATION_CLOSURE_NOT_APPLICABLE_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/migration-admission.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:MIGRATION_CLOSURE_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "MIGRATION_CLOSURE_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/migration-admission.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:MIGRATION_CONTRACT_SCOPE_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "MIGRATION_CONTRACT_SCOPE_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/migration-admission.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:MIGRATION_CUTOVER_MODE_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "MIGRATION_CUTOVER_MODE_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/migration-admission.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:MIGRATION_DISMISSED_CANDIDATE_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "MIGRATION_DISMISSED_CANDIDATE_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/migration-admission.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:MIGRATION_DISMISSED_CANDIDATE_IS_READER",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "MIGRATION_DISMISSED_CANDIDATE_IS_READER was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/migration-admission.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:MIGRATION_EARLY_FALSIFIER_MISMATCH",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "MIGRATION_EARLY_FALSIFIER_MISMATCH was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/migration-admission.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:MIGRATION_INVENTORY_FACT_NOT_PASS",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "MIGRATION_INVENTORY_FACT_NOT_PASS was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/migration-admission.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:MIGRATION_LEGACY_RUNTIME_ACCEPTANCE_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "MIGRATION_LEGACY_RUNTIME_ACCEPTANCE_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/migration-admission.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:MIGRATION_LEGACY_RUNTIME_ACCEPTANCE_SCOPE_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "MIGRATION_LEGACY_RUNTIME_ACCEPTANCE_SCOPE_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/migration-admission.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:MIGRATION_LEGACY_RUNTIME_AUTHORITY_SCOPE_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "MIGRATION_LEGACY_RUNTIME_AUTHORITY_SCOPE_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/migration-admission.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:MIGRATION_LEGACY_RUNTIME_NOT_APPLICABLE_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "MIGRATION_LEGACY_RUNTIME_NOT_APPLICABLE_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/migration-admission.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:MIGRATION_LEGACY_RUNTIME_PROBE_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "MIGRATION_LEGACY_RUNTIME_PROBE_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/migration-admission.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:MIGRATION_READER_CLOSURE_UNRESOLVED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "MIGRATION_READER_CLOSURE_UNRESOLVED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/migration-admission.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:MIGRATION_READER_MODULE_DUPLICATE",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "MIGRATION_READER_MODULE_DUPLICATE was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/migration-admission.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:MIGRATION_READER_NOT_ORDERED_BEFORE_REMOVAL",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "MIGRATION_READER_NOT_ORDERED_BEFORE_REMOVAL was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/migration-admission.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:MIGRATION_READER_PACKET_COVERAGE_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "MIGRATION_READER_PACKET_COVERAGE_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/migration-admission.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:MIGRATION_READER_PACKET_SCOPE_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "MIGRATION_READER_PACKET_SCOPE_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/migration-admission.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:MIGRATION_READER_RETAINS_REMOVED_SURFACE",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "MIGRATION_READER_RETAINS_REMOVED_SURFACE was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/migration-admission.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:MIGRATION_REFINED_ZERO_READER_INVENTORY_INCOMPLETE",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "MIGRATION_REFINED_ZERO_READER_INVENTORY_INCOMPLETE was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/migration-admission.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:MIGRATION_REFINED_ZERO_READER_RUNTIME_PROOF_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "MIGRATION_REFINED_ZERO_READER_RUNTIME_PROOF_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/migration-admission.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:MIGRATION_REMOVAL_PACKET_COVERAGE_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "MIGRATION_REMOVAL_PACKET_COVERAGE_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/migration-admission.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:MIGRATION_REMOVAL_PACKET_SCOPE_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "MIGRATION_REMOVAL_PACKET_SCOPE_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/migration-admission.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:MIGRATION_SYMBOL_TOO_GENERIC",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "MIGRATION_SYMBOL_TOO_GENERIC was raised only while validating an sdd-loop-delivery/v1 document (scripts/repo-facts.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:MIGRATION_SYMBOL_UNSCANNABLE",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "MIGRATION_SYMBOL_UNSCANNABLE was raised only while validating an sdd-loop-delivery/v1 document (scripts/repo-facts.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:MIGRATION_ZERO_READER_CLAIM_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "MIGRATION_ZERO_READER_CLAIM_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/migration-admission.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:MUST_SHIP_DEFERRAL_REQUIRES_USER",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "MUST_SHIP_DEFERRAL_REQUIRES_USER was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/authoring-closure.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:ORACLE_SENSITIVITY_EVIDENCE_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "ORACLE_SENSITIVITY_EVIDENCE_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/acceptance-execution.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:ORACLE_SENSITIVITY_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "ORACLE_SENSITIVITY_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/acceptance-execution.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:ORACLE_SENSITIVITY_PROCEDURE_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "ORACLE_SENSITIVITY_PROCEDURE_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/acceptance-execution.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:ORACLE_SENSITIVITY_REASON_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "ORACLE_SENSITIVITY_REASON_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/acceptance-execution.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:ORACLE_SENSITIVITY_RESULTS_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "ORACLE_SENSITIVITY_RESULTS_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/acceptance-execution.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:ORACLE_SENSITIVITY_RESULT_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "ORACLE_SENSITIVITY_RESULT_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/acceptance-execution.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:ORACLE_SENSITIVITY_RESULT_SCOPE_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "ORACLE_SENSITIVITY_RESULT_SCOPE_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/acceptance-execution.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:ORACLE_SENSITIVITY_TIMING_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "ORACLE_SENSITIVITY_TIMING_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/acceptance-execution.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:PRODUCT_ARCHETYPE_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "PRODUCT_ARCHETYPE_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/experience-contract.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:PRODUCT_ARCHETYPE_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "PRODUCT_ARCHETYPE_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/platform-architecture.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:PROGRAM_CHILD_NOT_FOUND",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "PROGRAM_CHILD_NOT_FOUND was raised only while validating an sdd-loop-delivery/v1 document (scripts/repo-facts.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:PROSE_TOTAL_DISAGREES_WITH_CONTRACT",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "PROSE_TOTAL_DISAGREES_WITH_CONTRACT was raised only while validating an sdd-loop-delivery/v1 document (scripts/repo-facts.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:SCOPE_GROWTH_UNAUTHORIZED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "SCOPE_GROWTH_UNAUTHORIZED was raised only while validating an sdd-loop-delivery/v1 document (scripts/repo-facts.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:SCOPE_LEDGER_BROKEN_CHAIN",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "SCOPE_LEDGER_BROKEN_CHAIN was raised only while validating an sdd-loop-delivery/v1 document (scripts/repo-facts.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:SCOPE_LEDGER_CLAIM_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "SCOPE_LEDGER_CLAIM_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/repo-facts.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:SCOPE_LEDGER_MISSING",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "SCOPE_LEDGER_MISSING was raised only while validating an sdd-loop-delivery/v1 document (scripts/repo-facts.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:SCOPE_LEDGER_NOT_CURRENT",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "SCOPE_LEDGER_NOT_CURRENT was raised only while validating an sdd-loop-delivery/v1 document (scripts/repo-facts.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:SDD_CONTRACT_ID_DUPLICATE",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "SDD_CONTRACT_ID_DUPLICATE was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/document-presentation.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:SDD_CONTRACT_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "SDD_CONTRACT_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/controllers/document.controller.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:SDD_DOCUMENT_POLICY_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "SDD_DOCUMENT_POLICY_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/document-presentation.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:SDD_DOCUMENT_POLICY_UNSUPPORTED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "SDD_DOCUMENT_POLICY_UNSUPPORTED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/document-presentation.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:SDD_ID_OR_PREFIX_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "SDD_ID_OR_PREFIX_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/document-presentation.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:SDD_ID_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "SDD_ID_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/document-presentation.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:SDD_IMPLEMENTATION_PLACEHOLDER",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "SDD_IMPLEMENTATION_PLACEHOLDER was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/controllers/document.controller.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:SDD_PREFIXES_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "SDD_PREFIXES_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/document-presentation.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:SDD_PREFIX_CONFLICT",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "SDD_PREFIX_CONFLICT was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/document-presentation.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:SDD_PRESENTATION_BATCH_SCOPE_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "SDD_PRESENTATION_BATCH_SCOPE_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/document-presentation.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:SDD_PRESENTATION_DESCRIPTION_DRIFT",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "SDD_PRESENTATION_DESCRIPTION_DRIFT was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/document-presentation.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:SDD_PRESENTATION_GATE_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "SDD_PRESENTATION_GATE_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/document-presentation.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:SDD_PRESENTATION_ITEMS_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "SDD_PRESENTATION_ITEMS_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/document-presentation.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:SDD_PRESENTATION_ITEM_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "SDD_PRESENTATION_ITEM_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/document-presentation.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:SDD_PRESENTATION_LINK_COLUMNS_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "SDD_PRESENTATION_LINK_COLUMNS_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/document-presentation.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:SDD_PRESENTATION_OBJECT_UNINDEXED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "SDD_PRESENTATION_OBJECT_UNINDEXED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/document-presentation.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:SDD_PRESENTATION_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "SDD_PRESENTATION_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/document-presentation.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:SDD_PRESENTATION_ROW_MISSING_OR_DUPLICATE",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "SDD_PRESENTATION_ROW_MISSING_OR_DUPLICATE was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/document-presentation.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:SDD_PRESENTATION_SCHEMA_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "SDD_PRESENTATION_SCHEMA_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/document-presentation.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:SDD_PRESENTATION_SCOPE_EXPANSION",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "SDD_PRESENTATION_SCOPE_EXPANSION was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/document-presentation.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:SDD_PRESENTATION_SECOND_GRAPH_FORBIDDEN",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "SDD_PRESENTATION_SECOND_GRAPH_FORBIDDEN was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/document-presentation.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:SDD_PRESENTATION_SHIP_COVERAGE_INCOMPLETE",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "SDD_PRESENTATION_SHIP_COVERAGE_INCOMPLETE was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/document-presentation.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:SDD_PRESENTATION_SOURCE_DRIFT",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "SDD_PRESENTATION_SOURCE_DRIFT was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/document-presentation.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:SDD_PROGRAM_ROOT",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "SDD_PROGRAM_ROOT was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/controllers/document.controller.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:SDD_REQUIRED_SECTION_EMPTY",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "SDD_REQUIRED_SECTION_EMPTY was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/controllers/document.controller.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:SDD_REQUIRED_SECTION_MISSING",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "SDD_REQUIRED_SECTION_MISSING was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/controllers/document.controller.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:SDD_RETIRED_IDS_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "SDD_RETIRED_IDS_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/document-presentation.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:SDD_RETIRED_ID_REUSED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "SDD_RETIRED_ID_REUSED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/document-presentation.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:SENSITIVITY_WRITES_UNDECLARED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "SENSITIVITY_WRITES_UNDECLARED was raised only while validating an sdd-loop-delivery/v1 document (scripts/repo-facts.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:SHARED_MECHANISM_WRITE_INVALID",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "SHARED_MECHANISM_WRITE_INVALID was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/delivery-graph.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:SHARED_MECHANISM_WRITE_POINT_NOT_FOUND",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "SHARED_MECHANISM_WRITE_POINT_NOT_FOUND was raised only while validating an sdd-loop-delivery/v1 document (scripts/repo-facts.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:SHARED_MECHANISM_WRITE_POINT_UNDECLARED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "SHARED_MECHANISM_WRITE_POINT_UNDECLARED was raised only while validating an sdd-loop-delivery/v1 document (scripts/repo-facts.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:SPLIT_DECISION_UNRECORDED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "SPLIT_DECISION_UNRECORDED was raised only while validating an sdd-loop-delivery/v1 document (scripts/repo-facts.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:STEP_THRESHOLD_NOT_IN_ACCEPTANCE",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "STEP_THRESHOLD_NOT_IN_ACCEPTANCE was raised only while validating an sdd-loop-delivery/v1 document (scripts/repo-facts.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:STEP_WRITE_OUTSIDE_AUTHORITY",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "STEP_WRITE_OUTSIDE_AUTHORITY was raised only while validating an sdd-loop-delivery/v1 document (scripts/repo-facts.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:TEST_FILE_BUSINESS_NAME_REQUIRED",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "TEST_FILE_BUSINESS_NAME_REQUIRED was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/test-naming.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:TEST_FILE_DELIVERY_METADATA_NAME_FORBIDDEN",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "TEST_FILE_DELIVERY_METADATA_NAME_FORBIDDEN was raised only while validating an sdd-loop-delivery/v1 document (scripts/validator/domain/policies/test-naming.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:TOOLCHAIN_VERSION_CONFLICT",
+      "disposition": "delete",
+      "decided_in": "R-20260925105927",
+      "counterexample": "TOOLCHAIN_VERSION_CONFLICT was raised only while validating an sdd-loop-delivery/v1 document (scripts/repo-facts.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
+      "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
+      "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
     }
   ]
 }

@@ -38,370 +38,6 @@
       }
     },
     {
-      "id": "CSDD-CONV-101",
-      "defect_class": "convergence-claimed-over-an-open-finding",
-      "source_delivery": "create-sdd worked example, perturbed",
-      "observed_at": "2026-09-23",
-      "statement": "The contract claims CONVERGED while a blocking finding is still recorded.",
-      "fixture": {
-        "base": "references/examples/loop-ready-example.md",
-        "overlay": {
-          "design_convergence": {
-            "blocking_findings": [
-              {
-                "id": "SP99",
-                "statement": "unresolved"
-              }
-            ]
-          }
-        }
-      },
-      "negative_fixture": {
-        "base": "references/examples/loop-ready-example.md",
-        "overlay": {}
-      },
-      "detector": {
-        "command": "bun scripts/validate.ts validate-draft --draft-file <fixture>",
-        "expected_code": "DESIGN_CONVERGENCE_INCONSISTENT",
-        "must_fire": true
-      },
-      "negative_expectation": {
-        "must_fire": false
-      }
-    },
-    {
-      "id": "CSDD-CONV-102",
-      "defect_class": "convergence-claimed-without-a-lens",
-      "source_delivery": "create-sdd worked example, perturbed",
-      "observed_at": "2026-09-23",
-      "statement": "The contract claims CONVERGED with the ADVERSARIAL lens absent from review_passes.",
-      "fixture": {
-        "base": "references/examples/loop-ready-example.md",
-        "overlay": {
-          "design_convergence": {
-            "review_passes": {
-              "merge_by_id": [],
-              "remove": [
-                "SP02"
-              ]
-            }
-          }
-        }
-      },
-      "negative_fixture": {
-        "base": "references/examples/loop-ready-example.md",
-        "overlay": {}
-      },
-      "detector": {
-        "command": "bun scripts/validate.ts validate-draft --draft-file <fixture>",
-        "expected_code": "DESIGN_CONVERGENCE_INCONSISTENT",
-        "must_fire": true
-      },
-      "negative_expectation": {
-        "must_fire": false
-      }
-    },
-    {
-      "id": "CSDD-PLAN-101",
-      "defect_class": "batch-claims-an-unknown-requirement",
-      "source_delivery": "create-sdd worked example, perturbed",
-      "observed_at": "2026-09-23",
-      "statement": "A batch lists a requirement ID the contract never defines.",
-      "fixture": {
-        "base": "references/examples/loop-ready-example.md",
-        "overlay": {
-          "delivery_plan": {
-            "batches": {
-              "merge_by_id": [
-                {
-                  "id": "PC01",
-                  "requirement_ids": [
-                    "XQ99"
-                  ]
-                }
-              ]
-            }
-          }
-        }
-      },
-      "negative_fixture": {
-        "base": "references/examples/loop-ready-example.md",
-        "overlay": {}
-      },
-      "detector": {
-        "command": "bun scripts/validate.ts validate-draft --draft-file <fixture>",
-        "expected_code": "DELIVERY_PLAN_REQUIREMENT_UNKNOWN",
-        "must_fire": true
-      },
-      "negative_expectation": {
-        "must_fire": false
-      }
-    },
-    {
-      "id": "CSDD-INDEX-101",
-      "defect_class": "object-defined-but-not-indexed",
-      "source_delivery": "create-sdd worked example, perturbed",
-      "observed_at": "2026-09-23",
-      "statement": "A gate row exists in the delivery table but is missing from the presentation index.",
-      "fixture": {
-        "base": "references/examples/loop-ready-example.md",
-        "overlay": {
-          "presentation": {
-            "items": {
-              "merge_by_id": [],
-              "remove": [
-                "MJ01"
-              ]
-            }
-          }
-        }
-      },
-      "negative_fixture": {
-        "base": "references/examples/loop-ready-example.md",
-        "overlay": {}
-      },
-      "detector": {
-        "command": "bun scripts/validate.ts validate-draft --draft-file <fixture>",
-        "expected_code": "SDD_PRESENTATION_OBJECT_UNINDEXED",
-        "must_fire": true
-      },
-      "negative_expectation": {
-        "must_fire": false
-      }
-    },
-    {
-      "id": "CSDD-OWN-101",
-      "defect_class": "ownership-disagrees-with-what-the-batches-write",
-      "source_delivery": "create-sdd worked example, perturbed",
-      "observed_at": "2026-09-23",
-      "statement": "ownership.packages names a package no batch writes, and omits the one PC01 does write. `validate` accepts this document; only the derived contract check reports it.",
-      "fixture": {
-        "base": "references/examples/loop-ready-example.md",
-        "overlay": {
-          "ownership": {
-            "packages": [
-              "@demo/other"
-            ]
-          }
-        }
-      },
-      "negative_fixture": {
-        "base": "references/examples/loop-ready-example.md",
-        "overlay": {}
-      },
-      "detector": {
-        "command": "bun scripts/validate.ts contract --sdd <fixture> --check",
-        "expected_code": "CONTRACT_DRIFT_OWNERSHIP_PACKAGES",
-        "must_fire": true
-      },
-      "negative_expectation": {
-        "must_fire": false
-      },
-      "note": "This case exists because the perturbation probe found `validate` silent on it. It is the first case whose detector is the derived-contract check rather than the validator, which is the evidence that generation adds coverage rather than only removing writing."
-    },
-    {
-      "id": "CSDD-CLAIM-101",
-      "defect_class": "universal-claim-without-its-universe",
-      "source_delivery": "create-sdd worked example, perturbed",
-      "observed_at": "2026-09-23",
-      "statement": "An acceptance claim quantified UNIVERSAL carries no `universe`, so the set it quantifies over is undeclared. `validate` accepted this until the check below existed: the universe was required only for zero-reader migration claims, and a universal claim anywhere else had nothing asking for it.",
-      "fixture": {
-        "base": "references/examples/loop-ready-example.md",
-        "overlay": {
-          "acceptance": {
-            "merge_by_id": [
-              {
-                "id": "YS01",
-                "claim": {
-                  "quantifier": "UNIVERSAL"
-                }
-              }
-            ]
-          }
-        }
-      },
-      "negative_fixture": {
-        "base": "references/examples/loop-ready-example.md",
-        "overlay": {
-          "acceptance": {
-            "merge_by_id": [
-              {
-                "id": "YS01",
-                "claim": {
-                  "quantifier": "UNIVERSAL",
-                  "universe": [
-                    "packages/demo/src",
-                    "packages/demo/package.json"
-                  ]
-                }
-              }
-            ]
-          }
-        }
-      },
-      "detector": {
-        "command": "bun scripts/validate.ts validate-draft --draft-file <fixture>",
-        "expected_code": "CONTRACT_UNIVERSAL_CLAIM_UNIVERSE_REQUIRED",
-        "must_fire": true
-      },
-      "negative_expectation": {
-        "must_fire": false
-      },
-      "note": "The negative fixture supplies the universe rather than dropping the quantifier, so the case turns on the missing field and not on the claim being universal at all."
-    },
-    {
-      "id": "CSDD-MANAGER-101",
-      "defect_class": "acceptance-command-names-a-competing-package-manager",
-      "source_delivery": "create-sdd worked example against a fixture workspace",
-      "observed_at": "2026-09-23",
-      "statement": "An acceptance method runs `npm` against a package whose workspace declares pnpm. The command would resolve a different tree than the one the design was checked against, and nothing else in the document says which manager is authoritative.",
-      "why_this_case_exists": "`COMMAND_PACKAGE_MANAGER_MISMATCH` had never fired across 444 observations, and 1016 lines of `managers.ts` plus `package-manager.test.ts` exist to serve it and one sibling code. The audit could not tell a dead rule from a rule whose defect this corpus never contains. This case answers that by running it: the code fires on the mismatch and stays silent on the match, so the rule discriminates and the silence was the corpus, not the rule.",
-      "repository": "cases/fixtures/repo-pnpm",
-      "fixture": {
-        "base": "references/examples/loop-ready-example.md",
-        "overlay": {
-          "acceptance": {
-            "merge_by_id": [
-              {
-                "id": "YS01",
-                "method": "npm test --workspace @demo/core"
-              }
-            ]
-          }
-        }
-      },
-      "negative_fixture": {
-        "base": "references/examples/loop-ready-example.md",
-        "overlay": {
-          "acceptance": {
-            "merge_by_id": [
-              {
-                "id": "YS01",
-                "method": "pnpm --filter @demo/core test"
-              }
-            ]
-          }
-        }
-      },
-      "detector": {
-        "command": "bun scripts/repo-facts.ts check --sdd <fixture> --repository <repository>",
-        "expected_code": "COMMAND_PACKAGE_MANAGER_MISMATCH",
-        "must_fire": true
-      },
-      "negative_expectation": {
-        "must_fire": false
-      }
-    },
-    {
-      "id": "CSDD-TOOLCHAIN-101",
-      "defect_class": "acceptance-environment-contradicts-a-repository-pin",
-      "source_delivery": "create-sdd worked example against a fixture workspace",
-      "observed_at": "2026-09-23",
-      "statement": "An acceptance environment names pnpm 8.1 while the workspace pins pnpm 9.0.0 through `packageManager`. The acceptance would run under a toolchain the repository does not use, so a PASS would be evidence about a different environment than the one shipped.",
-      "why_this_case_exists": "Same reason as CSDD-MANAGER-101: `TOOLCHAIN_VERSION_CONFLICT` had never fired, and the two codes share the same 1016 lines of assets. Both now have a minimal contrast, so a future round can retire either one against evidence instead of against the raw never-fired count.",
-      "repository": "cases/fixtures/repo-pnpm",
-      "fixture": {
-        "base": "references/examples/loop-ready-example.md",
-        "overlay": {
-          "acceptance": {
-            "merge_by_id": [
-              {
-                "id": "YS01",
-                "environment": "supported runtime, pnpm 8.1"
-              }
-            ]
-          }
-        }
-      },
-      "negative_fixture": {
-        "base": "references/examples/loop-ready-example.md",
-        "overlay": {
-          "acceptance": {
-            "merge_by_id": [
-              {
-                "id": "YS01",
-                "environment": "supported runtime, pnpm 9.0"
-              }
-            ]
-          }
-        }
-      },
-      "detector": {
-        "command": "bun scripts/repo-facts.ts check --sdd <fixture> --repository <repository>",
-        "expected_code": "TOOLCHAIN_VERSION_CONFLICT",
-        "must_fire": true
-      },
-      "negative_expectation": {
-        "must_fire": false
-      }
-    },
-    {
-      "id": "CSDD-CONVERGENCE-101",
-      "defect_class": "convergence-claimed-with-a-lens-never-applied",
-      "source_delivery": "promoted from behaviour case CSDD-CONVERGENCE-003",
-      "observed_at": "2026-09-23",
-      "statement": "The contract claims CONVERGED while the ADVERSARIAL and ACCEPTANCE_TOPOLOGY lenses have no recorded pass. Only the lens that agreed with the design was applied.",
-      "promoted_from": "CSDD-CONVERGENCE-003",
-      "repository": "cases/fixtures/repo-pnpm",
-      "fixture": {
-        "base": "references/examples/loop-ready-example.md",
-        "overlay": {
-          "design_convergence": {
-            "review_passes": {
-              "merge_by_id": [],
-              "remove": [
-                "SP02",
-                "SP03"
-              ]
-            }
-          }
-        }
-      },
-      "negative_fixture": {
-        "base": "references/examples/loop-ready-example.md",
-        "overlay": {}
-      },
-      "detector": {
-        "command": "bun scripts/repo-facts.ts check --sdd <fixture> --repository <repository>",
-        "expected_code": "DESIGN_GATE_LENS_MISSING",
-        "must_fire": true
-      },
-      "negative_expectation": {
-        "must_fire": false
-      }
-    },
-    {
-      "id": "CSDD-CONVERGENCE-102",
-      "defect_class": "convergence-claimed-over-an-open-information-question",
-      "source_delivery": "promoted from the mechanical half of behaviour case CSDD-CONVERGENCE-001",
-      "observed_at": "2026-09-23",
-      "statement": "The contract claims CONVERGED while an unresolved information question is still listed. The question is work the author owns; carrying it forward is the third ending the handoff rules forbid.",
-      "promoted_from": "CSDD-CONVERGENCE-001 (its mechanical half only; the case itself stays, because its other half is that the reply must not claim LOOP_READY, which no command can decide)",
-      "repository": "cases/fixtures/repo-pnpm",
-      "fixture": {
-        "base": "references/examples/loop-ready-example.md",
-        "overlay": {
-          "design_convergence": {
-            "unresolved_information_questions": [
-              "which store owns the key"
-            ]
-          }
-        }
-      },
-      "negative_fixture": {
-        "base": "references/examples/loop-ready-example.md",
-        "overlay": {}
-      },
-      "detector": {
-        "command": "bun scripts/repo-facts.ts check --sdd <fixture> --repository <repository>",
-        "expected_code": "DESIGN_GATE_ITEM_OPEN",
-        "must_fire": true
-      },
-      "negative_expectation": {
-        "must_fire": false
-      }
-    },
-    {
       "id": "CSDD-V2-REPO-101",
       "defect_class": "repository-hard-block",
       "statement": "A complete sdd/v2 leaf validated outside any git checkout (a draft written to a temporary directory) is BLOCKED by REPOSITORY_NOT_FOUND, although the skill supports authoring without the repository and only limits the claims.",
@@ -979,47 +615,6 @@
       "detector": {
         "command": "bun scripts/validate.ts validate --sdd <fixture> --repository <repository>",
         "expected_code": "SDD_V2_SHAPE_READER_UNDECLARED",
-        "must_fire": true
-      },
-      "observed_at": "2026-09-24",
-      "owning_test": "tests/v2-converge.test.ts",
-      "introduced_detector_at": "2026-09-24"
-    },
-    {
-      "id": "CSDD-V1-STALE-101",
-      "defect_class": "converged-but-invalid",
-      "source_delivery": "website-library-runtime r6, OD-11",
-      "statement": "A legacy document records design status CONVERGED yet the current validator reports a diagnostic; it reads as settled while its convergence predates the rule that now fails.",
-      "root_cause": "Convergence is a recorded status; nothing re-announces it when a later rule tightens.",
-      "evidence": {
-        "file": "rsi/observed-defects.md",
-        "line": 1,
-        "quote": "declares design status CONVERGED, yet the current legacy validate reports"
-      },
-      "fixture": {
-        "base": "references/examples/loop-ready-example.md",
-        "overlay": {
-          "delivery_plan": {
-            "batches": {
-              "merge_by_id": [
-                {
-                  "id": "PC01",
-                  "requirement_ids": [
-                    "XQ99"
-                  ]
-                }
-              ]
-            }
-          }
-        }
-      },
-      "negative_fixture": {
-        "base": "references/examples/loop-ready-example.md",
-        "overlay": {}
-      },
-      "detector": {
-        "command": "bun scripts/validate.ts validate-draft --draft-file <fixture>",
-        "expected_code": "DESIGN_CONVERGENCE_STALE",
         "must_fire": true
       },
       "observed_at": "2026-09-24",
@@ -2071,52 +1666,6 @@
       "repository": "cases/fixtures/v2-consume/repo"
     },
     {
-      "id": "CSDD-V2-FINGERPRINT-101",
-      "defect_class": "producer-semantics-edited-without-version",
-      "statement": "The producer's exported semantics (R9) no longer match the fingerprint recorded with export version 1, so a consumer pinned to v1 cannot tell which text it agreed to.",
-      "root_cause": "Export versions are free text; nothing binds them to the clauses a consumer relies on.",
-      "evidence": {
-        "file": "scripts/validator/domain/v2-document.ts",
-        "line": 1,
-        "quote": "exports"
-      },
-      "fixture": "cases/fixtures/v2-consume/producer-stale/capability.sdd.md",
-      "negative_fixture": "cases/fixtures/v2-consume/ok/capability.sdd.md",
-      "detector": {
-        "command": "bun scripts/validate.ts validate --sdd <fixture> --repository <repository>",
-        "expected_code": "SDD_V2_EXPORT_FINGERPRINT_STALE",
-        "must_fire": true
-      },
-      "observed_at": "2026-09-24",
-      "owning_test": "tests/v2-consume.test.ts",
-      "introduced_detector_at": "2026-09-24",
-      "source_delivery": "migai plugin-host R3 delivery, OD-37",
-      "repository": "cases/fixtures/v2-consume/repo"
-    },
-    {
-      "id": "CSDD-V2-PIN-101",
-      "defect_class": "consumer-pin-stale",
-      "statement": "The consumer pins dependency-planner v1 with a fingerprint that predates the producer's current semantics.",
-      "root_cause": "A consumer pin carries no fingerprint check.",
-      "evidence": {
-        "file": "scripts/validator/domain/v2-document.ts",
-        "line": 1,
-        "quote": "consumes"
-      },
-      "fixture": "cases/fixtures/v2-consume/pin-stale/host.sdd.md",
-      "negative_fixture": "cases/fixtures/v2-consume/ok/host.sdd.md",
-      "detector": {
-        "command": "bun scripts/validate.ts validate --sdd <fixture> --repository <repository>",
-        "expected_code": "SDD_V2_INTERFACE_MISMATCH",
-        "must_fire": true
-      },
-      "observed_at": "2026-09-24",
-      "owning_test": "tests/v2-consume.test.ts",
-      "introduced_detector_at": "2026-09-24",
-      "source_delivery": "migai plugin-host R3 delivery, OD-37",
-      "repository": "cases/fixtures/v2-consume/repo"
-    },
-    {
       "id": "CSDD-V2-ROOTCOPY-101",
       "defect_class": "root-restates-child-semantics",
       "statement": "The program root's integration acceptance restates planResume's outcome instead of citing the child acceptance, copying the consumer's wrong version.",
@@ -2424,6 +1973,136 @@
       "observed_at": "2026-09-24",
       "owning_test": "tests/v2-scope.test.ts",
       "introduced_detector_at": "2026-09-24"
+    },
+    {
+      "id": "CSDD-V2-REVIEW-101",
+      "defect_class": "review-findings-undisposed",
+      "statement": "The SDD records a pre-handoff review whose finding F2 has no disposition; validate reports nothing and the document goes to the host with an open finding.",
+      "root_cause": "references/review.md asks the author to close every finding, but no check reads the review's findings or its dispositions.",
+      "evidence": {
+        "file": "references/review.md",
+        "line": 1,
+        "quote": "Each finding is closed as"
+      },
+      "fixture": {
+        "base": "cases/fixtures/v2-scope/enum.ok.md",
+        "overlay": {
+          "review": {
+            "findings": "findings.json",
+            "dispositions": {
+              "F1": "fixed"
+            }
+          }
+        }
+      },
+      "negative_fixture": {
+        "base": "cases/fixtures/v2-scope/enum.ok.md",
+        "overlay": {
+          "review": {
+            "findings": "findings.json",
+            "dispositions": {
+              "F1": "fixed",
+              "F2": "ruled-invalid:S1 creates the file; nothing exists to replace"
+            }
+          }
+        }
+      },
+      "detector": {
+        "command": "bun scripts/validate.ts validate --sdd <fixture>",
+        "expected_code": "SDD_V2_REVIEW_UNDISPOSED",
+        "must_fire": true
+      },
+      "source_delivery": "create-sdd review stage wiring (plan step 4), 2026-09-25",
+      "observed_at": "2026-09-25",
+      "owning_test": "tests/v2-review.test.ts",
+      "introduced_detector_at": "2026-09-25",
+      "repository": "cases/fixtures/v2-review"
+    },
+    {
+      "id": "CSDD-V2-HISTORY-101",
+      "defect_class": "history-read-as-claim",
+      "statement": "A preservation phrase that appears only in the Clarifications log (a past answer) is reported as a current preservation claim; the same phrase in a normative section must still fire.",
+      "root_cause": "Candidate heuristics scan the whole prose body, including the Clarifications log and revision history, which record past answers rather than current claims.",
+      "evidence": {
+        "file": "rsi/observed-defects.md",
+        "line": 1,
+        "quote": "OD-49"
+      },
+      "fixture": "cases/fixtures/v2-scope/preserve.md",
+      "negative_fixture": "cases/fixtures/v2-scope/preserve-history.md",
+      "detector": {
+        "command": "bun scripts/validate.ts validate --sdd <fixture>",
+        "expected_code": "SDD_V2_PRESERVATION_UNPINNED",
+        "must_fire": true
+      },
+      "source_delivery": "migai plugin-host R3 revision 6 validate output, OD-49",
+      "observed_at": "2026-09-25",
+      "owning_test": "tests/v2-scope.test.ts",
+      "introduced_detector_at": "2026-09-25"
+    },
+    {
+      "id": "CSDD-V2-REVIEW-102",
+      "defect_class": "review-need-unassessed",
+      "statement": "A design that changes existing behaviour (BC1) reaches handoff with no review recorded and nothing says a pre-handoff review is warranted; a one-requirement design with no behaviour change must not be told to review.",
+      "root_cause": "The review phase ran on every design with a Must-Ship requirement, so it was either always paid for or skipped by feel; nothing assessed when it earns its cost.",
+      "evidence": {
+        "file": "references/review.md",
+        "line": 1,
+        "quote": "user decision 2026-09-25: review is optional, decided by a built-in assessment"
+      },
+      "fixture": "cases/fixtures/v2-review/bc.md",
+      "negative_fixture": "cases/fixtures/v2-scope/enum.ok.md",
+      "detector": {
+        "command": "bun scripts/validate.ts validate --sdd <fixture>",
+        "expected_code": "SDD_V2_REVIEW_RECOMMENDED",
+        "must_fire": true
+      },
+      "source_delivery": "user decision 2026-09-25 on optional review",
+      "observed_at": "2026-09-25",
+      "owning_test": "tests/v2-review.test.ts",
+      "introduced_detector_at": "2026-09-25"
+    },
+    {
+      "id": "CSDD-V2-REVIEW-103",
+      "defect_class": "review-findings-missing",
+      "statement": "The SDD records a review whose findings file does not exist; the diagnostic must say the file is missing rather than that a finding is undisposed.",
+      "root_cause": "A missing findings file was reported under SDD_V2_REVIEW_UNDISPOSED, which names a different failure.",
+      "evidence": {
+        "file": "scripts/validator/domain/v2-review.ts",
+        "line": 1,
+        "quote": "review findings not found"
+      },
+      "fixture": {
+        "base": "cases/fixtures/v2-scope/enum.ok.md",
+        "overlay": {
+          "review": {
+            "findings": "absent-findings.json",
+            "dispositions": {}
+          }
+        }
+      },
+      "negative_fixture": {
+        "base": "cases/fixtures/v2-scope/enum.ok.md",
+        "overlay": {
+          "review": {
+            "findings": "findings.json",
+            "dispositions": {
+              "F1": "fixed",
+              "F2": "ruled-invalid:S1 creates the file; nothing exists to replace"
+            }
+          }
+        }
+      },
+      "detector": {
+        "command": "bun scripts/validate.ts validate --sdd <fixture>",
+        "expected_code": "SDD_V2_REVIEW_FINDINGS_MISSING",
+        "must_fire": true
+      },
+      "source_delivery": "create-sdd review wiring audit 2026-09-25",
+      "observed_at": "2026-09-25",
+      "owning_test": "tests/v2-review.test.ts",
+      "introduced_detector_at": "2026-09-25",
+      "repository": "cases/fixtures/v2-review"
     }
   ],
   "held_out": [

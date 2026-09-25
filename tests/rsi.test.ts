@@ -9,12 +9,12 @@ const ROOT = join(import.meta.dir, '..')
 
 test('the rule ledger is derived from the sources that raise the codes', () => {
   const rules = catalog(ROOT)
-  expect(rules.length).toBeGreaterThan(100)
+  expect(rules.length).toBeGreaterThan(50)
   const byAsset = new Map(rules.map((rule) => [rule.asset, rule]))
   // A code this skill genuinely raises must be in the ledger, with the file that raises it.
-  const known = byAsset.get('code:SHARED_MECHANISM_WRITE_POINT_UNDECLARED')
+  const known = byAsset.get('code:SDD_V2_REVIEW_UNDISPOSED')
   expect(known).toBeDefined()
-  expect(known!.sites.some((site) => site.endsWith('repo-facts.ts'))).toBe(true)
+  expect(known!.sites.some((site) => site.endsWith('v2-review.ts'))).toBe(true)
   expect(new Set(rules.map((rule) => rule.id)).size).toBe(rules.length)
 })
 

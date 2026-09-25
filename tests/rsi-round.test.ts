@@ -64,6 +64,7 @@ test('the budget dimensions are measured, not asserted', () => {
     'SKILL.md.characters',
     'behavior_cases',
     'references.lines',
+    'review.md.characters',
     'scripts.lines',
     'tests.lines',
     'validator.lines'
