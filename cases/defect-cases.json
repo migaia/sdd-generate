@@ -2325,6 +2325,141 @@
       "observed_at": "2026-09-25",
       "owning_test": "tests/v2-scope.test.ts",
       "introduced_detector_at": "2026-09-25"
+    },
+    {
+      "id": "CSDD-V2-PREFLIGHT-101",
+      "defect_class": "preflight-missing",
+      "statement": "A leaf with BC1 declares no preflight items and has no report, yet validate called it valid; the repaired leaf covers BC1 with a candidate patch, declares a gate and has a passing report.",
+      "root_cause": "Nothing executed the design before handoff; validate checked structure only.",
+      "evidence": {
+        "file": "rsi/observed-defects.md",
+        "line": 1,
+        "quote": "OD-65"
+      },
+      "fixture": "cases/fixtures/v2-preflight/missing.md",
+      "negative_fixture": "cases/fixtures/v2-preflight/ok.md",
+      "detector": {
+        "command": "bun scripts/validate.ts validate --sdd <fixture> --repository <repository>",
+        "expected_code": "SDD_V2_PREFLIGHT_REQUIRED",
+        "must_fire": true
+      },
+      "source_delivery": "migai plugin-host R3 program, seven host stops on documents validate called clean (OD-65)",
+      "observed_at": "2026-09-26",
+      "owning_test": "tests/v2-preflight.test.ts",
+      "introduced_detector_at": "2026-09-26",
+      "repository": "cases/fixtures/v2-preflight/repo"
+    },
+    {
+      "id": "CSDD-V2-PREFLIGHT-102",
+      "defect_class": "preflight-stale",
+      "statement": "R1 was amended after the preflight report was written; the report still reads as passing. The current leaf's own report is fresh.",
+      "root_cause": "An amendment was never re-checked: nothing tied a result to the revision it came from.",
+      "evidence": {
+        "file": "rsi/observed-defects.md",
+        "line": 1,
+        "quote": "OD-65"
+      },
+      "fixture": "cases/fixtures/v2-preflight/stale.md",
+      "negative_fixture": "cases/fixtures/v2-preflight/ok.md",
+      "detector": {
+        "command": "bun scripts/validate.ts validate --sdd <fixture> --repository <repository>",
+        "expected_code": "SDD_V2_PREFLIGHT_STALE",
+        "must_fire": true
+      },
+      "source_delivery": "migai plugin-host R3 program, seven host stops on documents validate called clean (OD-65)",
+      "observed_at": "2026-09-26",
+      "owning_test": "tests/v2-preflight.test.ts",
+      "introduced_detector_at": "2026-09-26",
+      "repository": "cases/fixtures/v2-preflight/repo"
+    },
+    {
+      "id": "CSDD-V2-PREFLIGHT-103",
+      "defect_class": "preflight-failed",
+      "statement": "BC1's candidate change does not produce what the item expects, and the report says so; the repaired leaf's item passes.",
+      "root_cause": "A design whose candidate change fails on the current code was handed off as valid.",
+      "evidence": {
+        "file": "rsi/observed-defects.md",
+        "line": 1,
+        "quote": "OD-65"
+      },
+      "fixture": "cases/fixtures/v2-preflight/failing.md",
+      "negative_fixture": "cases/fixtures/v2-preflight/ok.md",
+      "detector": {
+        "command": "bun scripts/validate.ts validate --sdd <fixture> --repository <repository>",
+        "expected_code": "SDD_V2_PREFLIGHT_FAILED",
+        "must_fire": true
+      },
+      "source_delivery": "migai plugin-host R3 program, seven host stops on documents validate called clean (OD-65)",
+      "observed_at": "2026-09-26",
+      "owning_test": "tests/v2-preflight.test.ts",
+      "introduced_detector_at": "2026-09-26",
+      "repository": "cases/fixtures/v2-preflight/repo"
+    },
+    {
+      "id": "CSDD-V2-SINGLE-101",
+      "defect_class": "contract-field-restated",
+      "statement": "Prose restates the preserve list outside a generated region; the repaired leaf shows it only in a rendered region.",
+      "root_cause": "Contract facts had prose copies that went stale independently (versions, preserve, gates).",
+      "evidence": {
+        "file": "rsi/observed-defects.md",
+        "line": 1,
+        "quote": "OD-65"
+      },
+      "fixture": "cases/fixtures/v2-preflight/restated.md",
+      "negative_fixture": "cases/fixtures/v2-preflight/rendered.md",
+      "detector": {
+        "command": "bun scripts/validate.ts validate --sdd <fixture>",
+        "expected_code": "SDD_V2_CONTRACT_FIELD_RESTATED",
+        "must_fire": true
+      },
+      "source_delivery": "migai plugin-host R3 program, seven host stops on documents validate called clean (OD-65)",
+      "observed_at": "2026-09-26",
+      "owning_test": "tests/v2-preflight.test.ts",
+      "introduced_detector_at": "2026-09-26"
+    },
+    {
+      "id": "CSDD-V2-SINGLE-102",
+      "defect_class": "generated-region-stale",
+      "statement": "A generated preserve region says there is none while the contract preserves A1; the repaired region matches what render.ts writes.",
+      "root_cause": "A rendered copy can still drift when the contract changes and nobody re-renders.",
+      "evidence": {
+        "file": "rsi/observed-defects.md",
+        "line": 1,
+        "quote": "OD-65"
+      },
+      "fixture": "cases/fixtures/v2-preflight/region-stale.md",
+      "negative_fixture": "cases/fixtures/v2-preflight/rendered.md",
+      "detector": {
+        "command": "bun scripts/validate.ts validate --sdd <fixture>",
+        "expected_code": "SDD_V2_GENERATED_STALE",
+        "must_fire": true
+      },
+      "source_delivery": "migai plugin-host R3 program, seven host stops on documents validate called clean (OD-65)",
+      "observed_at": "2026-09-26",
+      "owning_test": "tests/v2-preflight.test.ts",
+      "introduced_detector_at": "2026-09-26"
+    },
+    {
+      "id": "CSDD-V2-SIZE-101",
+      "defect_class": "leaf-too-large",
+      "statement": "A leaf carries 13 steps; a one-step leaf is within the limit.",
+      "root_cause": "A 1745-line leaf with 23 steps and dense cross-references could not stay self-consistent.",
+      "evidence": {
+        "file": "rsi/observed-defects.md",
+        "line": 1,
+        "quote": "OD-65"
+      },
+      "fixture": "cases/fixtures/v2-preflight/large.md",
+      "negative_fixture": "cases/fixtures/v2-scope/enum.ok.md",
+      "detector": {
+        "command": "bun scripts/validate.ts validate --sdd <fixture>",
+        "expected_code": "SDD_V2_LEAF_TOO_LARGE",
+        "must_fire": true
+      },
+      "source_delivery": "migai plugin-host R3 program, seven host stops on documents validate called clean (OD-65)",
+      "observed_at": "2026-09-26",
+      "owning_test": "tests/v2-preflight.test.ts",
+      "introduced_detector_at": "2026-09-26"
     }
   ],
   "held_out": [

@@ -51,7 +51,7 @@ const USAGE = [
   '  rsi.ts baseline                      record the champion result for the open round',
   '  rsi.ts evaluate                      re-run the suite and compare against the baseline',
   '  rsi.ts prune                         check supersession and the budget ceilings',
-  '  rsi.ts settle --id <OD-n> --as detector|ruling|rejected --evidence <text>',
+  '  rsi.ts settle --id <OD-n> --as detector|lens|class|ruling|rejected --evidence <text>',
   '                                       settle a queued observation in the open round',
   '  rsi.ts close --confirm <token>       record the verdict and end the round'
 ].join('\n')
@@ -432,6 +432,8 @@ export type SkillHealth = Readonly<{
   over_budget: readonly { dimension: string; ceiling: number; measured: number }[]
   /** Pre-handoff review precision per lens, from recorded dispositions (one entry per revision). */
   review_lenses: Readonly<Record<string, LensHealth>>
+  /** Settled observations per defect class, the unit RSI converges by. */
+  defect_classes?: Readonly<Record<string, number>>
   limits: readonly string[]
 }>
 
@@ -481,7 +483,38 @@ const OBSERVED = join(ROOT, 'rsi', 'observed-defects.md')
  * all hold, acceptance a wrong implementation passes) settle as lenses; only a mechanical criterion
  * with no false positives becomes a detector.
  */
-const SETTLEMENTS = ['detector', 'lens', 'ruling', 'rejected'] as const
+const SETTLEMENTS = ['detector', 'lens', 'class', 'ruling', 'rejected'] as const
+
+/**
+ * The four defect classes (OD-65 item 6) and the class-level mechanism that answers each. An
+ * observation declares its class with a `**Class:** <class>` line. `--as class` settles it by the
+ * mechanism, with no new detector, when the evidence names that mechanism; RSI succeeds by fewer
+ * host stops per delivery (sdd-bench `stops`), not by more detectors.
+ */
+export const CLASS_MECHANISM = {
+  duplication: 'SDD_V2_CONTRACT_FIELD_RESTATED',
+  'blast-radius': 'SDD_V2_PREFLIGHT_STALE',
+  feasibility: 'SDD_V2_PREFLIGHT_FAILED',
+  'gate-scope': 'writes_outside'
+} as const
+export type DefectClass = keyof typeof CLASS_MECHANISM
+
+/** The class an observation declares, or null. */
+export function classOf(text: string): DefectClass | null {
+  const found = /\*\*Class:\*\*\s*`?([\w-]+)/.exec(text)?.[1]
+  return found && found in CLASS_MECHANISM ? (found as DefectClass) : null
+}
+
+/** Settled observations per class across closed rounds; older ones without a class are counted apart. */
+export function classCounts(rounds: readonly ClosedRound[]): Record<string, number> {
+  const counts: Record<string, number> = {}
+  for (const round of rounds)
+    for (const entry of (round as { settled_observations?: { text?: string }[] })
+      .settled_observations ?? [])
+      counts[classOf(entry.text ?? '') ?? 'unclassified'] =
+        (counts[classOf(entry.text ?? '') ?? 'unclassified'] ?? 0) + 1
+  return counts
+}
 export type Settlement = Readonly<{
   id: string
   as: (typeof SETTLEMENTS)[number]
@@ -559,6 +592,7 @@ export function skillHealth(now = new Date()): SkillHealth {
       .filter(([key, limit]) => (measured[key] ?? 0) > limit)
       .map(([key, limit]) => ({ dimension: key, ceiling: limit, measured: measured[key] ?? 0 })),
     review_lenses: reviewLenses(entries),
+    defect_classes: classCounts(closedRounds()),
     limits: [
       'dormant means unfired in this corpus, not useless: a structural guard is dormant whenever documents are well formed',
       'debt is advisory until calibrated against repair outcomes; it does not gate SDD readiness or repair rounds',
@@ -591,8 +625,14 @@ export function updateAgenda(
     steps.push({
       step: 'settle-observations',
       command:
-        'bun scripts/rsi.ts settle --id <OD-n> --as detector|ruling|rejected --evidence <text>',
-      detail: `${queued} observation(s) queued in rsi/observed-defects.md: settle every one inside a round (a detector names its frozen case); close archives them into the round record and empties the queue`
+        'bun scripts/rsi.ts settle --id <OD-n> --as class|detector|lens|ruling|rejected --evidence <text>',
+      detail: `${queued} observation(s) queued in rsi/observed-defects.md: settle every one inside a round; prefer --as class when the class mechanism (${Object.entries(
+        CLASS_MECHANISM
+      )
+        .map(([c, m]) => `${c}: ${m}`)
+        .join(
+          ', '
+        )}) catches it, a detector only for what no mechanism sees; close archives them into the round record and empties the queue`
     })
   if (state.catalog_drifted)
     steps.push({
@@ -1445,7 +1485,21 @@ function main(argv: readonly string[]): number {
     }
     if (!(SETTLEMENTS as readonly string[]).includes(String(as)) || !evidence?.trim()) {
       console.error(
-        'usage: rsi.ts settle --id <OD-n> --as detector|lens|ruling|rejected --evidence <text> [--review-results <rounds.json>]'
+        'usage: rsi.ts settle --id <OD-n> --as detector|lens|class|ruling|rejected --evidence <text> [--review-results <rounds.json>]'
+      )
+      return 1
+    }
+    // Every observation declares its class, so settlements converge by class (OD-65 item 6).
+    const cls = classOf(queue.find((entry) => entry.id === id)!.text)
+    if (!cls) {
+      console.error(
+        `SETTLEMENT_CLASS_REQUIRED: ${id} needs a **Class:** line (${Object.keys(CLASS_MECHANISM).join(', ')})`
+      )
+      return 1
+    }
+    if (as === 'class' && !evidence.includes(CLASS_MECHANISM[cls])) {
+      console.error(
+        `SETTLEMENT_MECHANISM_REQUIRED: a class settlement shows ${CLASS_MECHANISM[cls]} catching ${id}`
       )
       return 1
     }

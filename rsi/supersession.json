@@ -1022,6 +1022,66 @@
       "counterexample": "CSDD-V2-STATUS-101: the program status line says verified before the independent audit it was told to await; the audit then found seven defects (OD-70).",
       "scope": "Candidate for a status line (status, 文档状态, 状态) claiming verified, shipped, delivered or closed.",
       "tradeoff": "Also flags an honest status after a real closure; the candidate is advisory and points to the closure as the only authority."
+    },
+    {
+      "asset": "code:SDD_V2_PREFLIGHT_REQUIRED",
+      "added_at": "2026-09-26",
+      "round": "R-20260925161256",
+      "supersedes": [],
+      "supersedes_nothing_because": "Preflight existed only as authoring prose; no rule required an executed run before handoff.",
+      "counterexample": "migai plugin-host R3 program: seven host stops, each on a document validate called valid (OD-65); CSDD-V2-PREFLIGHT-101.",
+      "scope": "Blocking for a leaf with a BC, a scaling gate or a consumed export: items missing, a risk uncovered (BC candidate patch, preserve run, scaling clean and perturbed, relied-on acceptance, gate), a patch missing, or no report.",
+      "tradeoff": "The author writes the items; the check proves coverage by ID, not that an item's command exercises what it covers."
+    },
+    {
+      "asset": "code:SDD_V2_PREFLIGHT_STALE",
+      "added_at": "2026-09-26",
+      "round": "R-20260925161256",
+      "supersedes": [],
+      "supersedes_nothing_because": "No result was tied to the revision it came from, so amendments reopened earlier stops unchecked.",
+      "counterexample": "migai plugin-host R3 program: seven host stops, each on a document validate called valid (OD-65); stops 5–7 were introduced by amendments; CSDD-V2-PREFLIGHT-102.",
+      "scope": "Blocking when the report's document digest differs from the current text; lists changed clauses and the clauses citing them.",
+      "tradeoff": "Any edit, even a typo, requires re-running the affected items (preflight.ts run --affected)."
+    },
+    {
+      "asset": "code:SDD_V2_PREFLIGHT_FAILED",
+      "added_at": "2026-09-26",
+      "round": "R-20260925161256",
+      "supersedes": [],
+      "supersedes_nothing_because": "Nothing ran a BC's candidate change, a scaling gate or a gate command before the host did.",
+      "counterexample": "migai plugin-host R3 program: seven host stops, each on a document validate called valid (OD-65); CSDD-V2-PREFLIGHT-103.",
+      "scope": "Blocking when any declared item did not pass, errored, was not run, or wrote outside writes.",
+      "tradeoff": "Items run against HEAD in a copy; uncommitted work in the repository is not seen and the report records the tree as dirty."
+    },
+    {
+      "asset": "code:SDD_V2_CONTRACT_FIELD_RESTATED",
+      "added_at": "2026-09-26",
+      "round": "R-20260925161256",
+      "supersedes": [],
+      "supersedes_nothing_because": "SDD_V2_EXPORT_VERSION_PROSE_STALE and SDD_V2_PRESERVE_PROSE_STALE report a copy only when it disagrees; nothing forbade the copy itself, so every amendment multiplied the places to update.",
+      "counterexample": "migai plugin-host R3 program: seven host stops, each on a document validate called valid (OD-65); stops 2, 3 and 4 were stale prose copies; CSDD-V2-SINGLE-101.",
+      "scope": "Blocking when leaf prose outside a generated region restates an exported or consumed interface's version, a contract fingerprint, a preserve list or a preflight gate command.",
+      "tradeoff": "Historical phrases are skipped by wording, and restatements in other forms (a version stated without the interface name) are not matched; the two mismatch candidates stay as the finer signal."
+    },
+    {
+      "asset": "code:SDD_V2_GENERATED_STALE",
+      "added_at": "2026-09-26",
+      "round": "R-20260925161256",
+      "supersedes": [],
+      "supersedes_nothing_because": "Rendered regions are new; before them there was no generated copy to check.",
+      "counterexample": "migai plugin-host R3 program: seven host stops, each on a document validate called valid (OD-65); CSDD-V2-SINGLE-102.",
+      "scope": "Blocking when an sdd-generated region's content differs from what render.ts renders from the contract.",
+      "tradeoff": "Only the exports, preserve and gates regions exist; other facts are named by ID."
+    },
+    {
+      "asset": "code:SDD_V2_LEAF_TOO_LARGE",
+      "added_at": "2026-09-26",
+      "round": "R-20260925161256",
+      "supersedes": [],
+      "supersedes_nothing_because": "No size limit existed; plugin-host-r3 grew to 1745 lines and 23 steps.",
+      "counterexample": "migai plugin-host R3 program: seven host stops, each on a document validate called valid (OD-65); CSDD-V2-SIZE-101.",
+      "scope": "Blocking when a leaf's prose exceeds 800 lines or it declares more than 12 steps.",
+      "tradeoff": "The limits are round numbers from one failing document, not calibrated; a program root is not limited."
     }
   ]
 }

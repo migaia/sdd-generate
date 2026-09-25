@@ -3,11 +3,11 @@
   "note": "A round freezes these ceilings and its measured starting size when it opens. For ordinary rounds, `prune` rejects growth beyond the higher of those two values; inherited overage remains visible in `health` and cannot be worsened. An explicit budget-change round may revise ceilings and is RECORDED after clean checks, never credited with a repair. Historical raises and ratchets remain records; close no longer ratchets automatically.",
   "set_at": "2026-09-23",
   "ceilings": {
-    "SKILL.md.characters": 11000,
-    "references.lines": 1800,
-    "validator.lines": 5200,
+    "SKILL.md.characters": 11600,
+    "references.lines": 1900,
+    "validator.lines": 5700,
     "behavior_cases": 46,
-    "scripts.lines": 8800,
+    "scripts.lines": 9500,
     "tests.lines": 2400,
     "review.md.characters": 3500
   },
@@ -483,6 +483,38 @@
       "at": "2026-09-25",
       "round": "budget-change",
       "reason": "OD-69 and OD-70 (migai plugin-host R3 revision 6 delivery and audit): two advisory candidates, a timing oracle that names no execution isolation and a status word stronger than the closure validate computes. Measured 8650 of 8700 left room for neither; OD-66..OD-68 settle as rulings and add no code."
+    },
+    {
+      "dimension": "validator.lines",
+      "from": 5200,
+      "to": 5700,
+      "at": "2026-09-26",
+      "round": "R-20260925160655",
+      "reason": "The user approved six process controls on 2026-09-26 after OD-65 (seven host stops on documents validate called clean): an executable preflight that gates valid, one source per contract fact with rendered regions, amendment closure, a host batch preflight in the handoff, a leaf size limit and class-level RSI. They add a preflight runner and a renderer (scripts), their checks (validator) and the phase-6 contract text (SKILL.md, references)."
+    },
+    {
+      "dimension": "scripts.lines",
+      "from": 8800,
+      "to": 9500,
+      "at": "2026-09-26",
+      "round": "R-20260925160655",
+      "reason": "The user approved six process controls on 2026-09-26 after OD-65 (seven host stops on documents validate called clean): an executable preflight that gates valid, one source per contract fact with rendered regions, amendment closure, a host batch preflight in the handoff, a leaf size limit and class-level RSI. They add a preflight runner and a renderer (scripts), their checks (validator) and the phase-6 contract text (SKILL.md, references)."
+    },
+    {
+      "dimension": "SKILL.md.characters",
+      "from": 11000,
+      "to": 11600,
+      "at": "2026-09-26",
+      "round": "R-20260925160655",
+      "reason": "The user approved six process controls on 2026-09-26 after OD-65 (seven host stops on documents validate called clean): an executable preflight that gates valid, one source per contract fact with rendered regions, amendment closure, a host batch preflight in the handoff, a leaf size limit and class-level RSI. They add a preflight runner and a renderer (scripts), their checks (validator) and the phase-6 contract text (SKILL.md, references)."
+    },
+    {
+      "dimension": "references.lines",
+      "from": 1800,
+      "to": 1900,
+      "at": "2026-09-26",
+      "round": "R-20260925160655",
+      "reason": "The user approved six process controls on 2026-09-26 after OD-65 (seven host stops on documents validate called clean): an executable preflight that gates valid, one source per contract fact with rendered regions, amendment closure, a host batch preflight in the handoff, a leaf size limit and class-level RSI. They add a preflight runner and a renderer (scripts), their checks (validator) and the phase-6 contract text (SKILL.md, references)."
     }
   ],
   "introduced": [
