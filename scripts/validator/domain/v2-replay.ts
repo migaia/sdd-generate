@@ -39,7 +39,12 @@ const git = (repository: string, args: readonly string[]) =>
   Bun.spawnSync(['git', '-C', repository, ...args], { stdout: 'pipe', stderr: 'pipe' })
 
 /** Write `commit`'s tree (or one path of it) into `target`, read-only for the repository. */
-function exportTree(repository: string, commit: string, target: string, path?: string): boolean {
+export function exportTree(
+  repository: string,
+  commit: string,
+  target: string,
+  path?: string
+): boolean {
   const archive = git(repository, [
     'archive',
     '--format=tar',
@@ -131,6 +136,16 @@ function packages(tree: string, dir = ''): string[] {
     if (entry.isDirectory() && entry.name !== 'node_modules' && !entry.name.startsWith('.'))
       found.push(...packages(tree, join(dir, entry.name)))
   return found
+}
+
+/** Recreate the dependency layout in exported trees: the root's and every package's node_modules. */
+export function linkInstalled(repository: string, trees: readonly string[]): void {
+  // Every tree's packages, so a package that exists only in one tree (added by the change) is linked.
+  for (const dir of new Set(trees.flatMap((tree) => packages(tree)).concat('')))
+    if (existsSync(join(repository, dir, 'node_modules')))
+      for (const tree of trees)
+        if (existsSync(join(tree, dir)) && !existsSync(join(tree, dir, 'node_modules')))
+          symlinkSync(join(repository, dir, 'node_modules'), join(tree, dir, 'node_modules'))
 }
 
 /**
@@ -250,12 +265,7 @@ export function replay(input: {
           exportTree(repository, base, trees.ablation, path)
       }
     }
-    // Recreate the dependency layout: the root's and every package's installed node_modules.
-    for (const dir of packages(trees.head).concat(''))
-      if (existsSync(join(repository, dir, 'node_modules')))
-        for (const tree of Object.values(trees))
-          if (existsSync(join(tree, dir)) && !existsSync(join(tree, dir, 'node_modules')))
-            symlinkSync(join(repository, dir, 'node_modules'), join(tree, dir, 'node_modules'))
+    linkInstalled(repository, Object.values(trees))
     // A test runs from its own package, as the host ran it, so package config applies.
     const home = oracleFile
       ? (packages(trees.head)

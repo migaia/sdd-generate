@@ -1,0 +1,37 @@
+{
+  "protocol": "sdd-preflight/v1",
+  "sdd": "/Users/kaeo/.codex/skills/create-sdd/cases/fixtures/v2-preflight/ok.md",
+  "sdd_sha": "be9b118f3e5b",
+  "repository": "/Users/kaeo/.codex/skills/create-sdd/cases/fixtures/v2-preflight/repo",
+  "repository_head": null,
+  "dirty": false,
+  "clause_hashes": {
+    "R1": "ff1a093e067f",
+    "S1": "216ec3fa35cc",
+    "A1": "e1c659350bfc",
+    "BC1": "e3b0c44298fc"
+  },
+  "items": [
+    {
+      "id": "P1",
+      "covers": [
+        "BC1"
+      ],
+      "expect": "pass",
+      "exit": 0,
+      "outcome": "PASS",
+      "writes_outside": []
+    },
+    {
+      "id": "P2",
+      "covers": [
+        "A1"
+      ],
+      "expect": "pass",
+      "exit": 0,
+      "outcome": "PASS",
+      "writes_outside": []
+    }
+  ],
+  "status": "PASSED"
+}

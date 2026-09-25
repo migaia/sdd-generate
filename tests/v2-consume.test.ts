@@ -14,6 +14,10 @@ const check = (variant: string, file: string, text?: string) =>
     REPO
   )!
 
+/** Diagnostics other than the preflight gate, which these fixtures do not run (see v2-preflight.test.ts). */
+const structural = <T extends { code: string }>(result: { diagnostics: readonly T[] }) =>
+  result.diagnostics.filter((d) => !d.code.startsWith('SDD_V2_PREFLIGHT_'))
+
 /** Defect candidates only: a review recommendation is advice about cost, not a document defect. */
 const defects = (result: { handoff: { candidates: readonly { code: string }[] } }) =>
   result.handoff.candidates.filter((c) => c.code !== 'SDD_V2_REVIEW_RECOMMENDED')
@@ -21,7 +25,7 @@ const defects = (result: { handoff: { candidates: readonly { code: string }[] } 
 test('a program whose consumer and root cite the producer is clean', () => {
   for (const file of ['root.sdd.md', 'capability.sdd.md', 'host.sdd.md']) {
     const result = check('ok', file)
-    expect(result.diagnostics).toEqual([])
+    expect(structural(result)).toEqual([])
     expect(defects(result)).toEqual([])
   }
 })
@@ -56,16 +60,18 @@ const delegate = (variant: string, text?: string) =>
 
 test('a declared delegation with every delta and error disposition is clean', () => {
   const result = delegate('ok')
-  expect(result.diagnostics).toEqual([])
+  expect(structural(result)).toEqual([])
   expect(defects(result)).toEqual([])
 })
 
 test('delegation gaps: error dispositions, and preservation claims in either language', () => {
   const ok = readFileSync(join(DELEGATE, 'ok', 'host.sdd.md'), 'utf8')
   const noErrors = ok.replace(/"errors": \{[^}]*\}/, '"errors": {}')
-  expect(delegate('ok', noErrors).diagnostics.map((d) => d.message.split(':')[0])).toEqual([
-    'error-disposition-missing'
-  ])
+  expect(
+    structural(delegate('ok', noErrors)).map(
+      (d) => (d as { message: string }).message.split(':')[0]
+    )
+  ).toEqual(['error-disposition-missing'])
   const zh = ok.replace(
     'Except BC3 and BC4, pipeline behaviour for the four modes is the same as R2.',
     '除 BC3 外，四种 mode 的 pipeline 行为与 R2 相同。'

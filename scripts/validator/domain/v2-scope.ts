@@ -8,7 +8,7 @@ const QUANTIFIED = /\b(?:every|each|all)\b|每次|每个|所有/i
 /** A requirement that spans a variant set: modes, platforms, variants. */
 const VARIANTS = /\b(?:modes?|platforms?|variants?)\b|模式|平台|变体/i
 /** A complexity or scaling outcome ("proportional to", "linear", "O(n)", 成正比, 线性). */
-const SCALING =
+export const SCALING =
   /\b(?:proportional|linear(?:ly)?|scal(?:e|es|ing)|complexity)\b|O\([^)]*\)|成正比|线性|复杂度/i
 /** A measurement of the public operation itself, not an internal counter. */
 const END_TO_END = /end[ -]to[ -]end|wall|per[ -](?:call|operation)|mean time|端到端|耗时/i

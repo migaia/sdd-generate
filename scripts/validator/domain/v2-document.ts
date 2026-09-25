@@ -26,6 +26,8 @@ import { applyPreset, loadPreset } from './v2-preset.ts'
 import { checkDelegations, checkSemantics, exportVersionCandidates } from './v2-semantics.ts'
 import { reviewCandidates, type ReviewSummary } from './v2-review.ts'
 import { listCandidates } from './v2-lists.ts'
+import { checkPreflight, HOST_PROTOCOL } from './v2-preflight.ts'
+import { checkSingleSource } from './v2-render.ts'
 import { scopeCandidates } from './v2-scope.ts'
 import { symbolCandidates } from './v2-symbols.ts'
 import { ancestors, checkStepRecords, stepRecords } from './v2-tasks.ts'
@@ -40,6 +42,9 @@ type Child = Readonly<{
 type Leaf = Readonly<{ id: string; path: string; text: string; index: Item }>
 type Root = Readonly<{ path: string; text: string; index: Item }>
 
+/** A leaf beyond either limit is split (OD-65 item 5): dense cross-references stop staying consistent. */
+const LEAF_LINE_LIMIT = 800
+const LEAF_STEP_LIMIT = 12
 /** Keep machine fields to identity, paths, versions and relations; the Markdown body is normative. */
 export type V2Handoff = Readonly<{
   protocol: 'create-sdd-handoff/v2'
@@ -965,6 +970,33 @@ export function validateV2Document(
         : c.code === 'SDD_V2_ROOT_RESTATES_CHILD'
     )
   )
+  // OD-65 items 1, 2 and 5: an executed preflight, one source per contract fact, and a leaf small
+  // enough to stay self-consistent. All blocking: the leaf is not valid until they hold.
+  const preflight = selected
+    ? checkPreflight(
+        selected.index,
+        withoutHistory(selectedBody),
+        selected.text,
+        selected.path,
+        report
+      )
+    : null
+  if (selected) {
+    checkSingleSource(
+      selected.index,
+      selected.text,
+      withoutHistory(selectedBody),
+      selected.path,
+      report
+    )
+    const lines = selectedBody.split('\n').length
+    const steps = list(selected.index.steps).length
+    if (lines > LEAF_LINE_LIMIT || steps > LEAF_STEP_LIMIT)
+      report(
+        'SDD_V2_LEAF_TOO_LARGE',
+        `${selected.path}: ${lines} prose lines, ${steps} steps (limit ${LEAF_LINE_LIMIT} lines or ${LEAF_STEP_LIMIT} steps): split it into a program of narrower leaves`
+      )
+  }
   const preset = loadPreset(repo, report)
   if (preset) {
     const document = selected ?? root!
@@ -1033,6 +1065,9 @@ export function validateV2Document(
       meta_source: meta.source,
       candidates,
       ...(review.summary ? { review: review.summary } : {}),
+      ...(preflight && preflight.status !== 'NOT_REQUIRED'
+        ? { preflight: { ...preflight, host_protocol: HOST_PROTOCOL } }
+        : {}),
       preset: preset?.path ?? null,
       intent: selected?.index.intent === 'bug' ? 'bug' : 'feature',
       regression: list(selected?.index.regression).filter(nonempty),

@@ -1,0 +1,5 @@
+--- a/packages/feature-a/index.ts
++++ b/packages/feature-a/index.ts
+@@ -1 +1 @@
+-export const mode = 'old'
++export const mode = 'new'
