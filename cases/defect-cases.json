@@ -2147,6 +2147,184 @@
       "observed_at": "2026-09-25",
       "owning_test": "tests/v2-scope.test.ts",
       "introduced_detector_at": "2026-09-25"
+    },
+    {
+      "id": "CSDD-V2-VERSION-101",
+      "defect_class": "export-version-prose-stale",
+      "statement": "A consumer's prose names `dependency-planner` v2 while the producer exports version 1 and the consumer pins version 1; the repaired prose says v1 and a historical note naming the old version stays silent.",
+      "root_cause": "Export versions are compared inside the contract JSON only; version numbers restated in headers, root tables and plan prose are never read, so a version bump leaves every prose copy stale.",
+      "evidence": {
+        "file": "rsi/observed-defects.md",
+        "line": 1,
+        "quote": "OD-56"
+      },
+      "fixture": "cases/fixtures/v2-version/stale/host.sdd.md",
+      "negative_fixture": "cases/fixtures/v2-version/ok/host.sdd.md",
+      "detector": {
+        "command": "bun scripts/validate.ts validate --sdd <fixture> --repository <repository>",
+        "expected_code": "SDD_V2_EXPORT_VERSION_PROSE_STALE",
+        "must_fire": true
+      },
+      "repository": "cases/fixtures/v2-consume/repo",
+      "source_delivery": "migai plugin-host R3 program delivery, OD-56",
+      "observed_at": "2026-09-25",
+      "owning_test": "tests/v2-consume.test.ts",
+      "introduced_detector_at": "2026-09-25"
+    },
+    {
+      "id": "CSDD-V2-EQUIV-101",
+      "defect_class": "equivalence-exceptions-stale",
+      "statement": "R1 says behaviour is the same except BC1 while the document also declares BC3; the repaired R1 excepts BC1 and BC3.",
+      "root_cause": "An equivalence clause's exception list is written once and nothing relates it to BCs added later.",
+      "evidence": {
+        "file": "rsi/observed-defects.md",
+        "line": 1,
+        "quote": "OD-57"
+      },
+      "fixture": "cases/fixtures/v2-lists/equivalence.md",
+      "negative_fixture": "cases/fixtures/v2-lists/equivalence.ok.md",
+      "detector": {
+        "command": "bun scripts/validate.ts validate --sdd <fixture>",
+        "expected_code": "SDD_V2_EQUIVALENCE_EXCEPTIONS_STALE",
+        "must_fire": true
+      },
+      "source_delivery": "migai plugin-host R3 program delivery, OD-57",
+      "observed_at": "2026-09-25",
+      "owning_test": "tests/v2-scope.test.ts",
+      "introduced_detector_at": "2026-09-25"
+    },
+    {
+      "id": "CSDD-V2-PRESERVE-PROSE-101",
+      "defect_class": "preserve-prose-stale",
+      "statement": "Prose classifies A1 as a preserve acceptance while the contract preserve list omits it; the repaired contract lists A1.",
+      "root_cause": "validate reads preserve from the contract only; the prose classification the host reads is unchecked.",
+      "evidence": {
+        "file": "rsi/observed-defects.md",
+        "line": 1,
+        "quote": "OD-58"
+      },
+      "fixture": "cases/fixtures/v2-lists/preserve-prose.md",
+      "negative_fixture": "cases/fixtures/v2-lists/preserve-prose.ok.md",
+      "detector": {
+        "command": "bun scripts/validate.ts validate --sdd <fixture>",
+        "expected_code": "SDD_V2_PRESERVE_PROSE_STALE",
+        "must_fire": true
+      },
+      "source_delivery": "migai plugin-host R3 program delivery, OD-58",
+      "observed_at": "2026-09-25",
+      "owning_test": "tests/v2-scope.test.ts",
+      "introduced_detector_at": "2026-09-25"
+    },
+    {
+      "id": "CSDD-V2-EXEMPT-101",
+      "defect_class": "exempt-work-on-gated-operation",
+      "statement": "A cost-path inventory gates commitRemoval and exempts createView, but commitRemoval calls createView; the repaired inventory names the pair and how the gate treats it.",
+      "root_cause": "cost-path entries are keyed by function name; an exempt entry is checked for a reason, not for which gated operation reaches it.",
+      "evidence": {
+        "file": "rsi/observed-defects.md",
+        "line": 1,
+        "quote": "OD-60"
+      },
+      "fixture": "cases/fixtures/v2-exempt/exempt.md",
+      "negative_fixture": "cases/fixtures/v2-exempt/exempt.ok.md",
+      "detector": {
+        "command": "bun scripts/validate.ts validate --sdd <fixture> --repository <repository>",
+        "expected_code": "SDD_V2_EXEMPT_WORK_ON_GATED_OPERATION",
+        "must_fire": true
+      },
+      "source_delivery": "migai plugin-host R3 program delivery, OD-60",
+      "observed_at": "2026-09-25",
+      "owning_test": "tests/v2-scope.test.ts",
+      "introduced_detector_at": "2026-09-25",
+      "repository": "cases/fixtures/v2-exempt/repo"
+    },
+    {
+      "id": "CSDD-V2-AMEND-101",
+      "defect_class": "amendment-citation-unrechecked",
+      "statement": "The latest Clarification amends A1, and an inventory entry still describes A1 with the old procedure; nothing lists that entry for recheck. The negative's latest Clarification touches only R1, which no inventory entry cites.",
+      "root_cause": "Inventory names and exempt strings are free text; an amendment to an acceptance never lists the inventory entries that cite it.",
+      "evidence": {
+        "file": "rsi/observed-defects.md",
+        "line": 1,
+        "quote": "OD-62"
+      },
+      "fixture": "cases/fixtures/v2-process/amendment.md",
+      "negative_fixture": "cases/fixtures/v2-process/amendment.ok.md",
+      "detector": {
+        "command": "bun scripts/validate.ts validate --sdd <fixture>",
+        "expected_code": "SDD_V2_AMENDMENT_CITATION_RECHECK",
+        "must_fire": true
+      },
+      "source_delivery": "migai plugin-host R3 revision 6, OD-62",
+      "observed_at": "2026-09-25",
+      "owning_test": "tests/v2-scope.test.ts",
+      "introduced_detector_at": "2026-09-25"
+    },
+    {
+      "id": "CSDD-V2-GATE-101",
+      "defect_class": "gate-writes-out-of-scope",
+      "statement": "A root repository gate runs `pnpm run fmt` and `pnpm -r run build`, which write across workspace members outside `writes`; the repaired gate checks formatting, filters the build and says how out-of-scope writes are handled.",
+      "root_cause": "Gate commands are prose; nothing separates read-only gates from ones that write tracked files outside the document's write scope.",
+      "evidence": {
+        "file": "rsi/observed-defects.md",
+        "line": 1,
+        "quote": "OD-64"
+      },
+      "fixture": "cases/fixtures/v2-process/gates.md",
+      "negative_fixture": "cases/fixtures/v2-process/gates.ok.md",
+      "detector": {
+        "command": "bun scripts/validate.ts validate --sdd <fixture>",
+        "expected_code": "SDD_V2_GATE_WRITES_OUT_OF_SCOPE",
+        "must_fire": true
+      },
+      "source_delivery": "migai plugin-host R3 revision 6, OD-64",
+      "observed_at": "2026-09-25",
+      "owning_test": "tests/v2-scope.test.ts",
+      "introduced_detector_at": "2026-09-25"
+    },
+    {
+      "id": "CSDD-V2-TIMING-101",
+      "defect_class": "timing-oracle-in-parallel-gate",
+      "statement": "A1 asserts a wall-clock ratio and runs in the default test run with other files in parallel; the full run becomes nondeterministic.",
+      "root_cause": "Nothing asks a timing oracle to declare its execution isolation.",
+      "evidence": {
+        "file": "rsi/observed-defects.md",
+        "line": 1,
+        "quote": "OD-69"
+      },
+      "fixture": "cases/fixtures/v2-scope/timing.md",
+      "negative_fixture": "cases/fixtures/v2-scope/timing.ok.md",
+      "detector": {
+        "command": "bun scripts/validate.ts validate --sdd <fixture>",
+        "expected_code": "SDD_V2_TIMING_ORACLE_UNISOLATED",
+        "must_fire": true
+      },
+      "source_delivery": "migai plugin-host R3 revision 6 delivery and audit, OD-69",
+      "observed_at": "2026-09-25",
+      "owning_test": "tests/v2-scope.test.ts",
+      "introduced_detector_at": "2026-09-25"
+    },
+    {
+      "id": "CSDD-V2-STATUS-101",
+      "defect_class": "status-word-stronger-than-closure",
+      "statement": "The document's status line says verified after an independent audit that never happened; validate reports nothing.",
+      "root_cause": "The status line is free text; nothing ties it to the closure validate computes.",
+      "evidence": {
+        "file": "rsi/observed-defects.md",
+        "line": 1,
+        "quote": "OD-70"
+      },
+      "fixture": "cases/fixtures/v2-scope/status.md",
+      "negative_fixture": "cases/fixtures/v2-scope/status.ok.md",
+      "detector": {
+        "command": "bun scripts/validate.ts validate --sdd <fixture>",
+        "expected_code": "SDD_V2_STATUS_CLAIM_UNCHECKED",
+        "must_fire": true
+      },
+      "source_delivery": "migai plugin-host R3 revision 6 delivery and audit, OD-70",
+      "observed_at": "2026-09-25",
+      "owning_test": "tests/v2-scope.test.ts",
+      "introduced_detector_at": "2026-09-25"
     }
   ],
   "held_out": [

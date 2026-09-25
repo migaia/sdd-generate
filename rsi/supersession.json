@@ -932,6 +932,96 @@
       "counterexample": "plugin-host R3 rewrote the install batch and stage lane; a later survey found six current behaviours (host stages dropped during install, lease key deleted by a failed replace, reordered host stages) three of which needed user rulings (OD-54; CSDD-V2-REWRITE-101).",
       "scope": "One candidate per leaf when any step's first line rewrites or replaces a named file and the leaf has no current-behaviour inventory.",
       "tradeoff": "Fires on every rewrite until the inventory exists, including rewrites whose old behaviour is trivial; the inventory may then be one entry."
+    },
+    {
+      "asset": "code:SDD_V2_EXPORT_VERSION_PROSE_STALE",
+      "added_at": "2026-09-25",
+      "round": "R-20260925122758",
+      "supersedes": [],
+      "supersedes_nothing_because": "SDD_V2_EXPORT_FINGERPRINT_STALE and the consumes pin compare versions inside the contract JSON only; no rule read versions restated in prose, so nothing is replaced.",
+      "counterexample": "migai plugin-host R3: the JSON pinned dependency-planner 2 and create-pipeline 2 while the program root export table and the plugin-host-r3 header still said 1; all four documents validated clean and the delivery host stopped twice (OD-56; CSDD-V2-VERSION-101; replayed on a copy of the real root table and leaf header, both reported).",
+      "scope": "Candidate for each prose occurrence, outside history sections, of an export ID followed within 30 characters by v<N>/version <N>/版本 <N>, or by a bare number cell in a table row, where N differs from the producer's exports version; a parenthesis or clause marked historical is skipped.",
+      "tradeoff": "A version stated without the export ID nearby (\"导出版本 1\" in plan text) is not matched, and an export ID shared with a document ID can be matched in a table row whose numeric cell is not a version."
+    },
+    {
+      "asset": "code:SDD_V2_EQUIVALENCE_EXCEPTIONS_STALE",
+      "added_at": "2026-09-25",
+      "round": "R-20260925124858",
+      "supersedes": [],
+      "supersedes_nothing_because": "Keeping an equivalence claim's exception list in step was authoring prose only (v2-authoring Interfaces); no rule compared the list with anything.",
+      "counterexample": "migai create-pipeline revision 5: R3 '除 BC1 外' while its acceptance A3 excepted BC1 and BC3; R3 was in exports.semantics, so the stale list was consumer-pinned (OD-57; CSDD-V2-EQUIV-101; replayed on a copy of the real document, reported).",
+      "scope": "Candidate per requirement whose first line claims equivalence with named BC exceptions (except/other than/除…外/…除外/例外; 删除 excluded; ranges expanded) when its own acceptance names a BC the list omits; a sub-change is covered by its parent, and a clause marked out of scope is skipped.",
+      "tradeoff": "Only the requirement's own acceptance is compared, so a BC that belongs in the list but no acceptance names is not reported; success-criterion prose is not read."
+    },
+    {
+      "asset": "code:SDD_V2_PRESERVE_PROSE_STALE",
+      "added_at": "2026-09-25",
+      "round": "R-20260925124858",
+      "supersedes": [],
+      "supersedes_nothing_because": "validate read preserve from the contract only; no rule compared it with the prose classification hosts read.",
+      "counterexample": "migai create-pipeline revision 5 §7 said '本稿的保持验收：A3、A7' while contract preserve was A3, A7, A9 (OD-58; CSDD-V2-PRESERVE-PROSE-101; replayed on a copy of the real document, reported).",
+      "scope": "Candidate when a sentence lists acceptance IDs after 保持验收:/preserve acceptance: (a preceding 无/no means none) and the set differs from contract preserve, or when an acceptance's own first line calls it preserve and preserve omits it.",
+      "tradeoff": "Only colon-introduced lists are read; a classification phrased another way, or a change-acceptance list, is not compared."
+    },
+    {
+      "asset": "code:SDD_V2_EXEMPT_WORK_ON_GATED_OPERATION",
+      "added_at": "2026-09-25",
+      "round": "R-20260925124858",
+      "supersedes": [],
+      "supersedes_nothing_because": "The OD-45 detector asks for a cost-path inventory to exist; nothing related an exempt entry to the gated operations that call it.",
+      "counterexample": "migai plugin-host R3 revision 6: A18 gated receipt removal at 3x while R17 exempted createView as O(N), but commitPreparedUnUseBatch returns createView(); measured ratio 7.17 and the delivery stopped (OD-60; CSDD-V2-EXEMPT-101).",
+      "scope": "With --repository: for each cost-path entry that has a path and acceptance, the named operation's function body (brace-matched in that file) is scanned for calls to identifiers named by the inventory's exempt entries; an entry naming both acknowledges the pair.",
+      "tradeoff": "Only the gated function's own body is scanned, not its callees' callees, and the operation must be named by an identifier the file defines."
+    },
+    {
+      "asset": "code:SDD_V2_TIMING_DIFFERENCE_GATE",
+      "added_at": "2026-09-25",
+      "round": "R-20260925125120",
+      "supersedes": [],
+      "supersedes_nothing_because": "The OD-45 detector asks for an end-to-end timing at two or more sizes; no rule read how the gated quantity is computed.",
+      "counterexample": "migai plugin-host R3 A18 gated '200 × (prepareUnUseBatch + commitPreparedUnUseBatch) − 200 × getCurrentSnapshot()' at ≤3×; both terms were ~0.16 ms/op at 4000, one round measured −0.0074 ms/op and delivery stopped (OD-61; CSDD-V2-TIMING-101; replayed on a copy of the real A18 wording, reported).",
+      "scope": "Candidate per acceptance sentence that is timed, carries a threshold and subtracts (minus, subtract, 扣除, 减去, a spaced − or -).",
+      "tradeoff": "The noise margin and the perturbation that shows a gate can fail (OD-61 items 2 and 3) are not checked; a difference written in words the patterns miss is not reported."
+    },
+    {
+      "asset": "code:SDD_V2_AMENDMENT_CITATION_RECHECK",
+      "added_at": "2026-09-25",
+      "round": "R-20260925130317",
+      "supersedes": [],
+      "supersedes_nothing_because": "No rule related an amendment to the free-text inventory entries that cite the amended clause.",
+      "counterexample": "migai plugin-host R3: A18 was amended to forbid subtracting timings, but an older I5 exempt entry still said the A18 gate subtracts the view timing; the host stopped on two opposite procedures (OD-62; CSDD-V2-AMEND-101).",
+      "scope": "One candidate per inventory with entries whose name, exempt or statement cites an ID named by the latest-dated Clarifications entries.",
+      "tradeoff": "It lists entries to recheck, not contradictions: a heavily amended document gets a reminder even when every entry already agrees (plugin-host-r3: one reminder for I5's five entries)."
+    },
+    {
+      "asset": "code:SDD_V2_GATE_WRITES_OUT_OF_SCOPE",
+      "added_at": "2026-09-25",
+      "round": "R-20260925130317",
+      "supersedes": [],
+      "supersedes_nothing_because": "Gate commands were prose; no rule separated read-only gates from ones that write outside the write scope.",
+      "counterexample": "migai plugin-host R3 root gates ran pnpm run fmt and pnpm -r run build, which regenerate 16 tracked files under website/, a path the program forbids (OD-64; CSDD-V2-GATE-101; the real plugin-host-r3 gate line is reported).",
+      "scope": "Candidate per line with a backticked formatter, build or generator command (not its check mode) run from the root or recursively, when writes does not cover the repository and the line names no filter or disposition.",
+      "tradeoff": "Workspace membership is not read from the repository, so a root gate whose members all sit inside writes is still reported."
+    },
+    {
+      "asset": "code:SDD_V2_TIMING_ORACLE_UNISOLATED",
+      "added_at": "2026-09-25",
+      "round": "R-20260925152305",
+      "supersedes": [],
+      "supersedes_nothing_because": "No existing check reads a timing oracle's execution context or a document's status word; the closure never compared itself with the prose status.",
+      "counterexample": "CSDD-V2-TIMING-101: a wall-clock ratio acceptance runs in the parallel default suite; an existing timing test then fails in the full run and passes alone (migai plugin-host, OD-69).",
+      "scope": "Candidate for an acceptance sentence that times something against a threshold, unless the acceptance names serial, single-file or dedicated execution, or its oracle is a script other than `test`.",
+      "tradeoff": "Wording-based: an isolated oracle described in other words is flagged, and one that says 'serial' but is not is missed."
+    },
+    {
+      "asset": "code:SDD_V2_STATUS_CLAIM_UNCHECKED",
+      "added_at": "2026-09-25",
+      "round": "R-20260925152305",
+      "supersedes": [],
+      "supersedes_nothing_because": "No existing check reads a timing oracle's execution context or a document's status word; the closure never compared itself with the prose status.",
+      "counterexample": "CSDD-V2-STATUS-101: the program status line says verified before the independent audit it was told to await; the audit then found seven defects (OD-70).",
+      "scope": "Candidate for a status line (status, 文档状态, 状态) claiming verified, shipped, delivered or closed.",
+      "tradeoff": "Also flags an honest status after a real closure; the candidate is advisory and points to the closure as the only authority."
     }
   ]
 }

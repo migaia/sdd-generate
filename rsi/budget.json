@@ -5,9 +5,9 @@
   "ceilings": {
     "SKILL.md.characters": 11000,
     "references.lines": 1800,
-    "validator.lines": 4900,
+    "validator.lines": 5200,
     "behavior_cases": 46,
-    "scripts.lines": 8700,
+    "scripts.lines": 8800,
     "tests.lines": 2400,
     "review.md.characters": 3500
   },
@@ -467,6 +467,22 @@
       "at": "2026-09-25",
       "round": "budget-change",
       "reason": "Plan step 4 of the measured Review stage: SKILL.md gains a Review phase between Decompose and Report (fresh-context reviewer, references/review.md, one re-review of changed clauses) and a row for recording its dispositions. The lens passed the sdd-bench acceptance rule in round RR-2026-09-25-L2 before any wiring; measured size 10195 left 255 characters."
+    },
+    {
+      "dimension": "validator.lines",
+      "from": 4900,
+      "to": 5200,
+      "at": "2026-09-25",
+      "round": "R-20260925125039",
+      "reason": "Four detectors settled in R-20260925122758 and R-20260925124858 (export version prose, equivalence exceptions, preserve prose, exempt work on gated operations) brought the validator to 4960 lines, 60 above the ceiling ratcheted to measured +5% earlier the same day; 5200 leaves the same ~5% headroom above the new size."
+    },
+    {
+      "dimension": "scripts.lines",
+      "from": 8700,
+      "to": 8800,
+      "at": "2026-09-25",
+      "round": "budget-change",
+      "reason": "OD-69 and OD-70 (migai plugin-host R3 revision 6 delivery and audit): two advisory candidates, a timing oracle that names no execution isolation and a status word stronger than the closure validate computes. Measured 8650 of 8700 left room for neither; OD-66..OD-68 settle as rulings and add no code."
     }
   ],
   "introduced": [

@@ -1,0 +1,2161 @@
+{
+  "id": "R-20260925152231",
+  "kind": "budget-change",
+  "goal": "Room in scripts.lines for the OD-69 and OD-70 candidates",
+  "opened_at": "2026-09-25T15:22:31.510Z",
+  "head": "8b7ae1679932eb2918f051cdee85a297509393dd",
+  "commitments": {
+    "cases/defect-cases.json": "76e773c2e9af95cc5b9e18b306a6ab5338df5898975c478eb79288a1a48d968b",
+    "cases/behavior-cases.json": "303b26cb6746cd4afefb72697952b5fb9b140ddeda69c78ffc8a29ba9ecabdad",
+    "cases/fixtures/CSDD-TYPE-001.md": "6088047aa54ed7f7d94d80810b1222f0b9c095ccb15a90ed737c5b3fa33d5a00",
+    "cases/fixtures/CSDD-TYPE-001.ok.md": "7b5a62533dcac4438fb4aa67266181c799e64a4a8f9ede0b33ec3946e7111347",
+    "cases/fixtures/repo-pnpm/README.md": "736a7464308f34462c9dd91b9b55f19593edcd29fc197a9a5996715dde3f563f",
+    "cases/fixtures/repo-pnpm/package.json": "d30ebf7e7519657fbd2a5bf1f5b835c8e2b5e62839346db0b4053d6cf4ee063e",
+    "cases/fixtures/repo-pnpm/packages/core/package.json": "a4ebf53ed9739ac129abbdd3c4d79595497195d38bfb1d84af46789674557ba2",
+    "cases/fixtures/repo-pnpm/pnpm-lock.yaml": "24965b460770baebf4cf4e19bff4e40fffb38bf8a22609162416761c1081d551",
+    "cases/fixtures/rsi-telemetry-probe.ts": "f919cba87a6f8b2590bd3f45cf7dd83ccc2a747d8f10710cee8b7dd7797492f7",
+    "cases/fixtures/v2-assessment-go-empty.md": "600a042b897bd05574927d985903cd3ff221c5f2fc1629a53966e9069c1f8f73",
+    "cases/fixtures/v2-assessment-go.md": "65705469c62a354b5a04dc200e939d328e3f68123ba018fa79299980f2f2cba4",
+    "cases/fixtures/v2-bug.md": "80c75022a1893503fd4e4cce08836cef79672bf5ef4082c8ba65c079d7d16efd",
+    "cases/fixtures/v2-clarification-inline.md": "59c0e13fc753746f9853b031e507c5702bd535e9aaf1a9976c7d79c6334e4d16",
+    "cases/fixtures/v2-clarification-tracked.md": "14c0485d28f19d91aa20731b2c5643a70bb10658f7be7214c0a7c116cc10abf2",
+    "cases/fixtures/v2-clarification-untracked.md": "c00858a076ae535402684a4cbc6c3b7e5600e909e56f6ed45da5d355d157038e",
+    "cases/fixtures/v2-closure/README.md": "d992fe53ef0e8e31c66fc50d631087501787e7d9bbf1d56341cefc6c30397b20",
+    "cases/fixtures/v2-closure/evidence.json": "ecde03b6a014af2cd86206c9ef34c3a274ba6a250ccba77d2de0795cb14b6e83",
+    "cases/fixtures/v2-closure/packages/feature-a/feature.test.ts": "cbc0e9705ccaf26e76a056acaa75a537260add6d6ba195add4bf5b56db9d9f7b",
+    "cases/fixtures/v2-closure/packages/feature-a/index.ts": "52ec580463db307042c98652a684a470295423092669507fd265c2585e9d4076",
+    "cases/fixtures/v2-closure-claimed/README.md": "8a2017926692f4f706a6473f6d6d886cf6dec0638af37d4f198ac63de1976b08",
+    "cases/fixtures/v2-closure-claimed/evidence.json": "0cea3512c8d0b572af1107b8efdd47650a29c9e85c3fcc6e527a11cff891fe7a",
+    "cases/fixtures/v2-closure-claimed/packages/feature-a/feature.test.ts": "cbc0e9705ccaf26e76a056acaa75a537260add6d6ba195add4bf5b56db9d9f7b",
+    "cases/fixtures/v2-closure-claimed/packages/feature-a/index.ts": "52ec580463db307042c98652a684a470295423092669507fd265c2585e9d4076",
+    "cases/fixtures/v2-closure-duplicate/README.md": "94378515e9d202bcdd9ed2ab3330371a345b1b3a087030007ad4c715bd44e355",
+    "cases/fixtures/v2-closure-duplicate/evidence.json": "729948baa2088d075f5d4f744d477119ac4538c25a1bf2e7fb47e76969ce6734",
+    "cases/fixtures/v2-closure-duplicate/packages/feature-a/index.ts": "52ec580463db307042c98652a684a470295423092669507fd265c2585e9d4076",
+    "cases/fixtures/v2-closure-preserve/README.md": "8c3b51b23972639a09c4c52be20b80bc40aedd313b56c74f9c8bd5f322789f36",
+    "cases/fixtures/v2-closure-preserve/evidence.json": "02751ead10f092334993cc384ad30d8cfad51554250ee04837b24b0487d8af0e",
+    "cases/fixtures/v2-closure-preserve/packages/feature-a/feature.test.ts": "cbc0e9705ccaf26e76a056acaa75a537260add6d6ba195add4bf5b56db9d9f7b",
+    "cases/fixtures/v2-closure-preserve/packages/feature-a/index.ts": "52ec580463db307042c98652a684a470295423092669507fd265c2585e9d4076",
+    "cases/fixtures/v2-closure-preserve/packages/feature-a/other.test.ts": "34b7c070fdc4d5a014c1119831fffb2d48d11fd90715e96b39455c1ce6324705",
+    "cases/fixtures/v2-command/README.md": "e2e2b2dc41fae1ce6b794a4f4a36c7b41b9d09be507f6dfe3479753e9e835d63",
+    "cases/fixtures/v2-command/bun.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "cases/fixtures/v2-command/evidence.json": "ff97e40c2e0c0d0d9dbca3b40889b6cd39a4a6d16d891e64012dac21c88c90b7",
+    "cases/fixtures/v2-command/package.json": "27501a2fca85e22fefbdfb6ea9a67201fdd7e37c1e2688dd7eda2c109f49274b",
+    "cases/fixtures/v2-command/packages/feature-a/index.ts": "52ec580463db307042c98652a684a470295423092669507fd265c2585e9d4076",
+    "cases/fixtures/v2-consume/ok/capability.sdd.md": "9e99c6b8ba6659f2b3f8f4310f2df459df655668a99535db4fd000d58f1a10b9",
+    "cases/fixtures/v2-consume/ok/host.sdd.md": "98a27011dc0e4d3dfe243c00ea87693628caf0d40204466e4d552fbafc72d312",
+    "cases/fixtures/v2-consume/ok/root.sdd.md": "5df152ee5b35006b5b7d472ab80ddf970d1a8c9152e68707d02d507dd1e3c427",
+    "cases/fixtures/v2-consume/pin-stale/capability.sdd.md": "40f073e5fefe21ce81bda8be730f10849d3ea2a48df8070b492e93cad53ea773",
+    "cases/fixtures/v2-consume/pin-stale/host.sdd.md": "dd59359c0dffe4574f0e0419673eba773aa2139a7c25f609863fc58f518e4459",
+    "cases/fixtures/v2-consume/pin-stale/root.sdd.md": "5df152ee5b35006b5b7d472ab80ddf970d1a8c9152e68707d02d507dd1e3c427",
+    "cases/fixtures/v2-consume/producer-stale/capability.sdd.md": "1f632338cdf40516ec7c119eb00adc05c6614c5819b6960c48a69e0d5a669e14",
+    "cases/fixtures/v2-consume/producer-stale/host.sdd.md": "dd59359c0dffe4574f0e0419673eba773aa2139a7c25f609863fc58f518e4459",
+    "cases/fixtures/v2-consume/producer-stale/root.sdd.md": "5df152ee5b35006b5b7d472ab80ddf970d1a8c9152e68707d02d507dd1e3c427",
+    "cases/fixtures/v2-consume/repo/README.md": "bfc7484077db8b3605cf99fa5f0265a03be34cb0df787093b8d8ce7e219f681e",
+    "cases/fixtures/v2-consume/repo/packages/capability/planner.ts": "222e9f525ca63ecb707361205b895b50ee14dd20f703670ddd132806c62ab165",
+    "cases/fixtures/v2-consume/repo/packages/host/index.ts": "1aaca4b539a0ee2069061fa765881938dceff5efa5e5de04a946395b8bc18e8a",
+    "cases/fixtures/v2-consume/restate/capability.sdd.md": "40f073e5fefe21ce81bda8be730f10849d3ea2a48df8070b492e93cad53ea773",
+    "cases/fixtures/v2-consume/restate/host.sdd.md": "bfb99750056b660460319f36b7b1b19b25e80ab825c8d0dc252b4a7b8414dc9c",
+    "cases/fixtures/v2-consume/restate/root.sdd.md": "5df152ee5b35006b5b7d472ab80ddf970d1a8c9152e68707d02d507dd1e3c427",
+    "cases/fixtures/v2-consume/root/capability.sdd.md": "40f073e5fefe21ce81bda8be730f10849d3ea2a48df8070b492e93cad53ea773",
+    "cases/fixtures/v2-consume/root/host.sdd.md": "98a27011dc0e4d3dfe243c00ea87693628caf0d40204466e4d552fbafc72d312",
+    "cases/fixtures/v2-consume/root/root.sdd.md": "839fb9ddf6d1db0a77473227e80e8775a58838966eff87d7b45b7120fde8ad8a",
+    "cases/fixtures/v2-converge/README.md": "fb985158e748ec07969a2b9a638d36452317d960e8b1d5335cdf39f66940dd2a",
+    "cases/fixtures/v2-converge/evidence.json": "cb206c95e68a12d033246b583efa1f3f4fd404c1f3eb065bef60c12fba69b812",
+    "cases/fixtures/v2-converge/packages/feature-a/feature.test.ts": "cbc0e9705ccaf26e76a056acaa75a537260add6d6ba195add4bf5b56db9d9f7b",
+    "cases/fixtures/v2-converge/packages/feature-a/index.ts": "52ec580463db307042c98652a684a470295423092669507fd265c2585e9d4076",
+    "cases/fixtures/v2-converge/packages/feature-a/other.test.ts": "34b7c070fdc4d5a014c1119831fffb2d48d11fd90715e96b39455c1ce6324705",
+    "cases/fixtures/v2-delegate/claim/host.sdd.md": "a2fa9b896b0bf200b1ce3e9e8485fda597f3ac0f35df5827e21a89369c29be22",
+    "cases/fixtures/v2-delegate/claim/pipeline.sdd.md": "98d69770869a186453eafb7e46165a4ee3eefa9c98f27693f5d947d8fd45226f",
+    "cases/fixtures/v2-delegate/claim/root.sdd.md": "67edce869ec32e86d195b8ed5cfbc048103632933671163da9468614d39794d7",
+    "cases/fixtures/v2-delegate/incomplete/host.sdd.md": "f5e5b72fbf3946079f3ecf4a44b5036914a01f83b1c0dbfa0a611a1352d7ffeb",
+    "cases/fixtures/v2-delegate/incomplete/pipeline.sdd.md": "98d69770869a186453eafb7e46165a4ee3eefa9c98f27693f5d947d8fd45226f",
+    "cases/fixtures/v2-delegate/incomplete/root.sdd.md": "67edce869ec32e86d195b8ed5cfbc048103632933671163da9468614d39794d7",
+    "cases/fixtures/v2-delegate/ok/host.sdd.md": "949e36855678d168582c7d487071eaeea28a32310ddc5d8c98be7a57bbfcf7f3",
+    "cases/fixtures/v2-delegate/ok/pipeline.sdd.md": "98d69770869a186453eafb7e46165a4ee3eefa9c98f27693f5d947d8fd45226f",
+    "cases/fixtures/v2-delegate/ok/root.sdd.md": "67edce869ec32e86d195b8ed5cfbc048103632933671163da9468614d39794d7",
+    "cases/fixtures/v2-delegate/repo/README.md": "775f49cf4fcaf5828ca414970d56ad235c04cc40db63bdf937eb5fcd68c2246a",
+    "cases/fixtures/v2-delegate/repo/packages/host/src/error-code.ts": "9f3d510c11138d101476f0adc1a1194dae0f9fa335f55c38031200cbcd6e78d2",
+    "cases/fixtures/v2-delegate/repo/packages/host/src/runtime.ts": "fd81030cfd0c655a65e93a2ca4b375ca827bbefed3252b0fe64a2ab096fefcc0",
+    "cases/fixtures/v2-delegate/repo/packages/pipeline/runner.ts": "643cb7e8261355bec2a976b63349a26ab5503bcc6533cf5d4001e997aad85d9c",
+    "cases/fixtures/v2-delegate/undeclared/host.sdd.md": "e72af8634561865514580b5282b2825019d22c4bed59ca0ffc1bd6aa42c98b3a",
+    "cases/fixtures/v2-delegate/undeclared/pipeline.sdd.md": "98d69770869a186453eafb7e46165a4ee3eefa9c98f27693f5d947d8fd45226f",
+    "cases/fixtures/v2-delegate/undeclared/root.sdd.md": "67edce869ec32e86d195b8ed5cfbc048103632933671163da9468614d39794d7",
+    "cases/fixtures/v2-delegate/unreachable/host.sdd.md": "77ead7e6d080cf472882fc6fe8800562a3a1345aa254047bcee2f8b97a6c9f23",
+    "cases/fixtures/v2-delegate/unreachable/pipeline.sdd.md": "98d69770869a186453eafb7e46165a4ee3eefa9c98f27693f5d947d8fd45226f",
+    "cases/fixtures/v2-delegate/unreachable/root.sdd.md": "67edce869ec32e86d195b8ed5cfbc048103632933671163da9468614d39794d7",
+    "cases/fixtures/v2-design/premise.md": "d07ef28fa2d8b50c134225f391407a51f7ccc90335191512ee2ceeaf93b115f5",
+    "cases/fixtures/v2-design/premise.ok.md": "7b06632d51792476b7e2ac423156c604ef24a72849df5aafe96983c8d0ba179e",
+    "cases/fixtures/v2-design/rewrite.md": "c5db577436355b384e320ec69e30e5e0988afcd872ac97bb7345f97cdaa4bf5c",
+    "cases/fixtures/v2-design/rewrite.ok.md": "922cb6fbf994dfd7b11777eb84a10984a46162b84beda0e286826c10b2afe929",
+    "cases/fixtures/v2-design/timing-difference.md": "2b2bdf118802487f86171032b09511b1f3ba02ab20aad9371ad90f325811e0c2",
+    "cases/fixtures/v2-design/timing-difference.ok.md": "a7d0150ddbd6d04b773658a2bc38b99642b8d32845527933ab133f303ddb51e2",
+    "cases/fixtures/v2-duplicate.md": "9984e997e214af67e6df01bad3a34afedf2e4a88c5719ffc05d1ea654890ba11",
+    "cases/fixtures/v2-exempt/exempt.md": "a2f2c2667463e82f47696d4c25bdc7424bf08d1609b19977d3c71e9d18201b92",
+    "cases/fixtures/v2-exempt/exempt.ok.md": "1fbb2d0d666aba52794e30055a28d93363efe7c7aaa36566b722a27047d3f6fd",
+    "cases/fixtures/v2-exempt/repo/packages/feature-a/index.ts": "298ba585e2ca61b51fc44fe471fb292c596431d74a0897a8d8562553d5067523",
+    "cases/fixtures/v2-external-missing.md": "99a2eca240b0391aeb0387f345771494aeed195985e0b0f6f84b08dcd1b9d85f",
+    "cases/fixtures/v2-external-missing.plan.md": "9c715ad450a07da41977ef8a7f56b82a8281347f1b10888e40ab4a145338514c",
+    "cases/fixtures/v2-external-ok.md": "5d883d193e1a0df3b29c588d55af4873cb406d97249f12b43a9c0cc77401151e",
+    "cases/fixtures/v2-external-ok.plan.md": "f126b2f20e632a8ce1ea82cac40c92a92b14d046e3e30f4a6c6a529d19ede9bf",
+    "cases/fixtures/v2-forward-dependency.md": "bd9e9848981ac0c1d0b1978b3e3aa11766806556e7e1867a76099d5eb0b68222",
+    "cases/fixtures/v2-forward-dependency.ok.md": "d376da3c8ba94d4ae887bf526d48103b8d1e81ec7909652f624bf1af8395215e",
+    "cases/fixtures/v2-ignored/.gitignore": "b46d3006cb0d9cc950ae1bae2701fd93d6ce66955465a0064042d0e5ea8f3d73",
+    "cases/fixtures/v2-ignored/README.md": "fa6fed5d8fb791e117ea2a007f2c883b718f8f1dbceb0a6833e2be6d692c968e",
+    "cases/fixtures/v2-ignored/packages/feature-a/index.ts": "52ec580463db307042c98652a684a470295423092669507fd265c2585e9d4076",
+    "cases/fixtures/v2-ignored-input.md": "40b2e76fcad5c70385f313e2734ec61b156cbff299abb775e4612b2ee8e87b41",
+    "cases/fixtures/v2-ignored-input.ok.md": "2ec9ab7f707b73d386cd325bf7c5045fc6ed388401a02035b6c284ae8bf63942",
+    "cases/fixtures/v2-leaf-security.md": "7c52e7fc171d47c74da26775ce21824b02453ca5af93b786039bb008d81214f4",
+    "cases/fixtures/v2-leaf.md": "855c72a31263fe9d2d0dca51633874b4e0e4c4ce0699ed4c2c93d408d7bc7232",
+    "cases/fixtures/v2-lists/equivalence.md": "2e484075937c16c86b9d043a0d7687317faf048418ae17cf975d041abbadced8",
+    "cases/fixtures/v2-lists/equivalence.ok.md": "6ae9ad318ba5006de792525815cc3b371a58b6770644d29ed148ef33acc3033d",
+    "cases/fixtures/v2-lists/preserve-prose.md": "90540f9b000d9115bd6ae5cfebbaada90841de2ec65ff4c585b5608ee50ceebb",
+    "cases/fixtures/v2-lists/preserve-prose.ok.md": "d99457d8024641672c8eedcad99a73f63e210ff61219836e7dab7afb3a8dac43",
+    "cases/fixtures/v2-no-metas.md": "1c8abf89b3d224c002f1730383324e57d34e7fdaad75ba92a3da763969e28b13",
+    "cases/fixtures/v2-owned/README.md": "905b98668575a40860233ec92411316730c1d0b38b66c203e8bdc019bbef41fa",
+    "cases/fixtures/v2-owned/packages/feature-a/index.ts": "52ec580463db307042c98652a684a470295423092669507fd265c2585e9d4076",
+    "cases/fixtures/v2-owned/packages/feature-b/index.ts": "3239c4ef0c405fa8da70d71068b773661a161b636ee7d8d67ec1bfa8a816db9c",
+    "cases/fixtures/v2-owned/packages/feature-b/package.json": "801abb8b36503a3138a44c5ce88e54fe76ebec57e27c557c2b4cea56f5a16f82",
+    "cases/fixtures/v2-owned/plans/active.sdd.md": "c3904196122e79102b814ce645df0bee8fa9c8a507bdeec76826392dfb80cf05",
+    "cases/fixtures/v2-owned/plans/shipped.sdd.md": "22a9d5bca69e5fee81a2757526ef8e65cf428288c9d4b867bdba819d48e76526",
+    "cases/fixtures/v2-owned-writes.md": "6ee25bf60d5daf1ea35424f3f54028a041a33d2bf6b00f57d2d8d30d0c2602b2",
+    "cases/fixtures/v2-owned-writes.ok.md": "855c72a31263fe9d2d0dca51633874b4e0e4c4ce0699ed4c2c93d408d7bc7232",
+    "cases/fixtures/v2-preset/.create-sdd/preset.json": "47bbd88454b6cbcdaf8779f046242351e3c3ef358af52a33bec5639037c64a14",
+    "cases/fixtures/v2-preset/README.md": "562c94448a63fa8a1a0b0bf1fa25a99518399cac802bd5497bd85d18ba112037",
+    "cases/fixtures/v2-preset/packages/feature-a/index.ts": "52ec580463db307042c98652a684a470295423092669507fd265c2585e9d4076",
+    "cases/fixtures/v2-preset-ignored/.create-sdd/preset.json": "78045b9f7e79e5987bc0a8c4543fe000ea06ae1b154edb031da9ecb63697f8c2",
+    "cases/fixtures/v2-preset-ignored/.gitignore": "b46d3006cb0d9cc950ae1bae2701fd93d6ce66955465a0064042d0e5ea8f3d73",
+    "cases/fixtures/v2-preset-ignored/README.md": "0a0e57e11129fb1f5dedde1f48ec58bed7dde4519fbb684381d8b7c8b4037e82",
+    "cases/fixtures/v2-preset-ignored/packages/feature-a/index.ts": "52ec580463db307042c98652a684a470295423092669507fd265c2585e9d4076",
+    "cases/fixtures/v2-preset-pack/.create-sdd/packs/security/pack.json": "0f30cc9b74f65fb92312143e258689f6f7a2be9bf3bea040dad4eb9a7f836dc1",
+    "cases/fixtures/v2-preset-pack/.create-sdd/preset.json": "8615730ef2ef5447cb53cdb1d655b95ea8152b99a79efbeee3561db69de6777c",
+    "cases/fixtures/v2-preset-pack/README.md": "31530941a7881ff17fecb5af1c4eb1abd578af889bf1e0f03fbb3020d916aa37",
+    "cases/fixtures/v2-preset-pack/packages/feature-a/index.ts": "52ec580463db307042c98652a684a470295423092669507fd265c2585e9d4076",
+    "cases/fixtures/v2-process/amendment.md": "5f319d84f51d0b9b6d104d3558247979f6623f26f8f3b57921765637d43ce5e1",
+    "cases/fixtures/v2-process/amendment.ok.md": "edfe963a24a7e69a97bdcc61641c5b3404d2b535ede236c016bb43e11c75a53b",
+    "cases/fixtures/v2-process/gates.md": "d92383443da8647cce0ee74085f9de15381fdfa033174da6546a9ff7eef5f01a",
+    "cases/fixtures/v2-process/gates.ok.md": "eb226e7c93f22ebf10585457f46f6c3b3b8ffdab483391a9c4e5d9e2783aed97",
+    "cases/fixtures/v2-program-derived/README.md": "5511a56b258790cf8e22a97929275052f42719321efc3967cae8f120206a45d5",
+    "cases/fixtures/v2-program-derived/beta/child.sdd.md": "ad66d9319a4688a83704414fb018af31381dd2a00c1db0350e40ad17c5f304bb",
+    "cases/fixtures/v2-program-derived/gamma/child.sdd.md": "76a39b28218fd67089a13e6b6262bbd43cbbd36410b1a6c1c92b6258781aeb50",
+    "cases/fixtures/v2-program-derived/gamma/format.ts": "0938e941f43e0547d078f5fc5fa4a348af3a9368a5748f7a4f7d91f98276c4bc",
+    "cases/fixtures/v2-program-derived/root.sdd.md": "1066f18d24e82856003039bab620aff1432086b3861f55dd069341ba00db3d66",
+    "cases/fixtures/v2-program-derived/stale-root.sdd.md": "cf31b17f5cbefa31f914718c5dd028fbb48a4659b84c92411480545a3c0d3bdc",
+    "cases/fixtures/v2-program-sibling/docs/alpha/escape-root.sdd.md": "c9cd2748acdc6edaf540a0291292d89c956bb355418bf1d34abababd1b5be87f",
+    "cases/fixtures/v2-program-sibling/docs/alpha/root.sdd.md": "7dc800a742655e8e26a964d37ab2956f3a6a7392dee2e0d001651b7a2fd4c20c",
+    "cases/fixtures/v2-program-sibling/docs/beta/child.sdd.md": "aa54828413ad6f3df0c27d94f0737649061654d38478da6c1638b305ce659cb1",
+    "cases/fixtures/v2-quality/README.md": "61f369ad729e6bd4bcc801294add9874b2316baff2a292e5e00c854acf66386f",
+    "cases/fixtures/v2-quality/packages/feature-a/src/facade.ts": "c8bee3097ae022c0216a17b3ecbb66781fc1f6bedd5f4ed5fb7b8f7b6b4e5b46",
+    "cases/fixtures/v2-quality/packages/feature-a/src/index.ts": "70e8113a14589ae933fb59a89717e86270967bd62c6bc07ca2846cd185a47ceb",
+    "cases/fixtures/v2-quality/packages/feature-a/src/internal.ts": "9c76ec77aba0fdb6fe5a2fc23991973db4968f397da1008786490337dd6512b8",
+    "cases/fixtures/v2-quality/packages/feature-a/src/test-observer.ts": "ab91dddb982bbd5b10a21851ec9caa64962200fb84a8ea443018b3264c4b92ee",
+    "cases/fixtures/v2-quality/packages/feature-a/test/feature.test.ts": "b93901e10ae26eec3fe4e7fdf6df55c6686c4eec3e004a223f88f1683674d311",
+    "cases/fixtures/v2-quality/packages/feature-a/test/helper.test.ts": "e2d1fda5af8102d57de6eb90ce17bf0b2d93b88063544d31b1c1099ae2074c12",
+    "cases/fixtures/v2-quality/packages/feature-a/test/internal.test.ts": "c1364c58323a15f9ea270750481513bdb6e8f6569919767fcc408cd0ada2e1fb",
+    "cases/fixtures/v2-quality-od15.md": "0e3bed689fb7f0cdcd0b81c0ac8210f34f7cf77eef90d43a66a061e2ae2dfd71",
+    "cases/fixtures/v2-quality-od16.md": "c3f3f31a7f8a2be358289daa55b3ec1b232459cdcd1627b58040441b49d9ee77",
+    "cases/fixtures/v2-quality-od17.md": "92b996b5a7737e526257d9dc338d56b69133ed3e3c11a12ca556a552cfd6c200",
+    "cases/fixtures/v2-quality-od18.md": "679210239c28441a5b26ff4f9b30f0472ddba1dc0bbeb39399038847a956e816",
+    "cases/fixtures/v2-quality-od19.md": "fcd8c1d6e676784aa5b0be0b1c89e24e062fce26ec173922724f6a3228e728e2",
+    "cases/fixtures/v2-quality-od20.md": "c59411d14cded7fa355c36306a29da3a1ecdb45f8db6821b000307d2011ff948",
+    "cases/fixtures/v2-quality-od21.md": "9938937b467d22776d90eef42258dcf0ae930b78afd37ffcfa5001170aad79eb",
+    "cases/fixtures/v2-quality-od22.md": "eb543fe959e37b2e495cf1383eb15295299fdc1ebc4d3edb186abba085887e1d",
+    "cases/fixtures/v2-quality-od23.md": "42b3128becf28e1495b98ec8d4eb38c451a0796da2604558955035a5d343cac7",
+    "cases/fixtures/v2-quality-od24.md": "cfe46850eebbcafd1f639bf0694762d6106d642c0a03b3c4cf1b6ad36ebe4e1a",
+    "cases/fixtures/v2-quality-od25.md": "920040fa4c99682f2aff4b9ae6c0f4558a3345f82c3f790089fa0139936df4ce",
+    "cases/fixtures/v2-quality-od25b.md": "fba3af0526fc9b08ae9b52339b894b078f511b986ae29a1d267f5cea02845ac4",
+    "cases/fixtures/v2-quality-od26a.md": "991598ca66611b4a6bd97b717c47f1918b73796c55e2dd3b127679a210264796",
+    "cases/fixtures/v2-quality-od26b.md": "414ab1f5eb3d9fd1eb994ece93bd81087cb5b1a43abbf7a84e50b3889aa4f5aa",
+    "cases/fixtures/v2-quality-od26c.md": "a14bfb88e4f397e77ae9b263ba1babc0b70aceb281082ca9d0013f13f6c5b89a",
+    "cases/fixtures/v2-quality-od26d.md": "300e3cd75d66556aaf05c466fd390e11c1f8105ab8453bf3cdc31e98d08a17e2",
+    "cases/fixtures/v2-quality-od27.md": "4582973a6cb2edff016038abbe6bebcd53f961e5b0666db03654776fd3c7274d",
+    "cases/fixtures/v2-quality-od28a.md": "d374b1194a2946c5f68dca62df3ea06362ee544e5102d570faf70fc83a83c2a1",
+    "cases/fixtures/v2-quality-od28b.md": "6952b6922cdea36152f6699c37837a3f04ca2fb18162c2da9c723afc2eb2d486",
+    "cases/fixtures/v2-quality-od31a.md": "e5efa1da9e8d885d2e5d6c4a101eb720c63ab3cf4f4f978a2414aed2f437ac91",
+    "cases/fixtures/v2-quality-od31b.md": "492299d3676634527429bbd750e155df12f19ce1837a6d78388503f345e10211",
+    "cases/fixtures/v2-quality-od33.md": "d6285f629ea54e786f7a3c0d15c03edc549a92e24f28980ff72b7c79f4e67e7b",
+    "cases/fixtures/v2-quality-od33.ok.md": "3d3d87b9f2e64561d31a27e193b7a5c9556c1fa4023e6645b675dd54dcbfc91e",
+    "cases/fixtures/v2-quality-od35.md": "6385038a13b6bbd45d132ef52f4abd7adae28fcd18d61e8f8dd899fc39ae9499",
+    "cases/fixtures/v2-quality-od35.ok.md": "5dbd25531996b06ec16bcbd26ced329ebd4552359ec6f5c271df58a028b6ff27",
+    "cases/fixtures/v2-quality.md": "8afee53d05a87ffa83628d96eddd769711587a77e2983efeca590d17f5a9150e",
+    "cases/fixtures/v2-readers/README.md": "91e3774038204abc7b708b0b39ac54feb48461e3396049aaf2eadac0c3505e18",
+    "cases/fixtures/v2-readers/packages/host/index.ts": "22c68ec645af318ec01fd726d1f275a4c2b0cfa0b5c55fff6aa22c372e8eb528",
+    "cases/fixtures/v2-readers/packages/logger/logger.test.ts": "444f71332795bb5fb47ac9ff1280510ac87cc965036d6cdc904cd07f6e755884",
+    "cases/fixtures/v2-readers/packages/tray/tray.test.ts": "ce43f3e711ce253e4252947ef23041034e33b9f3e0ca98f45384fd1d68f3bdb7",
+    "cases/fixtures/v2-readers-declared.md": "d89f08b52f616a4020e9737828547a37e933fc0f823cbf420ac6f03db381bb50",
+    "cases/fixtures/v2-readers-test-source/README.md": "eb7f6661b3d8edabf2aa2a4ec0eed14598bd433e1c66269f425e1657f0f5716f",
+    "cases/fixtures/v2-readers-test-source/packages/host/host.test.ts": "515d737ba209858f887c552d87d897a9974503506b60078617b766bd17a95ce3",
+    "cases/fixtures/v2-readers-test-source/packages/host/index.ts": "7edb2b9570846b6f2f544771b34de9b635992444f2722aa6e78443a748371075",
+    "cases/fixtures/v2-readers-test-source/packages/logger/logger.test.ts": "444f71332795bb5fb47ac9ff1280510ac87cc965036d6cdc904cd07f6e755884",
+    "cases/fixtures/v2-readers-test-source/packages/store/store.test.ts": "0afa7382686fbb98bf0af56603e0fa8c897fc2553c0fd7274e5f4de24d79a517",
+    "cases/fixtures/v2-readers-test-source-declared.md": "0139f5acd7d312457daa04f63feefc472f1dda76accbcecee61294e7094d3178",
+    "cases/fixtures/v2-readers-test-source-undeclared.md": "7798d421d8035e94d49b84e331c1a2f6d1e4f86e15739dd065214b507e053b7e",
+    "cases/fixtures/v2-readers-undeclared.md": "291e46b9b4c9187e4ab39edb5b1f8217d9c1e48bd6bd54221800da20402b1cb2",
+    "cases/fixtures/v2-removed-export/README.md": "c7c077ba4772ea021e020d047808c427ab1ec30c968317d58c5500ae67f9b1d1",
+    "cases/fixtures/v2-removed-export/packages/pipe/src/index.ts": "f854e65c4ec7b4bf65feb8400845fdb0228af0a6d07f8301e406bc8389261e15",
+    "cases/fixtures/v2-removed-export/packages/pipe/test/signal.test.ts": "cd07d96ea9538b763fe3ff42086a7b42188ee1090d59f71a1a7d420d4170c7bc",
+    "cases/fixtures/v2-removed-export-rewritten.md": "b2dcc3aa59910bfcf69c671042cc4fbb5db92cd8cd6f0047d0842358266f6199",
+    "cases/fixtures/v2-removed-export-unchanged.md": "bcf2df69afbbde936584b06fb5e0e19563873ab993557d88f80e7ce38390f324",
+    "cases/fixtures/v2-replay-sibling/.gitignore": "16d30e4462189fb14dd611bdb708c510630c576a1f35b9383e89a4352da36c97",
+    "cases/fixtures/v2-replay-sibling/README.md": "878aeb44ad8a1f8d24d92ea1afe5b62be98cd7b234375887d593a629c8a5c9cb",
+    "cases/fixtures/v2-replay-sibling/bun.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "cases/fixtures/v2-replay-sibling/evidence.json": "1a98269d9c32912268e1cc307020d1a37f1363fc01910e428aa71c66a227cab2",
+    "cases/fixtures/v2-replay-sibling/history.json": "0515285c3f8af7fd70f65c4f13dd7f41cb1e91bddda87b7eb0cda6ebb7b5ea1d",
+    "cases/fixtures/v2-replay-sibling/packages/capability/index.ts": "c438d8fae6a12087a643a3113d3b48723ea785aa1f241389e96a5de9b86cd683",
+    "cases/fixtures/v2-replay-sibling/packages/pipeline/pipeline.ts": "aea07175444212c0dfb17fc1e59d96990449edd636825e6a6f32bda9705c8271",
+    "cases/fixtures/v2-replay-sibling.md": "4f82cc32af566bd1007039c9451ddb8d6cb580ac17a137e9ba23d9fa61cbca08",
+    "cases/fixtures/v2-replay-workspace/.gitignore": "16d30e4462189fb14dd611bdb708c510630c576a1f35b9383e89a4352da36c97",
+    "cases/fixtures/v2-replay-workspace/README.md": "51fe4cc8cec6acf7385a9eebcca20138a9492bf1e8910f51fc185b12ff17c859",
+    "cases/fixtures/v2-replay-workspace/bun.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "cases/fixtures/v2-replay-workspace/evidence.json": "1a98269d9c32912268e1cc307020d1a37f1363fc01910e428aa71c66a227cab2",
+    "cases/fixtures/v2-replay-workspace/history.json": "04459cd7981e62832282d3a99d4fd031088610db9f208174254bd73e3280a44a",
+    "cases/fixtures/v2-replay-workspace/packages/pipeline/node_modules/@acme/utils/index.ts": "72e900c05d76c24287f97b34cec2990f5262e5dacf2701cc6e5a126bf3b3de7c",
+    "cases/fixtures/v2-replay-workspace/packages/pipeline/node_modules/@acme/utils/package.json": "2583a8032fd524a4b40b5a2a10a6f0f1df9d9aceb47e7ccfbbf006f7a67995d0",
+    "cases/fixtures/v2-replay-workspace/packages/pipeline/package.json": "3374ec6e61633c14ec9a9d9d95817b0386f4733651e65ecc61ee42b8564e3da5",
+    "cases/fixtures/v2-replay-workspace/packages/pipeline/pipeline.ts": "c2bf2614d151412540952c2b27a4986777b18a28f191b5a353ef68b9b27a63cf",
+    "cases/fixtures/v2-replay-workspace.md": "1dde08e17d3dec703fcb1a687737f126cac403071d81d20653e87bc99a910c27",
+    "cases/fixtures/v2-repo/README.md": "8511375eb2700089a2e827e93e753f9c3274c1cece86bd51953c115ae9048c70",
+    "cases/fixtures/v2-repo/packages/feature-a/index.ts": "52ec580463db307042c98652a684a470295423092669507fd265c2585e9d4076",
+    "cases/fixtures/v2-review/bc.md": "8d13fa2ca8e7fd45c647682e7563f8fecc724c820b76716436d5961e79deaee2",
+    "cases/fixtures/v2-review/findings.json": "fc34d0e72a888d5da2c264be13576108ac79f0c8e2a15a8437ac0736ab0ea512",
+    "cases/fixtures/v2-review/packages/feature-a/index.ts": "07192688e7f6f21b9ff38f32e751a6f02e9ccf5d3a2fcca631a02e08833e8e03",
+    "cases/fixtures/v2-scope/cost.md": "21a0b5d8961ce31b71235a2f56d706fc9c9440156405033151e264eb7ec36a24",
+    "cases/fixtures/v2-scope/cost.ok.md": "65cfc7f273e8fe18b09c0b942987b26702fe092725abb0cf1e9f267261c69e76",
+    "cases/fixtures/v2-scope/enum.md": "56f0f08c16f7a8ca792c751867b07759fccb311abc07d8b7c5f27985f9794b78",
+    "cases/fixtures/v2-scope/enum.ok.md": "5d45da017d12d5fdf2c239e0b51e6b1bf80a558264a54788c2e93e2829f847c5",
+    "cases/fixtures/v2-scope/preserve-history.md": "0e69708c0532ce610f5eb5067a5e0510e2f74ff32a33e5f1da73c2b0beb1c098",
+    "cases/fixtures/v2-scope/preserve.md": "c9676d86198544d6855bbfd5b6b2e5b39b050b042d6198e7a32dc1e8f5ca4917",
+    "cases/fixtures/v2-scope/preserve.ok.md": "ea11fb84b8ac10c3072b2c42f51632f5f5af67e14441f44ab9a632bf8979a6e5",
+    "cases/fixtures/v2-scope/state.md": "41261afddae7a484ee04f7fb5dcac7fed072e8b1da9946f1a2b64ffbd458c9e9",
+    "cases/fixtures/v2-scope/state.ok.md": "165e2f805b27bcf8c4d34558be59fe38513379c6cb22e91c85c4b57e1ecf968e",
+    "cases/fixtures/v2-scope/status.md": "3b5449da72a9e6f0a083d4b9797f05af7d4ecc11f5a0d6fe8f1c559e61b93651",
+    "cases/fixtures/v2-scope/status.ok.md": "1efed8904f91f81fababbac7f1c96d3e1a57a75f2746b268806ec4043c585e39",
+    "cases/fixtures/v2-scope/timing.md": "9aa13dc284dd84b61d86cf28c4929c72b26de37cb139020cc2faeeeac3d6195c",
+    "cases/fixtures/v2-scope/timing.ok.md": "b819a1d3fc840d499206656c1061243391ea758d771b0c1a0ebc385b7bba86fc",
+    "cases/fixtures/v2-scope/variant.md": "eb318ed17f3f77eb17a9b9c7609cd9424c6b6b76935121e1a3e9b263044f1aa9",
+    "cases/fixtures/v2-scope/variant.ok.md": "bf5128f39cac384893d35541f9009a95cc23d6d47b8f3f98ef4e84e137060c11",
+    "cases/fixtures/v2-shared-baseline/.gitignore": "16d30e4462189fb14dd611bdb708c510630c576a1f35b9383e89a4352da36c97",
+    "cases/fixtures/v2-shared-baseline/README.md": "88e62e785de2704789ac29636346093bca1a0d001a17a00ff32dce59071f63a8",
+    "cases/fixtures/v2-shared-baseline/bun.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "cases/fixtures/v2-shared-baseline/evidence.json": "95d81354bb9969a90ff1f5c53d7252dd015519186548fa6f4b0687984a88c6d8",
+    "cases/fixtures/v2-shared-baseline/history.json": "9ff0de40f4462723d85ee420fa073e8d8ebe01e4ad5074f2f509e7f5973f1ce2",
+    "cases/fixtures/v2-shared-baseline/src/api.ts": "aea07175444212c0dfb17fc1e59d96990449edd636825e6a6f32bda9705c8271",
+    "cases/fixtures/v2-shared-baseline.md": "1bd46e9a6d7627a934e2f29600ea3b7f5a01d354bfb528fa29a272c600df8e90",
+    "cases/fixtures/v2-symbol-missing.md": "41774d440a5c749e7d076390be4cee552fae76eed5b0f072c99c87c5f8813cad",
+    "cases/fixtures/v2-symbol-ok.md": "c3c9dd27606f7b9de481a40243aa772cc815f39a5ba4a08fb15685e501e59ff3",
+    "cases/fixtures/v2-titles/.gitignore": "16d30e4462189fb14dd611bdb708c510630c576a1f35b9383e89a4352da36c97",
+    "cases/fixtures/v2-titles/README.md": "484171ad886d29279e4538686b970332ad6459f6b386e314f797635d8a526d58",
+    "cases/fixtures/v2-titles/bun.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "cases/fixtures/v2-titles/evidence.json": "4da49ef3470d348d050503a1e03cdd9963bef92cfa5518dda9d5a2cbf25f14b6",
+    "cases/fixtures/v2-titles/history.json": "cf86e72a395e2368a032b3080407c31a35706ad89473fcf0daac99016b581509",
+    "cases/fixtures/v2-titles/src/api.ts": "aea07175444212c0dfb17fc1e59d96990449edd636825e6a6f32bda9705c8271",
+    "cases/fixtures/v2-titles/test/api.test.ts": "4f6e9e586904963959fbd4d2460fc9660f5afd18da361e16a659538ad602e1a8",
+    "cases/fixtures/v2-titles.md": "aa60b4f34c98578a8df055834bd789832c3f60cdc048c86dc47e26f42f77f858",
+    "cases/fixtures/v2-trace.md": "410582c61e796fd25735e5a843946b4291fe27640604b664ef0eee10550466b5",
+    "cases/fixtures/v2-version/ok/capability.sdd.md": "9e99c6b8ba6659f2b3f8f4310f2df459df655668a99535db4fd000d58f1a10b9",
+    "cases/fixtures/v2-version/ok/host.sdd.md": "e53a6210ae2bda8f4d50e1e8c215525d1791217402f31a40f65b7d21b727492e",
+    "cases/fixtures/v2-version/ok/root.sdd.md": "5df152ee5b35006b5b7d472ab80ddf970d1a8c9152e68707d02d507dd1e3c427",
+    "cases/fixtures/v2-version/stale/capability.sdd.md": "9e99c6b8ba6659f2b3f8f4310f2df459df655668a99535db4fd000d58f1a10b9",
+    "cases/fixtures/v2-version/stale/host.sdd.md": "270153d391d313bb61add70b6f575ea273739cfa0ac1d14e146678cb9a2d0999",
+    "cases/fixtures/v2-version/stale/root.sdd.md": "5df152ee5b35006b5b7d472ab80ddf970d1a8c9152e68707d02d507dd1e3c427",
+    "cases/held-out/README.md": "babf4e723791c9c009947093b55454e6ae040448f1094fd76673ee968b8d86d4",
+    "cases/held-out/cases.json": "c31ce5d56ea419eb63d7956a9e96a3ad764a79e62dae8c502c4c2724d0646735"
+  },
+  "budget": {
+    "SKILL.md.characters": 10853,
+    "references.lines": 1693,
+    "review.md.characters": 3425,
+    "validator.lines": 5057,
+    "scripts.lines": 8650,
+    "tests.lines": 2264,
+    "behavior_cases": 45
+  },
+  "source_at_open": "62bb8d8db638d3d894da16e2cd3b37ec3e6bb3e93a2ce049d9c274255c4e1914",
+  "rule_assets_at_open": [
+    "code:API_SURFACE_DEGENERATE_INPUT",
+    "code:DEFECT_CASE_DETECTOR_NOT_BUN",
+    "code:DOCUMENT_ID_EXHAUSTED",
+    "code:DOCUMENT_PREFIX_INVALID",
+    "code:DRAFT_DOCUMENTS_ARGS_INVALID",
+    "code:DRAFT_DOCUMENTS_ARRAY_REQUIRED",
+    "code:DRAFT_DOCUMENT_DUPLICATE",
+    "code:DRAFT_DOCUMENT_INVALID",
+    "code:DRAFT_ROOT_REQUIRED",
+    "code:EVIDENCE_REQUIRES_V2_LEAF",
+    "code:EXAMPLE_CONTRACT_BLOCK_MISSING",
+    "code:EXAMPLE_OVERLAY_MERGE_TARGET_NOT_ARRAY",
+    "code:INIT_BRANCH_REQUIRES_GIT",
+    "code:INIT_EVIDENCE_REQUIRES_V2_LEAF",
+    "code:INIT_OUT_ABSOLUTE_REQUIRED",
+    "code:INIT_SDD_ABSOLUTE_REQUIRED",
+    "code:INIT_STUBS_REQUIRE_REPOSITORY",
+    "code:INIT_TEMPLATE_UNRECOGNIZED",
+    "code:PRESET_PATH_ABSOLUTE_REQUIRED",
+    "code:PSEUDOCODE_SYMBOL_UNRESOLVED",
+    "code:REPOSITORY_NOT_FOUND",
+    "code:REPOSITORY_PATH_ABSOLUTE_REQUIRED",
+    "code:RSI_NO_OPEN_ROUND",
+    "code:SDD_AND_PREFIX_REQUIRED",
+    "code:SDD_CONTRACT_INVALID",
+    "code:SDD_DESCRIPTION_EMPTY",
+    "code:SDD_ID_DANGLING",
+    "code:SDD_ID_DUPLICATE",
+    "code:SDD_ID_INVALID",
+    "code:SDD_REQUIRED",
+    "code:SDD_TABLE_COLUMNS_MISMATCH",
+    "code:SDD_TABLE_DESCRIPTION_MISSING",
+    "code:SDD_V1_UNSUPPORTED",
+    "code:SDD_V2_ACCEPTANCE_BASELINE_UNFALSIFIABLE",
+    "code:SDD_V2_ACCEPTANCE_FORWARD_DEPENDENCY",
+    "code:SDD_V2_ACCEPTANCE_SUBJECT_UNOBSERVABLE",
+    "code:SDD_V2_ALGORITHM_PREMISE_UNGROUNDED",
+    "code:SDD_V2_AMENDMENT_CITATION_RECHECK",
+    "code:SDD_V2_BUDGET_GATE_UNOWNED",
+    "code:SDD_V2_CAUSE_OVERWRITE_PRESCRIBED",
+    "code:SDD_V2_CLARIFICATION_UNTRACKED",
+    "code:SDD_V2_CLOSURE_FAILED",
+    "code:SDD_V2_CLOSURE_OPEN",
+    "code:SDD_V2_COUNT_ONLY_PRESERVATION",
+    "code:SDD_V2_COVERAGE_MISSING",
+    "code:SDD_V2_DELEGATION_INCOMPLETE",
+    "code:SDD_V2_DELEGATION_UNDECLARED",
+    "code:SDD_V2_DEPENDENCY_CYCLE",
+    "code:SDD_V2_ENUMERATED_OPERATION_UNCOVERED",
+    "code:SDD_V2_EQUIVALENCE_EXCEPTIONS_STALE",
+    "code:SDD_V2_ERROR_CODE_UNREACHABLE",
+    "code:SDD_V2_ERROR_POSITION_UNSTATED",
+    "code:SDD_V2_ERROR_TEXT_READER_UNDECLARED",
+    "code:SDD_V2_EXEMPT_WORK_ON_GATED_OPERATION",
+    "code:SDD_V2_EXPORT_FINGERPRINT_STALE",
+    "code:SDD_V2_EXPORT_VERSION_PROSE_STALE",
+    "code:SDD_V2_FAILURE_CLAUSE_UNBOUND",
+    "code:SDD_V2_GATE_WRITES_OUT_OF_SCOPE",
+    "code:SDD_V2_ID_DUPLICATE",
+    "code:SDD_V2_INDEX_ORACLE_DIRTY_TREE",
+    "code:SDD_V2_INDEX_SHAPE_INVALID",
+    "code:SDD_V2_INTEGRATION_OWNER_REQUIRED",
+    "code:SDD_V2_INTERFACE_MISMATCH",
+    "code:SDD_V2_INVARIANT_INVENTORY_MISSING",
+    "code:SDD_V2_INVENTORY_ENTRY_UNCOVERED",
+    "code:SDD_V2_META_SOURCE_MISMATCH",
+    "code:SDD_V2_MUST_SHIP_CHAIN_INCOMPLETE",
+    "code:SDD_V2_NEGATIVE_SEARCH_GENERIC_TOKEN",
+    "code:SDD_V2_ORACLE_BELOW_BOUNDARY",
+    "code:SDD_V2_ORACLE_PROCEDURE_UNSCRIPTED",
+    "code:SDD_V2_OWNER_CONFLICT",
+    "code:SDD_V2_PATH_ESCAPE",
+    "code:SDD_V2_PATH_GIT_IGNORED",
+    "code:SDD_V2_PATH_INVALID",
+    "code:SDD_V2_PATH_NOT_FOUND",
+    "code:SDD_V2_PRESERVATION_CLAIM_UNCHECKED",
+    "code:SDD_V2_PRESERVATION_UNPINNED",
+    "code:SDD_V2_PRESERVE_PROSE_STALE",
+    "code:SDD_V2_PRESET_BLOCKED",
+    "code:SDD_V2_PRESET_INVALID",
+    "code:SDD_V2_PRINCIPLE_CHECK_UNBOUND",
+    "code:SDD_V2_PRODUCER_SEMANTICS_RESTATED",
+    "code:SDD_V2_PROGRAM_LINK_INVALID",
+    "code:SDD_V2_PROSE_DEFINITION_DUPLICATE",
+    "code:SDD_V2_PROSE_DEFINITION_MISSING",
+    "code:SDD_V2_QUANTIFIER_FIXTURE_UNDISCRIMINATING",
+    "code:SDD_V2_REFERENCE_MISSING",
+    "code:SDD_V2_REMOVED_EXPORT_ASSERTED_UNCHANGED",
+    "code:SDD_V2_REPO_GATE_NO_DISPOSITION",
+    "code:SDD_V2_REQUIRED_FIELD_EMPTY",
+    "code:SDD_V2_REQUIREMENT_OUTCOME_UNCOVERED",
+    "code:SDD_V2_REVIEW_CLAUSE_UNKNOWN",
+    "code:SDD_V2_REVIEW_FINDINGS_MISSING",
+    "code:SDD_V2_REVIEW_RECOMMENDED",
+    "code:SDD_V2_REVIEW_UNDISPOSED",
+    "code:SDD_V2_REWRITE_BEHAVIOUR_UNSURVEYED",
+    "code:SDD_V2_ROOT_RESTATES_CHILD",
+    "code:SDD_V2_SCALING_ORACLE_UNSCOPED",
+    "code:SDD_V2_SECTION_MISSING",
+    "code:SDD_V2_SHAPE_READER_UNDECLARED",
+    "code:SDD_V2_STATE_SPACE_UNSTATED",
+    "code:SDD_V2_SURFACE_INVENTORY_INCOMPLETE",
+    "code:SDD_V2_TIMING_DIFFERENCE_GATE",
+    "code:SDD_V2_VARIANT_MATRIX_MISSING",
+    "code:SDD_V2_WRITES_OWNED_ELSEWHERE",
+    "code:TYPE_PROBE_MODULE_UNAVAILABLE",
+    "code:TYPE_PROBE_PROJECT_UNAVAILABLE",
+    "code:TYPE_PROBE_SOURCE_UNAVAILABLE"
+  ],
+  "ceilings_at_open": {
+    "SKILL.md.characters": 11000,
+    "references.lines": 1800,
+    "validator.lines": 5200,
+    "behavior_cases": 46,
+    "scripts.lines": 8700,
+    "tests.lines": 2400,
+    "review.md.characters": 3500
+  },
+  "rules_at_open": 108,
+  "debt_at_open": "NOTICE",
+  "baseline": {
+    "at": "2026-09-25T15:22:39.693Z",
+    "results": [
+      {
+        "id": "CSDD-TYPE-001",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "API_SURFACE_DEGENERATE_INPUT"
+        ]
+      },
+      {
+        "id": "CSDD-V2-REPO-101",
+        "fired": false,
+        "negative_fired": null,
+        "pass": true,
+        "codes": []
+      },
+      {
+        "id": "CSDD-V2-TRACE-101",
+        "fired": false,
+        "negative_fired": true,
+        "pass": true,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-META-101",
+        "fired": false,
+        "negative_fired": null,
+        "pass": true,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-CLAR-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "CLARIFICATION",
+          "NEEDS",
+          "PSEUDOCODE_SYMBOL_UNRESOLVED",
+          "SDD_V2_CLARIFICATION_UNTRACKED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-READS-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_PATH_NOT_FOUND"
+        ]
+      },
+      {
+        "id": "CSDD-V2-CLAR-102",
+        "fired": false,
+        "negative_fired": true,
+        "pass": true,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-STEP-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_META_SOURCE_MISMATCH"
+        ]
+      },
+      {
+        "id": "CSDD-V2-CLOSURE-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_CLOSURE_OPEN"
+        ]
+      },
+      {
+        "id": "CSDD-V2-BUG-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_SECTION_MISSING"
+        ]
+      },
+      {
+        "id": "CSDD-V2-ASSESS-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_REQUIRED_FIELD_EMPTY"
+        ]
+      },
+      {
+        "id": "CSDD-V2-SYMBOL-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-PROOF-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_CLOSURE_OPEN"
+        ]
+      },
+      {
+        "id": "CSDD-V2-CLOSURE-102",
+        "fired": true,
+        "negative_fired": null,
+        "pass": true,
+        "codes": [
+          "SDD_V2_CLOSURE_OPEN"
+        ]
+      },
+      {
+        "id": "CSDD-V2-SYMBOL-102",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED"
+        ]
+      },
+      {
+        "id": "CSDD-RSI-TEL-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "RSI_TELEMETRY_CANDIDATES_RECORDED"
+        ]
+      },
+      {
+        "id": "CSDD-RSI-TEL-102",
+        "fired": true,
+        "negative_fired": null,
+        "pass": true,
+        "codes": [
+          "RSI_TELEMETRY_CLOSURE_RECORDED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-IGNORED-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_PATH_GIT_IGNORED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-OWNED-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_WRITES_OWNED_ELSEWHERE"
+        ]
+      },
+      {
+        "id": "CSDD-V2-FWD-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_ACCEPTANCE_FORWARD_DEPENDENCY",
+          "SDD_V2_WRITES_OWNED_ELSEWHERE"
+        ]
+      },
+      {
+        "id": "CSDD-V2-ERRTEXT-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_ERROR_TEXT_READER_UNDECLARED",
+          "SDD_V2_REWRITE_BEHAVIOUR_UNSURVEYED",
+          "SDD_V2_SHAPE_READER_UNDECLARED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-SHAPE-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_ERROR_TEXT_READER_UNDECLARED",
+          "SDD_V2_REWRITE_BEHAVIOUR_UNSURVEYED",
+          "SDD_V2_SHAPE_READER_UNDECLARED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-ORACLE-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_CLOSURE_OPEN"
+        ]
+      },
+      {
+        "id": "CSDD-V2-GAP-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_CLOSURE_OPEN"
+        ]
+      },
+      {
+        "id": "CSDD-V2-STRICT-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_CLOSURE_OPEN"
+        ]
+      },
+      {
+        "id": "CSDD-V2-CLAIMED-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_CLOSURE_OPEN"
+        ]
+      },
+      {
+        "id": "CSDD-V2-TOUCH-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_CLOSURE_OPEN"
+        ]
+      },
+      {
+        "id": "CSDD-V2-PRESET-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_SECTION_MISSING"
+        ]
+      },
+      {
+        "id": "CSDD-V2-PRESET-102",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_PATH_GIT_IGNORED",
+          "SDD_V2_PRESET_BLOCKED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-CMDORACLE-101",
+        "fired": false,
+        "negative_fired": true,
+        "pass": true,
+        "codes": []
+      },
+      {
+        "id": "CSDD-V2-QUALITY-015",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_NEGATIVE_SEARCH_GENERIC_TOKEN"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-016",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_INDEX_ORACLE_DIRTY_TREE"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-017",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_REPO_GATE_NO_DISPOSITION"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-018",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_BUDGET_GATE_UNOWNED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-019",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_COUNT_ONLY_PRESERVATION"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-020",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_SURFACE_INVENTORY_INCOMPLETE"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-021",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_ORACLE_PROCEDURE_UNSCRIPTED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-022",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_REQUIREMENT_OUTCOME_UNCOVERED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-023",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_FAILURE_CLAUSE_UNBOUND"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-024",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_QUANTIFIER_FIXTURE_UNDISCRIMINATING"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-025",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_ORACLE_BELOW_BOUNDARY"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-026A",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_INVARIANT_INVENTORY_MISSING"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-026B",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_INVENTORY_ENTRY_UNCOVERED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-027",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_ERROR_POSITION_UNSTATED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-028A",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_PRINCIPLE_CHECK_UNBOUND"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-028B",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_CAUSE_OVERWRITE_PRESCRIBED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-026C",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_INVARIANT_INVENTORY_MISSING"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-026D",
+        "fired": false,
+        "negative_fired": true,
+        "pass": true,
+        "codes": []
+      },
+      {
+        "id": "CSDD-V2-QUALITY-025B",
+        "fired": false,
+        "negative_fired": true,
+        "pass": true,
+        "codes": []
+      },
+      {
+        "id": "CSDD-V2-PROGRAM-SIBLING-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_COVERAGE_MISSING",
+          "SDD_V2_INDEX_SHAPE_INVALID",
+          "SDD_V2_PATH_ESCAPE",
+          "SDD_V2_REFERENCE_MISSING"
+        ]
+      },
+      {
+        "id": "CSDD-V2-ERRTEXT-102",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_ERROR_TEXT_READER_UNDECLARED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-031A",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_QUANTIFIER_FIXTURE_UNDISCRIMINATING"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-031B",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_QUANTIFIER_FIXTURE_UNDISCRIMINATING"
+        ]
+      },
+      {
+        "id": "CSDD-V2-PROGRAM-DERIVED-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_COVERAGE_MISSING",
+          "SDD_V2_PROGRAM_LINK_INVALID",
+          "SDD_V2_REFERENCE_MISSING"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-033",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED",
+          "SDD_V2_ACCEPTANCE_SUBJECT_UNOBSERVABLE"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-034",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_REMOVED_EXPORT_ASSERTED_UNCHANGED",
+          "SDD_V2_REWRITE_BEHAVIOUR_UNSURVEYED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-035",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED",
+          "SDD_V2_ACCEPTANCE_BASELINE_UNFALSIFIABLE"
+        ]
+      },
+      {
+        "id": "CSDD-V2-PRESERVE-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_CLOSURE_OPEN"
+        ]
+      },
+      {
+        "id": "CSDD-V2-REPLAY-201",
+        "fired": false,
+        "negative_fired": true,
+        "pass": true,
+        "codes": []
+      },
+      {
+        "id": "CSDD-V2-REPLAY-202",
+        "fired": false,
+        "negative_fired": true,
+        "pass": true,
+        "codes": []
+      },
+      {
+        "id": "CSDD-V2-CONSUME-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_PRODUCER_SEMANTICS_RESTATED",
+          "SDD_V2_REVIEW_RECOMMENDED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-ROOTCOPY-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_ROOT_RESTATES_CHILD"
+        ]
+      },
+      {
+        "id": "CSDD-V2-DELEGATE-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_DELEGATION_UNDECLARED",
+          "SDD_V2_PRESERVATION_CLAIM_UNCHECKED",
+          "SDD_V2_PRESERVATION_UNPINNED",
+          "SDD_V2_REVIEW_RECOMMENDED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-DELEGATE-102",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "CODE",
+          "INVALID_OPTION",
+          "SDD_V2_DELEGATION_INCOMPLETE",
+          "SDD_V2_PRESERVATION_UNPINNED",
+          "SDD_V2_REVIEW_RECOMMENDED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-DELEGATE-103",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_PRESERVATION_CLAIM_UNCHECKED",
+          "SDD_V2_PRESERVATION_UNPINNED",
+          "SDD_V2_REVIEW_RECOMMENDED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-DELEGATE-104",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_ERROR_CODE_UNREACHABLE",
+          "SDD_V2_PRESERVATION_UNPINNED",
+          "SDD_V2_REVIEW_RECOMMENDED",
+          "STAGE_KIND_MISMATCH"
+        ]
+      },
+      {
+        "id": "CSDD-V2-PRESETPACK-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_SECTION_MISSING"
+        ]
+      },
+      {
+        "id": "CSDD-V2-TITLES-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_CLOSURE_OPEN"
+        ]
+      },
+      {
+        "id": "CSDD-V2-ENUM-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED",
+          "SDD_V2_ENUMERATED_OPERATION_UNCOVERED",
+          "SDD_V2_QUANTIFIER_FIXTURE_UNDISCRIMINATING"
+        ]
+      },
+      {
+        "id": "CSDD-V2-STATE-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED",
+          "SDD_V2_STATE_SPACE_UNSTATED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-PRESERVE-201",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED",
+          "SDD_V2_PRESERVATION_UNPINNED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-VARIANT-201",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED",
+          "SDD_V2_ENUMERATED_OPERATION_UNCOVERED",
+          "SDD_V2_QUANTIFIER_FIXTURE_UNDISCRIMINATING",
+          "SDD_V2_VARIANT_MATRIX_MISSING"
+        ]
+      },
+      {
+        "id": "CSDD-V2-SHARED-101",
+        "fired": true,
+        "negative_fired": null,
+        "pass": true,
+        "codes": [
+          "SDD_V2_CLOSURE_OPEN"
+        ]
+      },
+      {
+        "id": "CSDD-V2-COST-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED",
+          "SDD_V2_SCALING_ORACLE_UNSCOPED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-REVIEW-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_QUANTIFIER_FIXTURE_UNDISCRIMINATING",
+          "SDD_V2_REVIEW_UNDISPOSED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-HISTORY-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED",
+          "SDD_V2_PRESERVATION_UNPINNED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-REVIEW-102",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "DEPENDENCY_BLOCKED",
+          "PSEUDOCODE_SYMBOL_UNRESOLVED",
+          "SDD_V2_QUANTIFIER_FIXTURE_UNDISCRIMINATING",
+          "SDD_V2_REQUIREMENT_OUTCOME_UNCOVERED",
+          "SDD_V2_REVIEW_RECOMMENDED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-REVIEW-103",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_QUANTIFIER_FIXTURE_UNDISCRIMINATING",
+          "SDD_V2_REVIEW_FINDINGS_MISSING"
+        ]
+      },
+      {
+        "id": "CSDD-V2-PREMISE-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED",
+          "SDD_V2_ALGORITHM_PREMISE_UNGROUNDED",
+          "SDD_V2_QUANTIFIER_FIXTURE_UNDISCRIMINATING"
+        ]
+      },
+      {
+        "id": "CSDD-V2-REWRITE-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED",
+          "SDD_V2_QUANTIFIER_FIXTURE_UNDISCRIMINATING",
+          "SDD_V2_REWRITE_BEHAVIOUR_UNSURVEYED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-VERSION-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_EXPORT_VERSION_PROSE_STALE",
+          "SDD_V2_REVIEW_RECOMMENDED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-EQUIV-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED",
+          "SDD_V2_EQUIVALENCE_EXCEPTIONS_STALE",
+          "SDD_V2_QUANTIFIER_FIXTURE_UNDISCRIMINATING",
+          "SDD_V2_REVIEW_RECOMMENDED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-PRESERVE-PROSE-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED",
+          "SDD_V2_PRESERVE_PROSE_STALE",
+          "SDD_V2_QUANTIFIER_FIXTURE_UNDISCRIMINATING"
+        ]
+      },
+      {
+        "id": "CSDD-V2-EXEMPT-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED",
+          "SDD_V2_EXEMPT_WORK_ON_GATED_OPERATION",
+          "SDD_V2_QUANTIFIER_FIXTURE_UNDISCRIMINATING"
+        ]
+      },
+      {
+        "id": "CSDD-V2-AMEND-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED",
+          "SDD_V2_AMENDMENT_CITATION_RECHECK",
+          "SDD_V2_QUANTIFIER_FIXTURE_UNDISCRIMINATING"
+        ]
+      },
+      {
+        "id": "CSDD-V2-GATE-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED",
+          "SDD_V2_GATE_WRITES_OUT_OF_SCOPE",
+          "SDD_V2_QUANTIFIER_FIXTURE_UNDISCRIMINATING",
+          "SDD_V2_REPO_GATE_NO_DISPOSITION"
+        ]
+      },
+      {
+        "id": "CSDD-V2-TIMING-101",
+        "fired": false,
+        "negative_fired": false,
+        "pass": false,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED",
+          "SDD_V2_ENUMERATED_OPERATION_UNCOVERED",
+          "SDD_V2_QUANTIFIER_FIXTURE_UNDISCRIMINATING"
+        ]
+      },
+      {
+        "id": "CSDD-V2-STATUS-101",
+        "fired": false,
+        "negative_fired": false,
+        "pass": false,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED",
+          "SDD_V2_QUANTIFIER_FIXTURE_UNDISCRIMINATING"
+        ]
+      }
+    ],
+    "heldOut": [
+      {
+        "id": "CSDD-V2-FINGERPRINT-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_ENUMERATED_OPERATION_UNCOVERED",
+          "SDD_V2_EXPORT_FINGERPRINT_STALE",
+          "SDD_V2_INTERFACE_MISMATCH"
+        ]
+      },
+      {
+        "id": "CSDD-V2-PIN-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_INTERFACE_MISMATCH",
+          "SDD_V2_REVIEW_RECOMMENDED"
+        ]
+      }
+    ]
+  },
+  "candidate": {
+    "at": "2026-09-25T15:22:57.633Z",
+    "source_version": "a4fd1d6bc1877912d5bd722261adfee0c08b916a4c47f0b519740fc53355b354",
+    "results": [
+      {
+        "id": "CSDD-TYPE-001",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "API_SURFACE_DEGENERATE_INPUT"
+        ]
+      },
+      {
+        "id": "CSDD-V2-REPO-101",
+        "fired": false,
+        "negative_fired": null,
+        "pass": true,
+        "codes": []
+      },
+      {
+        "id": "CSDD-V2-TRACE-101",
+        "fired": false,
+        "negative_fired": true,
+        "pass": true,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-META-101",
+        "fired": false,
+        "negative_fired": null,
+        "pass": true,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-CLAR-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "CLARIFICATION",
+          "NEEDS",
+          "PSEUDOCODE_SYMBOL_UNRESOLVED",
+          "SDD_V2_CLARIFICATION_UNTRACKED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-READS-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_PATH_NOT_FOUND"
+        ]
+      },
+      {
+        "id": "CSDD-V2-CLAR-102",
+        "fired": false,
+        "negative_fired": true,
+        "pass": true,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-STEP-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_META_SOURCE_MISMATCH"
+        ]
+      },
+      {
+        "id": "CSDD-V2-CLOSURE-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_CLOSURE_OPEN"
+        ]
+      },
+      {
+        "id": "CSDD-V2-BUG-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_SECTION_MISSING"
+        ]
+      },
+      {
+        "id": "CSDD-V2-ASSESS-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_REQUIRED_FIELD_EMPTY"
+        ]
+      },
+      {
+        "id": "CSDD-V2-SYMBOL-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-PROOF-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_CLOSURE_OPEN"
+        ]
+      },
+      {
+        "id": "CSDD-V2-CLOSURE-102",
+        "fired": true,
+        "negative_fired": null,
+        "pass": true,
+        "codes": [
+          "SDD_V2_CLOSURE_OPEN"
+        ]
+      },
+      {
+        "id": "CSDD-V2-SYMBOL-102",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED"
+        ]
+      },
+      {
+        "id": "CSDD-RSI-TEL-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "RSI_TELEMETRY_CANDIDATES_RECORDED"
+        ]
+      },
+      {
+        "id": "CSDD-RSI-TEL-102",
+        "fired": true,
+        "negative_fired": null,
+        "pass": true,
+        "codes": [
+          "RSI_TELEMETRY_CLOSURE_RECORDED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-IGNORED-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_PATH_GIT_IGNORED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-OWNED-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_WRITES_OWNED_ELSEWHERE"
+        ]
+      },
+      {
+        "id": "CSDD-V2-FWD-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_ACCEPTANCE_FORWARD_DEPENDENCY",
+          "SDD_V2_WRITES_OWNED_ELSEWHERE"
+        ]
+      },
+      {
+        "id": "CSDD-V2-ERRTEXT-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_ERROR_TEXT_READER_UNDECLARED",
+          "SDD_V2_REWRITE_BEHAVIOUR_UNSURVEYED",
+          "SDD_V2_SHAPE_READER_UNDECLARED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-SHAPE-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_ERROR_TEXT_READER_UNDECLARED",
+          "SDD_V2_REWRITE_BEHAVIOUR_UNSURVEYED",
+          "SDD_V2_SHAPE_READER_UNDECLARED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-ORACLE-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_CLOSURE_OPEN"
+        ]
+      },
+      {
+        "id": "CSDD-V2-GAP-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_CLOSURE_OPEN"
+        ]
+      },
+      {
+        "id": "CSDD-V2-STRICT-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_CLOSURE_OPEN"
+        ]
+      },
+      {
+        "id": "CSDD-V2-CLAIMED-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_CLOSURE_OPEN"
+        ]
+      },
+      {
+        "id": "CSDD-V2-TOUCH-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_CLOSURE_OPEN"
+        ]
+      },
+      {
+        "id": "CSDD-V2-PRESET-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_SECTION_MISSING"
+        ]
+      },
+      {
+        "id": "CSDD-V2-PRESET-102",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_PATH_GIT_IGNORED",
+          "SDD_V2_PRESET_BLOCKED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-CMDORACLE-101",
+        "fired": false,
+        "negative_fired": true,
+        "pass": true,
+        "codes": []
+      },
+      {
+        "id": "CSDD-V2-QUALITY-015",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_NEGATIVE_SEARCH_GENERIC_TOKEN"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-016",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_INDEX_ORACLE_DIRTY_TREE"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-017",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_REPO_GATE_NO_DISPOSITION"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-018",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_BUDGET_GATE_UNOWNED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-019",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_COUNT_ONLY_PRESERVATION"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-020",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_SURFACE_INVENTORY_INCOMPLETE"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-021",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_ORACLE_PROCEDURE_UNSCRIPTED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-022",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_REQUIREMENT_OUTCOME_UNCOVERED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-023",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_FAILURE_CLAUSE_UNBOUND"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-024",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_QUANTIFIER_FIXTURE_UNDISCRIMINATING"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-025",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_ORACLE_BELOW_BOUNDARY"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-026A",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_INVARIANT_INVENTORY_MISSING"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-026B",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_INVENTORY_ENTRY_UNCOVERED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-027",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_ERROR_POSITION_UNSTATED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-028A",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_PRINCIPLE_CHECK_UNBOUND"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-028B",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_CAUSE_OVERWRITE_PRESCRIBED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-026C",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_INVARIANT_INVENTORY_MISSING"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-026D",
+        "fired": false,
+        "negative_fired": true,
+        "pass": true,
+        "codes": []
+      },
+      {
+        "id": "CSDD-V2-QUALITY-025B",
+        "fired": false,
+        "negative_fired": true,
+        "pass": true,
+        "codes": []
+      },
+      {
+        "id": "CSDD-V2-PROGRAM-SIBLING-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_COVERAGE_MISSING",
+          "SDD_V2_INDEX_SHAPE_INVALID",
+          "SDD_V2_PATH_ESCAPE",
+          "SDD_V2_REFERENCE_MISSING"
+        ]
+      },
+      {
+        "id": "CSDD-V2-ERRTEXT-102",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_ERROR_TEXT_READER_UNDECLARED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-031A",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_QUANTIFIER_FIXTURE_UNDISCRIMINATING"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-031B",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_QUANTIFIER_FIXTURE_UNDISCRIMINATING"
+        ]
+      },
+      {
+        "id": "CSDD-V2-PROGRAM-DERIVED-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_COVERAGE_MISSING",
+          "SDD_V2_PROGRAM_LINK_INVALID",
+          "SDD_V2_REFERENCE_MISSING"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-033",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED",
+          "SDD_V2_ACCEPTANCE_SUBJECT_UNOBSERVABLE"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-034",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_REMOVED_EXPORT_ASSERTED_UNCHANGED",
+          "SDD_V2_REWRITE_BEHAVIOUR_UNSURVEYED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-QUALITY-035",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED",
+          "SDD_V2_ACCEPTANCE_BASELINE_UNFALSIFIABLE"
+        ]
+      },
+      {
+        "id": "CSDD-V2-PRESERVE-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_CLOSURE_OPEN"
+        ]
+      },
+      {
+        "id": "CSDD-V2-REPLAY-201",
+        "fired": false,
+        "negative_fired": true,
+        "pass": true,
+        "codes": []
+      },
+      {
+        "id": "CSDD-V2-REPLAY-202",
+        "fired": false,
+        "negative_fired": true,
+        "pass": true,
+        "codes": []
+      },
+      {
+        "id": "CSDD-V2-CONSUME-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_PRODUCER_SEMANTICS_RESTATED",
+          "SDD_V2_REVIEW_RECOMMENDED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-ROOTCOPY-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_ROOT_RESTATES_CHILD"
+        ]
+      },
+      {
+        "id": "CSDD-V2-DELEGATE-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_DELEGATION_UNDECLARED",
+          "SDD_V2_PRESERVATION_CLAIM_UNCHECKED",
+          "SDD_V2_PRESERVATION_UNPINNED",
+          "SDD_V2_REVIEW_RECOMMENDED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-DELEGATE-102",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "CODE",
+          "INVALID_OPTION",
+          "SDD_V2_DELEGATION_INCOMPLETE",
+          "SDD_V2_PRESERVATION_UNPINNED",
+          "SDD_V2_REVIEW_RECOMMENDED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-DELEGATE-103",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_PRESERVATION_CLAIM_UNCHECKED",
+          "SDD_V2_PRESERVATION_UNPINNED",
+          "SDD_V2_REVIEW_RECOMMENDED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-DELEGATE-104",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_ERROR_CODE_UNREACHABLE",
+          "SDD_V2_PRESERVATION_UNPINNED",
+          "SDD_V2_REVIEW_RECOMMENDED",
+          "STAGE_KIND_MISMATCH"
+        ]
+      },
+      {
+        "id": "CSDD-V2-PRESETPACK-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_SECTION_MISSING"
+        ]
+      },
+      {
+        "id": "CSDD-V2-TITLES-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_CLOSURE_OPEN"
+        ]
+      },
+      {
+        "id": "CSDD-V2-ENUM-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED",
+          "SDD_V2_ENUMERATED_OPERATION_UNCOVERED",
+          "SDD_V2_QUANTIFIER_FIXTURE_UNDISCRIMINATING"
+        ]
+      },
+      {
+        "id": "CSDD-V2-STATE-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED",
+          "SDD_V2_STATE_SPACE_UNSTATED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-PRESERVE-201",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED",
+          "SDD_V2_PRESERVATION_UNPINNED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-VARIANT-201",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED",
+          "SDD_V2_ENUMERATED_OPERATION_UNCOVERED",
+          "SDD_V2_QUANTIFIER_FIXTURE_UNDISCRIMINATING",
+          "SDD_V2_VARIANT_MATRIX_MISSING"
+        ]
+      },
+      {
+        "id": "CSDD-V2-SHARED-101",
+        "fired": true,
+        "negative_fired": null,
+        "pass": true,
+        "codes": [
+          "SDD_V2_CLOSURE_OPEN"
+        ]
+      },
+      {
+        "id": "CSDD-V2-COST-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED",
+          "SDD_V2_SCALING_ORACLE_UNSCOPED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-REVIEW-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_QUANTIFIER_FIXTURE_UNDISCRIMINATING",
+          "SDD_V2_REVIEW_UNDISPOSED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-HISTORY-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED",
+          "SDD_V2_PRESERVATION_UNPINNED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-REVIEW-102",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "DEPENDENCY_BLOCKED",
+          "PSEUDOCODE_SYMBOL_UNRESOLVED",
+          "SDD_V2_QUANTIFIER_FIXTURE_UNDISCRIMINATING",
+          "SDD_V2_REQUIREMENT_OUTCOME_UNCOVERED",
+          "SDD_V2_REVIEW_RECOMMENDED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-REVIEW-103",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_QUANTIFIER_FIXTURE_UNDISCRIMINATING",
+          "SDD_V2_REVIEW_FINDINGS_MISSING"
+        ]
+      },
+      {
+        "id": "CSDD-V2-PREMISE-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED",
+          "SDD_V2_ALGORITHM_PREMISE_UNGROUNDED",
+          "SDD_V2_QUANTIFIER_FIXTURE_UNDISCRIMINATING"
+        ]
+      },
+      {
+        "id": "CSDD-V2-REWRITE-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED",
+          "SDD_V2_QUANTIFIER_FIXTURE_UNDISCRIMINATING",
+          "SDD_V2_REWRITE_BEHAVIOUR_UNSURVEYED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-VERSION-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_EXPORT_VERSION_PROSE_STALE",
+          "SDD_V2_REVIEW_RECOMMENDED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-EQUIV-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED",
+          "SDD_V2_EQUIVALENCE_EXCEPTIONS_STALE",
+          "SDD_V2_QUANTIFIER_FIXTURE_UNDISCRIMINATING",
+          "SDD_V2_REVIEW_RECOMMENDED"
+        ]
+      },
+      {
+        "id": "CSDD-V2-PRESERVE-PROSE-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED",
+          "SDD_V2_PRESERVE_PROSE_STALE",
+          "SDD_V2_QUANTIFIER_FIXTURE_UNDISCRIMINATING"
+        ]
+      },
+      {
+        "id": "CSDD-V2-EXEMPT-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED",
+          "SDD_V2_EXEMPT_WORK_ON_GATED_OPERATION",
+          "SDD_V2_QUANTIFIER_FIXTURE_UNDISCRIMINATING"
+        ]
+      },
+      {
+        "id": "CSDD-V2-AMEND-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED",
+          "SDD_V2_AMENDMENT_CITATION_RECHECK",
+          "SDD_V2_QUANTIFIER_FIXTURE_UNDISCRIMINATING"
+        ]
+      },
+      {
+        "id": "CSDD-V2-GATE-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED",
+          "SDD_V2_GATE_WRITES_OUT_OF_SCOPE",
+          "SDD_V2_QUANTIFIER_FIXTURE_UNDISCRIMINATING",
+          "SDD_V2_REPO_GATE_NO_DISPOSITION"
+        ]
+      },
+      {
+        "id": "CSDD-V2-TIMING-101",
+        "fired": false,
+        "negative_fired": false,
+        "pass": false,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED",
+          "SDD_V2_ENUMERATED_OPERATION_UNCOVERED",
+          "SDD_V2_QUANTIFIER_FIXTURE_UNDISCRIMINATING"
+        ]
+      },
+      {
+        "id": "CSDD-V2-STATUS-101",
+        "fired": false,
+        "negative_fired": false,
+        "pass": false,
+        "codes": [
+          "PSEUDOCODE_SYMBOL_UNRESOLVED",
+          "SDD_V2_QUANTIFIER_FIXTURE_UNDISCRIMINATING"
+        ]
+      }
+    ],
+    "regressions": [],
+    "repairs": [],
+    "missing_cases": [],
+    "heldOut": [
+      {
+        "id": "CSDD-V2-FINGERPRINT-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_ENUMERATED_OPERATION_UNCOVERED",
+          "SDD_V2_EXPORT_FINGERPRINT_STALE",
+          "SDD_V2_INTERFACE_MISMATCH"
+        ]
+      },
+      {
+        "id": "CSDD-V2-PIN-101",
+        "fired": true,
+        "negative_fired": false,
+        "pass": true,
+        "codes": [
+          "SDD_V2_INTERFACE_MISMATCH",
+          "SDD_V2_REVIEW_RECOMMENDED"
+        ]
+      }
+    ]
+  },
+  "prune": {
+    "source_version": "a4fd1d6bc1877912d5bd722261adfee0c08b916a4c47f0b519740fc53355b354",
+    "over_budget": [],
+    "unjustified_additions": [],
+    "undecided_removals": [],
+    "not_net_negative": []
+  },
+  "closed_at": "2026-09-25T15:23:05.917Z",
+  "verdict": "RECORDED",
+  "repair_ids": [],
+  "rejection_reasons": [],
+  "not_proven": [
+    "that the change makes the skill better at anything not covered by a mechanical case",
+    "that an authoring agent reads, understands or follows any rule involved",
+    "that a reader with write access could not have edited a case; the guard makes that visible, not impossible"
+  ],
+  "settled_observations": []
+}
