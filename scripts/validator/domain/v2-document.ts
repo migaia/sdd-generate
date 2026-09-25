@@ -23,8 +23,9 @@ import { ignoredInputCandidates, ownershipCandidates } from './v2-boundaries.ts'
 import { forwardDependencyCandidates, readerCandidates } from './v2-readers.ts'
 import { qualityCandidates } from './v2-quality.ts'
 import { applyPreset, loadPreset } from './v2-preset.ts'
-import { checkDelegations, checkSemantics } from './v2-semantics.ts'
+import { checkDelegations, checkSemantics, exportVersionCandidates } from './v2-semantics.ts'
 import { reviewCandidates, type ReviewSummary } from './v2-review.ts'
+import { listCandidates } from './v2-lists.ts'
 import { scopeCandidates } from './v2-scope.ts'
 import { symbolCandidates } from './v2-symbols.ts'
 import { ancestors, checkStepRecords, stepRecords } from './v2-tasks.ts'
@@ -895,6 +896,7 @@ export function validateV2Document(
         ...forwardDependencyCandidates(selected.index, claimBody, external),
         ...readerCandidates(selected.index, claimBody, repo, reads),
         ...scopeCandidates(selected.index, claimBody),
+        ...listCandidates(selected.index, claimBody, repo, selectedBody),
         ...qualityCandidates(selected.index, claimBody, repo)
       ]
     : []
@@ -931,6 +933,31 @@ export function validateV2Document(
   )
   if (selected)
     candidates.push(...delegationCandidates.filter((c) => c.detail.startsWith(`${selected.id} `)))
+  // OD-56: every document of the program is read, and each reports only its own stale copies.
+  const versionCandidates = exportVersionCandidates(
+    [
+      ...[...leaves].map(([id, leaf]) => ({
+        id,
+        path: leaf.path,
+        body: prose(leaf.text, 'sdd-contract'),
+        index: leaf.index
+      })),
+      ...(root
+        ? [
+            {
+              id: 'root',
+              path: root.path,
+              body: prose(root.text, 'sdd-program'),
+              index: root.index
+            }
+          ]
+        : [])
+    ],
+    withoutHistory
+  )
+  candidates.push(
+    ...versionCandidates.filter((c) => c.detail.startsWith(`${selected ? selected.id : 'root'} `))
+  )
   candidates.push(
     ...semanticCandidates.filter((c) =>
       selected

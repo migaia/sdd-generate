@@ -15,7 +15,7 @@ This README explains the skill. [SKILL.md](SKILL.md) is the normative contract; 
 | Host implementability | 9 | A compact handoff: read order, ordered tasks with the files they touch, the MVP task set and a per-Bundle execution slice |
 | Requirement traceability | 9 | Every must-ship requirement is traced through Module, Chunk and Bundle to an observable acceptance and its declared oracle |
 | Verifiable convergence | 9 | Evidence reports, commit-checked causal proof, `--replay` ablation and a `preserve` class for properties that already hold |
-| Design-defect detection | 6 | Structural checks are exact. The semantic checks (acceptance quality, readers, symbols) are regex-based advice. |
+| Design-defect detection | 6 | Structural checks are exact. The semantic checks (acceptance quality, readers, symbols) are regex-based advice; a fresh-context review, measured outside the skill, reads for cross-clause conflicts and weak acceptance |
 | Context economy | 8 | The host reads one child and its direct dependencies; derived Metas keep the index short |
 | Repository fit | 8 | `AGENTS.md` and principle files, repository presets, shareable preset packs and custom `init` templates |
 | Host neutrality | 8 | Works with Claude Code, Codex or any agent that reads a skill folder; the scripts need Bun |
@@ -145,7 +145,7 @@ Every document is written in the same order. The phases are a reasoning order, n
 
 ```mermaid
 flowchart LR
-  H[1 Harvest] --> A[2 Admit] --> D[3 Design] --> V[4 Verify] --> C[5 Decompose] --> R[6 Report]
+  H[1 Harvest] --> A[2 Admit] --> D[3 Design] --> V[4 Verify] --> C[5 Decompose] --> R[6 Review and report]
 ```
 
 | Phase | Question | Produces | Prevents |
@@ -155,7 +155,7 @@ flowchart LR
 | **3 Design** | How, under the principles? | Normative behaviour, steps with `touches`, producer and consumer interfaces, supported failures, and one owner per change boundary | Two owners for one boundary; steps the host has to invent |
 | **4 Verify** | How would we notice it is missing? | A Given/When/Then or command case for each must-ship requirement, its deciding test in `oracles`, and the resolved acceptance-quality candidates | Acceptance that passes against the old code; unobservable assertions |
 | **5 Decompose** | In what order, and what can run in parallel? | The five-Meta graph; batches ordered by real dependencies; parallel waves derived, never hand-marked | Hand-maintained task lists that drift from the design |
-| **6 Report** | What can the host rely on? | One `validate` run, a semantic review of what structure cannot see, and a handoff with blockers, open decisions and evidence limits | Readiness claimed on unrun checks |
+| **6 Review and report** | What would the host hit mid-delivery, and what can it rely on? | A fresh-context review with a disposition for every finding (when a must-ship requirement or a BC exists), then one `validate` run and a handoff with blockers, open decisions and evidence limits | Clauses that cannot all hold, acceptance a wrong implementation passes, and readiness claimed on unrun checks |
 
 A bug fix runs the same six phases, adding a reproduction, a root cause and `regression` cases that must fail before the fix. An assessment runs Harvest and Admit only, then decides go, no-go or reshape.
 
@@ -241,6 +241,7 @@ flowchart LR
 3. If the size budget must move, a separate `budget-change` round records the measured need.
 4. An `improvement` round is `ACCEPTED` only if the frozen case flips and no earlier case regresses.
 5. Every new rule records what it supersedes, a counterexample, its scope and its trade-off.
+6. A semantic defect that no zero-false-positive regex can catch settles as a review `lens`, not as a detector. The settlement must name a review round that `sdd-bench` accepted (`settle --as lens --review-results <rounds.json>`); a written `ruling` or a `rejected` settlement records the other outcomes.
 
 ---
 
@@ -250,11 +251,12 @@ flowchart LR
 
 **The `validate` handoff.** A single command performs the structural check and emits the host handoff. The handoff contains the resolved paths, read order, ordered `tasks`, derived `waves`, the MVP and its minimal task set, the execution slice (Chunks, Modules, required and produced Assets) and `evidence_limits`.
 
-**Advisory candidates.** Some findings are advice rather than blockers, because a regular expression cannot decide semantics. They come in five families:
+**Advisory candidates.** Some findings are advice rather than blockers, because a regular expression cannot decide semantics. They come in six families:
 - *Readers:* tests asserting error text, or code depending on class shape.
 - *Symbols:* step calls declared nowhere in owned source.
 - *Boundaries:* git-ignored inputs, and writes owned by another SDD.
 - *Forward dependencies.*
+- *Review:* a recorded finding with no disposition, or one that cites a clause the document does not define.
 - *Acceptance quality:*
   - uncovered outcomes;
   - undiscriminating fixtures for quantifiers;
@@ -266,6 +268,15 @@ flowchart LR
   - and others.
 
 A preset can promote any candidate to a blocker.
+
+**Pre-handoff review.** Structure cannot see clauses that contradict each other, or acceptance that a wrong implementation still passes. Before the handoff, one reviewer that did not write the document reads the SDD, the repository and [review](references/review.md), and nothing else. It applies three lenses:
+- *L1 behaviour-change sweep:* for every BC or rewritten branch, find every test and branch that asserts the old behaviour, and check each pair of clauses on the same cell (for example "the other tests stay unchanged" against a sibling test that asserts the changed behaviour).
+- *L2 discrimination:* for every must-ship acceptance, including ones an earlier revision left unchanged, describe a plausible wrong implementation that passes it.
+- *L3 implementation dry-run:* walk each step against the code and list every decision the SDD leaves to the host.
+
+Findings go to an `sdd-review-findings/v1` file (`id`, `lens`, `clauses`, `evidence`, `claim`). The author closes each one as `fixed`, `ruled-invalid:<reason>` or `out-of-scope` in the index (`"review": {"findings": …, "dispositions": {"F1": "fixed"}}`), and re-reviews only the changed clauses, once. `validate` reports an undisposed finding or an unknown clause as a candidate, never a blocker. The handoff and the local telemetry carry disposition counts per lens, and `rsi.ts health` turns them into per-lens precision (fixed ÷ (fixed + ruled-invalid)).
+
+The lenses are measured, not asserted. The separate `sdd-bench` scores a lens version on seeded review cases, most of them defects that real deliveries hit. It reports recall, false alarms on the repaired document, recall on held-out cases never used to write a lens, and token cost. A new lens version is accepted only if it catches the case that triggered it, loses nothing, and stays within the cost ceiling.
 
 **Closure.** `validate --evidence` checks, for each acceptance:
 - that the PASS row runs the declared oracle;
@@ -309,7 +320,7 @@ Run from anywhere as `bun <create-sdd-root>/scripts/<script>`; the flags are doc
 
 ## What the checks do not prove
 
-Structure, evidence links and replays do not prove that a design is good, that an oracle covers all of a requirement's behaviour, or that any agent read the guidance. A design-ready SDD grants no authority to run tests, commit, merge or deploy. Read the `evidence_limits` in every result literally.
+Structure, evidence links and replays do not prove that a design is good, that an oracle covers all of a requirement's behaviour, or that any agent read the guidance. A design-ready SDD grants no authority to run tests, commit, merge or deploy. Read the `evidence_limits` in every result literally. A review with every finding closed does not prove the design is free of defects: the lenses are measured on a small set of real cases, and a held-out case (acceptance that drops a condition branch) is still missed.
 
 ## Layout
 
@@ -332,6 +343,7 @@ The skill improves itself only through recorded rounds ([behavior evaluation](re
   - `budget-change` raises a size ceiling with a reason;
   - `improvement` repairs it, and is accepted only when a frozen case flips and nothing regresses;
   - `consolidation` shrinks the skill.
+- A change to `references/review.md` is measured in `sdd-bench` first, and its size is held by the `review.md.characters` ceiling.
 - Before finishing a change, run `bun test tests`, `bun run typecheck`, `bun run lint` and `bun scripts/rsi.ts suite`.
 
 ## License

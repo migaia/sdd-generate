@@ -174,6 +174,54 @@ const DISPOSITION = /^(?:propagate|unreachable|wrap:[A-Z][A-Z0-9_]*)$/
  * A blanket preservation claim against a named earlier revision ("same as R2", "与 R2 相同").
  * A bare "unchanged" is a local assertion, not a claim about a prior revision, and is not matched.
  */
+/** A version token after an export name: `v2`, `version 2`, `版本 2`. */
+const VERSION_AFTER = /^[^|\n]{0,30}?(?:\bv|\bversion\s*|版本\s*)(\d+)\b/i
+/** A phrase that talks about an earlier version on purpose ("revision 5 及之前为版本 1", "formerly"). */
+const HISTORICAL = /及之前|此前|以前|旧版|formerly|previously|before revision|until revision/i
+
+/**
+ * OD-56: an export version restated in prose (a leaf header, a root table row, plan text) that
+ * differs from the producer's current `exports[].version`. The contract JSON is the authority; a
+ * stale prose copy reads as a producer/consumer conflict to the host. A parenthetical or clause
+ * that names an earlier version on purpose is skipped.
+ */
+export function exportVersionCandidates(
+  documents: readonly Doc[],
+  withoutHistory: (body: string) => string
+): Candidate[] {
+  const versions = new Map<string, string>()
+  for (const doc of documents)
+    for (const value of list(doc.index.exports))
+      if (object(value) && text(value.id) && value.version !== undefined)
+        versions.set(value.id, String(value.version))
+  const found: Candidate[] = []
+  for (const doc of documents)
+    for (const line of withoutHistory(doc.body).split('\n'))
+      for (const segment of line.split(/[()（）;；。]/)) {
+        if (HISTORICAL.test(segment)) continue
+        for (const [id, version] of versions) {
+          const name = new RegExp(`(?<![\\w-])\`?${id.replace(/[-]/g, '\\-')}\`?(?![\\w-])`, 'g')
+          for (const match of segment.matchAll(name)) {
+            const rest = segment.slice(match.index! + match[0].length)
+            const stated =
+              VERSION_AFTER.exec(rest)?.[1] ??
+              (line.trimStart().startsWith('|')
+                ? rest
+                    .split('|')
+                    .map((cell) => /^\s*v?(\d+)\s*$/i.exec(cell)?.[1])
+                    .find(Boolean)
+                : undefined)
+            if (stated && stated !== version)
+              found.push({
+                code: 'SDD_V2_EXPORT_VERSION_PROSE_STALE',
+                detail: `${doc.id} says ${id} version ${stated} ("${segment.trim().slice(0, 80)}"); the producer exports version ${version}: point to the contract instead of restating it, or update the prose`
+              })
+          }
+        }
+      }
+  return found
+}
+
 export const PRESERVATION =
   /(?:same as|unchanged (?:from|since)|identical to)\s+R\d+|与\s*R\d+\s*(?:相同|一致)|R\d+\s*(?:的)?(?:行为)?(?:不变|相同)/i
 /** The line's own anchor ID (`- R7 …`), which is not a revision reference. */

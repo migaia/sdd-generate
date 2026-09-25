@@ -15,7 +15,9 @@ test('each scope gap is reported, and its repaired design is clean', () => {
     state: 'SDD_V2_STATE_SPACE_UNSTATED',
     preserve: 'SDD_V2_PRESERVATION_UNPINNED',
     variant: 'SDD_V2_VARIANT_MATRIX_MISSING',
-    cost: 'SDD_V2_SCALING_ORACLE_UNSCOPED'
+    cost: 'SDD_V2_SCALING_ORACLE_UNSCOPED',
+    timing: 'SDD_V2_TIMING_ORACLE_UNISOLATED',
+    status: 'SDD_V2_STATUS_CLAIM_UNCHECKED'
   }
   for (const [name, code] of Object.entries(expected)) {
     expect(codes(`${name}.md`)).toContain(code)
@@ -38,4 +40,18 @@ test('a scaling outcome needs both the end-to-end timing and the cost-path inven
   expect(codes('cost.ok.md', counterOnly)).toContain('SDD_V2_SCALING_ORACLE_UNSCOPED')
   const noPaths = ok.replace('"kind": "cost-path"', '"kind": "invariant"')
   expect(codes('cost.ok.md', noPaths)).toContain('SDD_V2_SCALING_ORACLE_UNSCOPED')
+})
+
+test('a dedicated oracle script counts as isolation, and a design status is not a claim', () => {
+  const bad = readFileSync(join(DIR, 'timing.md'), 'utf8')
+  const scripted = bad.replace(
+    '"writes"',
+    '"oracles": { "A1": { "script": "test:timing", "stdout": "ok" } },\n  "writes"'
+  )
+  expect(codes('timing.md', scripted)).not.toContain('SDD_V2_TIMING_ORACLE_UNISOLATED')
+  const zh = readFileSync(join(DIR, 'status.ok.md'), 'utf8').replace(
+    '- Status: design; delivery state is the closure `validate --evidence` computes.',
+    '- 文档状态：**verified / SHIP**（修复轮 revision 2）'
+  )
+  expect(codes('status.ok.md', zh)).toContain('SDD_V2_STATUS_CLAIM_UNCHECKED')
 })

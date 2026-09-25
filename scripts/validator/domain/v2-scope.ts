@@ -42,6 +42,20 @@ function prescribes(clause: string): boolean {
   return false
 }
 
+/** A timed quantity (OD-61). */
+const TIMED = /\btim(?:e|ed|ing)\b|\bms\b|duration|latency|耗时|计时|用时/i
+/** A threshold the measured quantity must meet ("at most 3x", "≤3×", "不超过 3 倍"). */
+const THRESHOLD = /at most|≤|<=|不超过|不大于|\bwithin\b|\d+(?:\.\d+)?\s*[x×倍]/i
+/** A quantity formed by subtracting one timed span from another. */
+const DIFFERENCE = /\bminus\b|\bsubtract|扣除|减去|\s[−–]\s|\s-\s(?=\d|`|\()/i
+
+/** A timing oracle's own execution isolation: serial, single-file or a dedicated script (OD-69). */
+const ISOLATED =
+  /serial|isolat|single[- ]file|dedicated|own (?:script|project)|fileParallelism|no-file-parallelism|runInBand|max-?workers[= ]1|串行|单独|隔离|非并行|独立(?:脚本|项目)/i
+/** A status word claiming delivery (OD-70): only the closure `validate --evidence` computes says so. */
+const STATUS_CLAIM =
+  /^\s*[-*]?\s*(?:\*\*)?(?:status|文档状态|状态)(?:\*\*)?\s*[:：][^\n]*\b(?:verified|SHIP(?:PED)?|delivered|closed)\b|^\s*[-*]?\s*(?:文档状态|状态)\s*[:：][^\n]*(?:已验证|已交付|已关闭)/im
+
 /** A step that rewrites or replaces existing code (OD-54), as opposed to creating new code. */
 const REWRITE = /\b(?:rewrite|rewrites|reimplement|replace)\b|重写|改写|重新实现|替换/i
 
@@ -67,7 +81,10 @@ const heading = (body: string, names: RegExp) =>
  * - an algorithm premise (sorted, merged, deduplicated, monotonic input) with no cited location that
  *   establishes it (OD-47);
  * - a step that rewrites existing code with no `current-behaviour` inventory of the replaced paths
- *   (OD-54).
+ *   (OD-54);
+ * - a timing acceptance whose gated quantity is a difference of separately timed spans (OD-61), or
+ *   that names no execution isolation from the parallel default run (OD-69);
+ * - a status line claiming verified, shipped or closed, which nothing computed (OD-70).
  */
 export function scopeCandidates(index: Item, body: string): Candidate[] {
   const found: Candidate[] = []
@@ -159,6 +176,31 @@ export function scopeCandidates(index: Item, body: string): Candidate[] {
         detail: `${id} prescribes an algorithm with a data precondition ("${clause.trim().slice(0, 80)}"): cite the file:line where the current code establishes it, or the step that will`
       })
   }
+  // OD-61: two spans of similar size subtract to noise, so a gate on their difference cannot decide;
+  // gate one operation that isolates the work and record the rest without a threshold.
+  for (const id of list(index.acceptance).filter(text))
+    for (const sentence of (stepText(body, id).split('\n')[0] ?? '').split(/[;；。]/))
+      if (TIMED.test(sentence) && THRESHOLD.test(sentence)) {
+        if (DIFFERENCE.test(sentence))
+          found.push({
+            code: 'SDD_V2_TIMING_DIFFERENCE_GATE',
+            detail: `${id} gates a difference of timed spans ("${sentence.trim().slice(0, 80)}"): gate one public operation that isolates the work and record the other timing without a threshold`
+          })
+        // OD-69: a wall-clock gate sharing a parallel default run fails under load from other files.
+        const oracle = index.oracles && object(index.oracles) ? index.oracles[id] : undefined
+        const dedicated = object(oracle) && text(oracle.script) && oracle.script !== 'test'
+        if (!ISOLATED.test(stepText(body, id).split('\n')[0] ?? '') && !dedicated)
+          found.push({
+            code: 'SDD_V2_TIMING_ORACLE_UNISOLATED',
+            detail: `${id} gates a timing: name how it runs isolated (a dedicated serial script or project, no file parallelism), not in the parallel default gate`
+          })
+      }
+  const claimed = STATUS_CLAIM.exec(body)
+  if (claimed)
+    found.push({
+      code: 'SDD_V2_STATUS_CLAIM_UNCHECKED',
+      detail: `"${claimed[0].trim().slice(0, 80)}": a status word is not evidence; delivery is the closure validate --evidence computes, and an audit it names is checked by nothing`
+    })
   const surveyed = inventories.some((entry) => entry.kind === 'current-behaviour')
   const rewrites = list(index.steps)
     .map((step) => (object(step) ? step.id : step))
