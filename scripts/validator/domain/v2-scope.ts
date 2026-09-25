@@ -13,6 +13,38 @@ const SCALING =
 /** A measurement of the public operation itself, not an internal counter. */
 const END_TO_END = /end[ -]to[ -]end|wall|per[ -](?:call|operation)|mean time|端到端|耗时/i
 
+/**
+ * An algorithm whose correctness rests on a data precondition (OD-47): binary search needs sorted
+ * input, a merge needs ordered runs, dedupe needs a key, an append-only order needs monotonic writes.
+ */
+const PREMISE =
+  /binary[ -]search|\bsorted\b|merge[ -]sort|\bdedupe|de-?duplicat|monotonic|append-only|二分|有序|归并|去重|单调|只追加/i
+/** A repository location cited as `path/file.ext:line`, the observation a premise must rest on. */
+const LOCATION = /[\w./-]+\.\w+:\d+/
+/** Words in the same phrase before a premise that forbid it rather than prescribe it ("禁止…去重", "never sorted"). */
+const NEGATION = /禁止|不得|不要|不能|无需|\b(?:never|not|no|without|don't)\b/i
+
+/** Whether a clause prescribes a premise algorithm, not merely forbids one. */
+function prescribes(clause: string): boolean {
+  const pattern = new RegExp(PREMISE.source, 'gi')
+  for (const match of clause.matchAll(pattern))
+    // The phrase runs back to the previous clause punctuation, so a prohibition earlier in the
+    // same phrase still applies and one in an earlier sentence does not.
+    if (
+      !NEGATION.test(
+        clause
+          .slice(0, match.index)
+          .split(/[，。；;,.!?、]/)
+          .pop() ?? ''
+      )
+    )
+      return true
+  return false
+}
+
+/** A step that rewrites or replaces existing code (OD-54), as opposed to creating new code. */
+const REWRITE = /\b(?:rewrite|rewrites|reimplement|replace)\b|重写|改写|重新实现|替换/i
+
 /** A state vocabulary declared in a design fence: `type XStatus = 'a' | 'b' | 'c'`. */
 const STATE = /(?:type|enum)\s+(\w*(?:Status|State|Phase))\s*=?\s*\{?([^\n]*)/g
 
@@ -31,7 +63,11 @@ const heading = (body: string, names: RegExp) =>
  *   inventory pinning each branch of the replaced code to a test or acceptance;
  * - a requirement spanning a variant set with no capability matrix recording each cell's source;
  * - a scaling outcome measured only by a subsystem counter (OD-45): it needs an end-to-end timing of
- *   the public operation at two or more sizes and a `cost-path` inventory of whole-collection work.
+ *   the public operation at two or more sizes and a `cost-path` inventory of whole-collection work;
+ * - an algorithm premise (sorted, merged, deduplicated, monotonic input) with no cited location that
+ *   establishes it (OD-47);
+ * - a step that rewrites existing code with no `current-behaviour` inventory of the replaced paths
+ *   (OD-54).
  */
 export function scopeCandidates(index: Item, body: string): Candidate[] {
   const found: Candidate[] = []
@@ -111,6 +147,31 @@ export function scopeCandidates(index: Item, body: string): Candidate[] {
           (list(point.acceptance).length || text(point.test))
       )
   )
+  const clauseIds = [
+    ...list(index.requirements).map((r) => (object(r) ? r.id : r)),
+    ...list(index.steps).map((step) => (object(step) ? step.id : step))
+  ].filter(text)
+  for (const id of clauseIds) {
+    const clause = stepText(body, id).split('\n')[0] ?? ''
+    if (prescribes(clause) && !LOCATION.test(clause))
+      found.push({
+        code: 'SDD_V2_ALGORITHM_PREMISE_UNGROUNDED',
+        detail: `${id} prescribes an algorithm with a data precondition ("${clause.trim().slice(0, 80)}"): cite the file:line where the current code establishes it, or the step that will`
+      })
+  }
+  const surveyed = inventories.some((entry) => entry.kind === 'current-behaviour')
+  const rewrites = list(index.steps)
+    .map((step) => (object(step) ? step.id : step))
+    .filter(text)
+    .filter((id) => {
+      const clause = stepText(body, id).split('\n')[0] ?? ''
+      return REWRITE.test(clause) && /`[\w./-]+\.\w+`/.test(clause)
+    })
+  if (rewrites.length && !surveyed)
+    found.push({
+      code: 'SDD_V2_REWRITE_BEHAVIOUR_UNSURVEYED',
+      detail: `${rewrites.join(', ')} rewrite existing code: list what the replaced paths do now (ordering, visibility windows, failure and rollback effects) in a current-behaviour inventory, each kept by an acceptance or changed by a BC`
+    })
   const claims = body
     .split('\n')
     .filter((line) => PRESERVATION.test(line.replace(/^\s*[-*]\s+\S+\s+/, '')))
