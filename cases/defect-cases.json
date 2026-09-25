@@ -2103,6 +2103,50 @@
       "owning_test": "tests/v2-review.test.ts",
       "introduced_detector_at": "2026-09-25",
       "repository": "cases/fixtures/v2-review"
+    },
+    {
+      "id": "CSDD-V2-PREMISE-101",
+      "defect_class": "algorithm-premise-ungrounded",
+      "statement": "A step prescribes binary search over the lane without citing where the code keeps the lane sorted; the citing version names the file:line that establishes it.",
+      "root_cause": "Pseudocode symbols are resolved, but an algorithm's data precondition (sortedness, uniqueness, monotonic order) is never tied to observed code.",
+      "evidence": {
+        "file": "rsi/observed-defects.md",
+        "line": 1,
+        "quote": "OD-47"
+      },
+      "fixture": "cases/fixtures/v2-design/premise.md",
+      "negative_fixture": "cases/fixtures/v2-design/premise.ok.md",
+      "detector": {
+        "command": "bun scripts/validate.ts validate --sdd <fixture>",
+        "expected_code": "SDD_V2_ALGORITHM_PREMISE_UNGROUNDED",
+        "must_fire": true
+      },
+      "source_delivery": "migai plugin-host R3 revision 6, OD-47",
+      "observed_at": "2026-09-25",
+      "owning_test": "tests/v2-scope.test.ts",
+      "introduced_detector_at": "2026-09-25"
+    },
+    {
+      "id": "CSDD-V2-REWRITE-101",
+      "defect_class": "rewrite-behaviour-unsurveyed",
+      "statement": "A step rewrites an existing source file with no current-behaviour inventory of what the replaced code does; the repaired version lists it with the acceptance that keeps or changes it.",
+      "root_cause": "Only a 'same as' claim asks for the replaced code's branches; a rewrite that states a new design is never asked what the old code did.",
+      "evidence": {
+        "file": "rsi/observed-defects.md",
+        "line": 1,
+        "quote": "OD-54"
+      },
+      "fixture": "cases/fixtures/v2-design/rewrite.md",
+      "negative_fixture": "cases/fixtures/v2-design/rewrite.ok.md",
+      "detector": {
+        "command": "bun scripts/validate.ts validate --sdd <fixture>",
+        "expected_code": "SDD_V2_REWRITE_BEHAVIOUR_UNSURVEYED",
+        "must_fire": true
+      },
+      "source_delivery": "migai plugin-host R3 revision 6, OD-54",
+      "observed_at": "2026-09-25",
+      "owning_test": "tests/v2-scope.test.ts",
+      "introduced_detector_at": "2026-09-25"
     }
   ],
   "held_out": [

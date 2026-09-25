@@ -912,6 +912,26 @@
       "counterexample": "A v1 document passed to validate after the v1 validator was removed would otherwise be reported as not an SDD at all.",
       "scope": "validate, validate-draft and document-check on a document that carries a contract or program block without the sdd/v2 protocol.",
       "tradeoff": "No v1 check runs, so a v1 document's defects are not reported until it is rewritten."
+    },
+    {
+      "asset": "code:SDD_V2_ALGORITHM_PREMISE_UNGROUNDED",
+      "added_at": "2026-09-25",
+      "round": "R-20260925114452",
+      "supersedes": [],
+      "supersedes_nothing_because": "Pseudocode symbols were resolved against the repository, but no rule looked at the data preconditions an algorithm relies on.",
+      "counterexample": "plugin-host R3 revision 6 R17 prescribed binary search over a lane that interleaves slotless host stages and is not slot-sorted (OD-47; CSDD-V2-PREMISE-101).",
+      "scope": "Candidate for each requirement or step whose first line prescribes binary search, sorting, merging, deduplication, monotonic or append-only order and cites no file:line; a prohibition in the same phrase (禁止, never, not) does not count.",
+      "tradeoff": "A citation is taken at its word: the check proves a location is named, not that the code there establishes the premise."
+    },
+    {
+      "asset": "code:SDD_V2_REWRITE_BEHAVIOUR_UNSURVEYED",
+      "added_at": "2026-09-25",
+      "round": "R-20260925114452",
+      "supersedes": [],
+      "supersedes_nothing_because": "SDD_V2_PRESERVATION_UNPINNED asks for the replaced code's branches only when a 'same as' claim exists; a rewrite without that claim was never asked, so nothing is replaced.",
+      "counterexample": "plugin-host R3 rewrote the install batch and stage lane; a later survey found six current behaviours (host stages dropped during install, lease key deleted by a failed replace, reordered host stages) three of which needed user rulings (OD-54; CSDD-V2-REWRITE-101).",
+      "scope": "One candidate per leaf when any step's first line rewrites or replaces a named file and the leaf has no current-behaviour inventory.",
+      "tradeoff": "Fires on every rewrite until the inventory exists, including rewrites whose old behaviour is trivial; the inventory may then be one entry."
     }
   ]
 }
