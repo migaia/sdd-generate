@@ -24,6 +24,7 @@ import { forwardDependencyCandidates, readerCandidates } from './v2-readers.ts'
 import { qualityCandidates } from './v2-quality.ts'
 import { applyPreset, loadPreset } from './v2-preset.ts'
 import { checkDelegations, checkSemantics } from './v2-semantics.ts'
+import { reviewCandidates, type ReviewSummary } from './v2-review.ts'
 import { scopeCandidates } from './v2-scope.ts'
 import { symbolCandidates } from './v2-symbols.ts'
 import { ancestors, checkStepRecords, stepRecords } from './v2-tasks.ts'
@@ -70,6 +71,8 @@ export type V2Handoff = Readonly<{
   assessment: string | null
   /** Advisory findings that never block, such as step calls declared nowhere in owned source. */
   candidates: readonly { code: string; detail: string }[]
+  /** Per-lens dispositions of the recorded pre-handoff review, when the leaf records one. */
+  review?: ReviewSummary
   /** The repository preset applied, if any (`.create-sdd/preset.json`). */
   preset: string | null
   /** Program root only: child IDs in dependency layers. */
@@ -127,6 +130,33 @@ export function prose(text: string, marker: 'sdd-contract' | 'sdd-program'): str
     new RegExp(`<!--\\s*${marker}:start\\s*-->[\\s\\S]*?<!--\\s*${marker}:end\\s*-->`),
     ''
   )
+}
+
+/**
+ * A section that records past answers (the Clarifications log, revision history) rather than
+ * current claims. Its heading level ends it: the section runs to the next heading at the same or a
+ * higher level.
+ */
+const HISTORY_HEADING =
+  /^(#{2,6})\s+(?:\d+(?:\.\d+)*\s+)?(?:Clarifications|澄清(?:记录)?|Revision history|Change log|修订记录|变更记录)\s*$/i
+
+/**
+ * OD-49: the prose that candidate heuristics read. History sections are blanked, not removed, so
+ * line positions stay those of the document; definitions and required sections still read the full
+ * body.
+ */
+export function withoutHistory(body: string): string {
+  let depth = 0
+  return body
+    .split('\n')
+    .map((line) => {
+      const heading = /^(#{1,6})\s/.exec(line)
+      if (depth && heading && heading[1]!.length <= depth) depth = 0
+      const history = depth ? null : HISTORY_HEADING.exec(line)
+      if (history) depth = history[1]!.length
+      return depth ? '' : line
+    })
+    .join('\n')
 }
 
 /** A compact root summary is copied from prose; its full constraints remain available by path. */
@@ -842,19 +872,30 @@ export function validateV2Document(
   const displayRoot = root ?? { path: source, text, index: contract.value ?? {} }
   // Advisory findings about the selected leaf; a repository preset may promote some to blockers.
   const selectedBody = selected ? prose(selected.text, 'sdd-contract') : ''
+  const claimBody = withoutHistory(selectedBody)
   const reads = selected ? (slices.get(root ? selected.id : 'self')?.reads ?? []) : []
   const external = new Map(
     selectedSourcePaths.map(({ step, path }) => [step, io.read(path).toString('utf8')])
   )
+  // The recorded pre-handoff review: its findings must cite real clauses and each needs a disposition.
+  const review = selected
+    ? reviewCandidates(
+        selected.index,
+        selected.path,
+        (id) => definitionCount(selectedBody, id) > 0,
+        claimBody
+      )
+    : { candidates: [], summary: null }
   const candidates = selected
     ? [
-        ...symbolCandidates(selected.index, selectedBody, repo, reads, external),
-        ...ignoredInputCandidates(selected.index, selectedBody, repo, reads),
+        ...review.candidates,
+        ...symbolCandidates(selected.index, claimBody, repo, reads, external),
+        ...ignoredInputCandidates(selected.index, claimBody, repo, reads),
         ...ownershipCandidates(selected.index, selected.path, selected.text, repo),
-        ...forwardDependencyCandidates(selected.index, selectedBody, external),
-        ...readerCandidates(selected.index, selectedBody, repo, reads),
-        ...scopeCandidates(selected.index, selectedBody),
-        ...qualityCandidates(selected.index, selectedBody, repo)
+        ...forwardDependencyCandidates(selected.index, claimBody, external),
+        ...readerCandidates(selected.index, claimBody, repo, reads),
+        ...scopeCandidates(selected.index, claimBody),
+        ...qualityCandidates(selected.index, claimBody, repo)
       ]
     : []
   // OD-37: consumed semantics come from the producer, by fingerprint and citation, not restatement.
@@ -881,7 +922,7 @@ export function validateV2Document(
     [...leaves].map(([id, leaf]) => ({
       id,
       path: leaf.path,
-      body: prose(leaf.text, 'sdd-contract'),
+      body: withoutHistory(prose(leaf.text, 'sdd-contract')),
       index: leaf.index
     })),
     assetPaths,
@@ -964,6 +1005,7 @@ export function validateV2Document(
       ...(selected ? { execution_slice: slices.get(root ? selected.id : 'self') } : {}),
       meta_source: meta.source,
       candidates,
+      ...(review.summary ? { review: review.summary } : {}),
       preset: preset?.path ?? null,
       intent: selected?.index.intent === 'bug' ? 'bug' : 'feature',
       regression: list(selected?.index.regression).filter(nonempty),

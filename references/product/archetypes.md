@@ -1,6 +1,6 @@
 # Product archetypes
 
-Classify the product before designing it. The archetype decides which dimensions control the design; missing one of them produces a technically complete SDD for the wrong product. Classification happens in [harvest card](../phases/1-harvest.md) pass 1 and is recorded in the contract as `product_archetype`.
+Classify the product before designing it. The archetype decides which dimensions control the design; missing one of them produces a technically complete SDD for the wrong product. Classification happens in [harvest card](../v2-authoring.md#1-harvest--facts-and-principles) pass 1 and is recorded in the contract as `product_archetype`.
 
 ## Classify
 
@@ -56,5 +56,3 @@ Do not ask about framework or hosting when the repository already decides them.
 - Designing components before routes, templates and journeys exist.
 - Leaving typography, spacing and color as implementation details in a content or brand-led product.
 - Hard-coding visual values instead of declaring style hooks, which makes later theming a rewrite.
-
-<!-- reading-receipt: 2faba293 -->

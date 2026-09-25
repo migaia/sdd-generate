@@ -102,5 +102,3 @@ Write atomic, executable acceptance instead of "looks good":
 - Related content above the article, pop-ups before the first paragraph, sticky elements covering the reading column.
 - Components with inline colors and sizes instead of style hooks.
 - No route for feeds, sitemap or 404.
-
-<!-- reading-receipt: 6d2cfff9 -->

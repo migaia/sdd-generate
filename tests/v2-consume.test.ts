@@ -14,11 +14,15 @@ const check = (variant: string, file: string, text?: string) =>
     REPO
   )!
 
+/** Defect candidates only: a review recommendation is advice about cost, not a document defect. */
+const defects = (result: { handoff: { candidates: readonly { code: string }[] } }) =>
+  result.handoff.candidates.filter((c) => c.code !== 'SDD_V2_REVIEW_RECOMMENDED')
+
 test('a program whose consumer and root cite the producer is clean', () => {
   for (const file of ['root.sdd.md', 'capability.sdd.md', 'host.sdd.md']) {
     const result = check('ok', file)
     expect(result.diagnostics).toEqual([])
-    expect(result.handoff.candidates).toEqual([])
+    expect(defects(result)).toEqual([])
   }
 })
 
@@ -53,7 +57,7 @@ const delegate = (variant: string, text?: string) =>
 test('a declared delegation with every delta and error disposition is clean', () => {
   const result = delegate('ok')
   expect(result.diagnostics).toEqual([])
-  expect(result.handoff.candidates).toEqual([])
+  expect(defects(result)).toEqual([])
 })
 
 test('delegation gaps: error dispositions, and preservation claims in either language', () => {
@@ -66,12 +70,12 @@ test('delegation gaps: error dispositions, and preservation claims in either lan
     'Except BC3 and BC4, pipeline behaviour for the four modes is the same as R2.',
     '除 BC3 外，四种 mode 的 pipeline 行为与 R2 相同。'
   )
-  expect(delegate('ok', zh).handoff.candidates.map((c) => c.code)).toEqual([
+  expect(defects(delegate('ok', zh)).map((c) => c.code)).toEqual([
     'SDD_V2_PRESERVATION_CLAIM_UNCHECKED'
   ])
   const local = ok.replace(
     'Except BC3 and BC4, pipeline behaviour for the four modes is the same as R2.',
     'Install counts stay unchanged for resumed stages.'
   )
-  expect(delegate('ok', local).handoff.candidates).toEqual([])
+  expect(defects(delegate('ok', local))).toEqual([])
 })

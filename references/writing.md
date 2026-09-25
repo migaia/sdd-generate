@@ -1,6 +1,6 @@
 # SDD writing guide
 
-Load when writing or revising SDD prose. New implementation documents follow [sdd/v2](v2-contract.md); existing v1 documents retain their phase cards and [complete design template](complete-design.md). This page covers how either document reads.
+Load when writing or revising SDD prose. Documents follow [sdd/v2](v2-contract.md); this page covers how they read.
 
 ## Plain prose
 
@@ -28,6 +28,4 @@ The SDD is the normative design. Requirements, steps, dependencies and acceptanc
 
 ## Output location
 
-Keep repository input and output location independent. Read the actual system `$TMPDIR` when the user asks for a sample there and write it there directly; absolute output paths are supported. Source paths stay repository-relative, and a cross-document link resolves from the document that refers to it. For a new SDD kept outside the repository it describes, pass both: `validate.ts validate --sdd <absolute-SDD> --repository <absolute-repository>`, so where the document lives never changes which repository its claims are checked against. Existing v1 documents retain the legacy `repo-facts.ts check` route.
-
-<!-- reading-receipt: 0c347fac -->
+Keep repository input and output location independent. Read the actual system `$TMPDIR` when the user asks for a sample there and write it there directly; absolute output paths are supported. Source paths stay repository-relative, and a cross-document link resolves from the document that refers to it. For a new SDD kept outside the repository it describes, pass both: `validate.ts validate --sdd <absolute-SDD> --repository <absolute-repository>`, so where the document lives never changes which repository its claims are checked against.

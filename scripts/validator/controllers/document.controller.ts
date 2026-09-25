@@ -1,49 +1,31 @@
-import { contractBlock } from '../../lib/contract-source.ts'
-import { admissibilityBlockers } from '../domain/policies/admissibility'
-import { readContractDocument } from '../services/contract-document'
-import { checkDocument, checkDocumentText } from '../domain/document-check'
 import { readFileSync } from 'node:fs'
-import { markdownSections } from '../utils/markdown-sections'
-import { readContractText } from '../domain/contract'
-import type { DocumentPolicy } from '../domain/document-presentation'
-import { assertDeliveryPlan } from '../domain/delivery-plan'
-import { assertAuthoringClosure } from '../domain/policies/authoring-closure'
-import { assertContractReferences } from '../helpers/contract-references'
-import { assertExperienceContract } from '../domain/experience-contract'
-import { assertArchitecture, assertDeliveryPlatforms } from '../domain/platform-architecture'
-import { executionRequests as readExecutionRequests } from '../domain/policies/execution-authorization'
+import { checkDocument } from '../domain/document-check'
 import { validateAssessment } from '../domain/v2-assessment'
 import { validateV2Document } from '../domain/v2-document'
+
 export type DocumentCheckResult = Readonly<{
   sdd: string
   valid: boolean
   diagnostics: ReturnType<typeof checkDocument>
 }>
-const REQUIRED = [
-  'Breaking Changes',
-  'New/Changed API & Typing',
-  'New/Changed Entities & Tools',
-  'Implementation Flow & Pseudocode',
-  'Delivery & Verification'
-] as const
 
-/** Check the versioned contract and presentation using the execution parser; standalone prose uses table diagnostics. */
+/** A document that carries a contract block but not the sdd/v2 protocol (the retired v1 format). */
+const LEGACY_CONTRACT = /<!--\s*sdd-(?:contract|program):start/
+
+/** The diagnostic for a document this skill no longer validates. */
+const unsupported = (sdd: string) => ({
+  code: 'SDD_V1_UNSUPPORTED',
+  line: 1,
+  message: `${sdd} is not an sdd/v2 document; the sdd-loop-delivery/v1 format is retired. Rewrite it with init.ts --kind feature|bug|program and carry its IDs over`
+})
+
+/** Check a document that does not target implementation; an sdd/v2 document gets its own checks. */
 export function documentCheck(sdd: string): DocumentCheckResult {
-  const diagnostics: ReturnType<typeof checkDocument>[number][] = []
-  try {
-    const text = readFileSync(sdd, 'utf8')
-    const v2 = validateAssessment(sdd, text) ?? validateV2Document(sdd, text)
-    if (v2) return { sdd: v2.sdd, valid: v2.valid, diagnostics: v2.diagnostics }
-    // Contract documents use their versioned policy, including authoritative JSON
-    // definitions and linked normative tables. Do not apply a second prose ID graph.
-    if (!readContractDocument(sdd)) diagnostics.push(...checkDocument(sdd))
-  } catch (error) {
-    diagnostics.push({
-      code: 'SDD_CONTRACT_INVALID',
-      line: 1,
-      message: error instanceof Error ? error.message : 'Contract parsing failed'
-    })
-  }
+  const text = readFileSync(sdd, 'utf8')
+  const v2 = validateAssessment(sdd, text) ?? validateV2Document(sdd, text)
+  if (v2) return { sdd: v2.sdd, valid: v2.valid, diagnostics: v2.diagnostics }
+  if (LEGACY_CONTRACT.test(text)) return { sdd, valid: false, diagnostics: [unsupported(sdd)] }
+  const diagnostics = checkDocument(sdd)
   return { sdd, valid: diagnostics.length === 0, diagnostics }
 }
 
@@ -52,163 +34,31 @@ function validateText(
   text: string,
   sdd: string,
   documents: readonly { path: string; content: string }[] = [],
-  policy: DocumentPolicy = 'legacy',
   repository?: string
 ) {
   const v2 = validateAssessment(sdd, text) ?? validateV2Document(sdd, text, documents, repository)
   if (v2) return v2
-  const diagnostics: ReturnType<typeof checkDocument>[number][] = []
-  // A program root carries a node index instead of a contract and owns none of the IDs its prose
-  // coordinates. Running the implementation checks over it produces a page of confident-looking
-  // diagnostics — a missing contract, missing sections, every child-owned ID reported as dangling —
-  // none of which the author can or should fix. Say which command applies and check nothing else.
-  if (/<!--\s*sdd-program:start/.test(text))
-    return {
-      sdd,
-      valid: false,
-      program_root: true,
-      diagnostics: [
-        {
-          code: 'SDD_PROGRAM_ROOT',
-          line: 1,
-          message: `this document carries an sdd-program index: it is a program root, not a leaf contract (${sdd})`
-        }
-      ],
-      requiredSections: REQUIRED
-    }
-  let deliveryPlan: ReturnType<typeof assertDeliveryPlan> = null
-  let experienceContract: ReturnType<typeof assertExperienceContract> = null
-  let deliveryPlatforms: ReturnType<typeof assertDeliveryPlatforms> = null
-  let architecture: ReturnType<typeof assertArchitecture> = null
-  let admissibility: { admissible: boolean; blockers: string[] } | null = null
-  let executionRequests: ReturnType<typeof readExecutionRequests> | null = null
-  // Section and table checks cannot prove that the embedded machine contract is
-  // parseable. Use the same parser as init/amend before reporting structural validity.
-  try {
-    if (documents.length && sdd === '<stdin>') throw Error('DRAFT_ROOT_PATH_REQUIRED')
-    const contract =
-      sdd === '<stdin>'
-        ? readContractText(text, { self: text }, policy)
-        : readContractDocument(sdd, text, documents, policy)
-    if (!contract) {
-      diagnostics.push(...checkDocumentText(text))
-      // validate is the implementation gate; prose-only documents use document-check instead.
-      diagnostics.push({
-        code: 'SDD_CONTRACT_REQUIRED',
-        line: 1,
-        message: 'implementation SDD has no sdd-contract block; draft it before validating'
-      })
-    }
-    // Waves and critical path let the author see the parallelism the plan actually allows.
-    else {
-      assertAuthoringClosure(contract)
-      if (sdd !== '<stdin>')
-        assertContractReferences(
-          contract,
-          sdd,
-          documents.map((document) => document.path)
-        )
-      deliveryPlan = assertDeliveryPlan(contract)
-      deliveryPlatforms = assertDeliveryPlatforms(contract)
-      experienceContract = assertExperienceContract(contract)
-      architecture = assertArchitecture(contract)
-      executionRequests = readExecutionRequests(contract as unknown as Record<string, unknown>)
-      const blockers = admissibilityBlockers(contract)
-      admissibility = { admissible: blockers.length === 0, blockers }
-    }
-  } catch (error) {
-    diagnostics.push({
-      code: 'SDD_CONTRACT_INVALID',
-      line: 1,
-      message: error instanceof Error ? error.message : 'Contract parsing failed'
-    })
-  }
-  {
-    const sections = markdownSections(text)
-    for (const heading of REQUIRED) {
-      // Section numbering such as "4.1 " or "6. " is presentation, not a different section.
-      const index = sections.findIndex(
-        (section) => section.heading.replace(/^\d+(?:\.\d+)*\.?\s+/, '') === heading
-      )
-      if (index < 0) {
-        diagnostics.push({
-          code: 'SDD_REQUIRED_SECTION_MISSING',
-          line: 1,
-          message: 'missing required section: ' + heading
-        })
-        continue
-      }
-      const current = sections[index]!
-      const next = sections.slice(index + 1).find((section) => section.level <= current.level)
-      const body = text
-        .split(/\r?\n/)
-        .slice(current.startLine, next ? next.startLine - 1 : undefined)
-        .join('\n')
-        .trim()
-      if (!body)
-        diagnostics.push({
-          code: 'SDD_REQUIRED_SECTION_EMPTY',
-          line: current.startLine,
-          message: 'required section has no body: ' + heading
-        })
-      if (
-        heading === 'Implementation Flow & Pseudocode' &&
-        /^\s*(?:(?:[-*]|\d+\.)\s+)?(?:(?:#|\/\/|\/\*|<!--)\s*)?(?:TODO|TBD|FIXME|待补充|待实现)(?:\s|[:：—-]|$)/im.test(
-          body
-        )
-      )
-        diagnostics.push({
-          code: 'SDD_IMPLEMENTATION_PLACEHOLDER',
-          line: current.startLine,
-          message: 'implementation flow contains an explicit placeholder'
-        })
-    }
-  }
-  // OD-11: a recorded CONVERGED claim that the current rules reject is stale, not merely a draft.
-  if (diagnostics.length && contractBlock(text).value?.design_convergence?.status === 'CONVERGED')
-    diagnostics.push({
-      code: 'DESIGN_CONVERGENCE_STALE',
-      line: 1,
-      message: `status CONVERGED predates the current validator: ${diagnostics.length} diagnostic(s)`
-    })
-  return {
-    sdd,
-    valid: diagnostics.length === 0,
-    diagnostics,
-    // Structural validity and readiness to execute are different questions, and a document can pass
-    // the first while the delivery loop would refuse it. `blockers` is empty exactly when admission
-    // would accept the design; it never makes a draft invalid.
-    ...(admissibility ? { admissibility } : {}),
-    // Acceptance commands and controller-owned external writes are separate authorization inputs.
-    ...(executionRequests ? { executionRequests } : {}),
-    requiredSections: REQUIRED,
-    ...(deliveryPlan ? { deliveryPlan } : {}),
-    ...(experienceContract ? { experienceContract } : {}),
-    ...(deliveryPlatforms ? { deliveryPlatforms } : {}),
-    ...(architecture ? { architecture } : {})
-  }
+  return { sdd, valid: false, diagnostics: [unsupported(sdd)] }
 }
-export function validateDocument(
-  sdd: string,
-  policy: DocumentPolicy = 'legacy',
-  repository?: string
-) {
-  return validateText(readFileSync(sdd, 'utf8'), sdd, [], policy, repository)
+
+export function validateDocument(sdd: string, repository?: string) {
+  return validateText(readFileSync(sdd, 'utf8'), sdd, [], repository)
 }
+
 /** File-backed draft validation shares the exact memory parser and never creates state. */
-export function validateDraft(sdd: string, policy: DocumentPolicy = 'legacy', repository?: string) {
-  return validateDraftText(readFileSync(sdd, 'utf8'), sdd, [], policy, repository)
+export function validateDraft(sdd: string, repository?: string) {
+  return validateDraftText(readFileSync(sdd, 'utf8'), sdd, [], repository)
 }
+
 /** Validate candidate bytes without creating an SDD or sidecar. */
 export function validateDraftText(
   text: string,
   source = '<stdin>',
   documents: readonly { path: string; content: string }[] = [],
-  policy: DocumentPolicy = 'legacy',
   repository?: string
 ) {
   return {
-    ...validateText(text, source, documents, policy, repository),
+    ...validateText(text, source, documents, repository),
     draft: true as const,
     persisted: false as const
   }

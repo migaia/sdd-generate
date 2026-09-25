@@ -1,30 +1,21 @@
 /**
- * The SDD document validator, owned by create-sdd because create-sdd defines the format.
+ * The sdd/v2 document validator, owned by create-sdd because create-sdd defines the format.
+ * Exit codes: 0 valid, 1 invalid, 2 for a usage error or a document that could not be read. A
+ * document in the retired sdd-loop-delivery/v1 format is reported as SDD_V1_UNSUPPORTED.
  *
- * Same commands, flags, JSON output and exit codes as the delivery loop's document commands, so a
- * caller can switch between them without changing how it reads the result: 0 valid, 1 invalid,
- * 2 for a usage error or a document that could not be read. What the loop adds on top — the
- * sidecar files a run would write — is not a property of the document and is not reported here.
- *
- *   validate          --sdd <path> [--repository <root>] [--evidence <report.json> [--replay]] [--document-policy current] [--design-policy current]
+ *   validate          --sdd <path> [--repository <root>] [--evidence <report.json> [--replay]]
  *   validate-draft    --sdd <path> | --draft-file <path> | (stdin)
  *                     --sdd <absolute root> --documents-file <json array of {path, content}>
  *   document-check    --sdd <path>
  *   document-next-id  --sdd <path> --prefix <XX>
  */
-import { existsSync, readFileSync, writeFileSync } from 'node:fs'
+import './lib/require-bun.ts'
+import { existsSync, readFileSync } from 'node:fs'
 import { isAbsolute, resolve } from 'node:path'
 import { documentDigest, record } from './lib/telemetry'
 import { contractBlock } from './lib/contract-source.ts'
 import { checkClosure } from './validator/domain/v2-closure.ts'
 import type { V2Result } from './validator/domain/v2-document.ts'
-import {
-  contractDrift,
-  deriveContract,
-  replaceContractBlock,
-  reverseTables,
-  writeDerived
-} from './validator/domain/derive/contract.ts'
 import {
   documentCheck,
   nextDocumentId,
@@ -33,17 +24,9 @@ import {
   validateDraftText
 } from './validator/controllers/document.controller'
 
-type DocumentPolicy = Parameters<typeof validateDocument>[1]
-const COMMANDS = [
-  'validate',
-  'validate-draft',
-  'document-check',
-  'document-next-id',
-  'contract',
-  'contract-migrate'
-] as const
+const COMMANDS = ['validate', 'validate-draft', 'document-check', 'document-next-id'] as const
 const USAGE =
-  'usage: validate.ts validate|validate-draft|document-check|contract|contract-migrate --sdd <path> [--repository <absolute-root>] [--evidence <sdd-evidence.json> [--replay]] [--document-policy current] [--design-policy current] | contract --sdd <path> [--check | --emit inline|sidecar|stdout] | validate-draft --draft-file <path> | validate-draft --sdd <abs> --documents-file <json> | document-next-id --sdd <path> --prefix <XX>'
+  'usage: validate.ts validate|validate-draft|document-check --sdd <path> [--repository <absolute-root>] [--evidence <sdd-evidence.json> [--replay]] | validate-draft --draft-file <path> | validate-draft --sdd <abs> --documents-file <json> | document-next-id --sdd <path> --prefix <XX>'
 
 /** Read `--flag value` pairs; a bare flag reads as present with no value. */
 function flags(argv: readonly string[]): Map<string, string | undefined> {
@@ -77,107 +60,11 @@ export async function run(
   const repository = value('--repository')
   if (options.has('--repository') && (!repository || !isAbsolute(repository)))
     throw new Error('REPOSITORY_PATH_ABSOLUTE_REQUIRED')
-  if (command === 'contract-migrate') {
-    if (!sdd) throw new Error('SDD_REQUIRED: pass --sdd /absolute/path/to/document.sdd.md')
-    const text = readFileSync(sdd, 'utf8')
-    const block = contractBlock(text)
-    if (!block.value)
-      return {
-        output: {
-          protocol: 'create-sdd-contract-migrate/v1',
-          sdd,
-          tables: [],
-          reason: block.error
-        },
-        exit: 0
-      }
-    const tables = reverseTables(block.value)
-    // Printed, never written. A reverse projection is a draft of prose: where to put a table, what
-    // to call its heading and which column carries which fact are the author's decisions, and a
-    // command that pasted them into the document would be guessing at all three.
-    return {
-      output: {
-        protocol: 'create-sdd-contract-migrate/v1',
-        sdd,
-        tables,
-        note: 'Paste each table under a heading of your choosing, then run `contract --check`: a field whose table is in place derives, and the JSON copy can go.'
-      },
-      exit: 0
-    }
-  }
-  if (command === 'contract') {
-    if (!sdd) throw new Error('SDD_REQUIRED: pass --sdd /absolute/path/to/document.sdd.md')
-    const text = readFileSync(sdd, 'utf8')
-    const block = contractBlock(text)
-    if (!block.value)
-      return {
-        output: {
-          protocol: 'create-sdd-contract/v2',
-          sdd,
-          valid: true,
-          applicability: 'NOT_APPLICABLE',
-          reason: block.error ?? 'the document carries no sdd-contract block',
-          derived: [],
-          drift: []
-        },
-        exit: 0
-      }
-    const derived = deriveContract(block.value, text, 'self')
-    const drift = contractDrift(block.value, text, 'self')
-    const checking = options.has('--check')
-    const emit = value('--emit')
-    if (emit !== undefined && !['inline', 'sidecar', 'stdout'].includes(emit))
-      throw new Error('CONTRACT_EMIT_INVALID: pass --emit inline|sidecar|stdout')
-    if (emit) {
-      // `contract_source` is what makes the two tracks distinguishable. A document that never opted
-      // in keeps its authored block and every existing check; one that has been written by the
-      // generator says so, so a later reader knows which copy is the original.
-      const written = writeDerived(block.value, derived)
-      const rendered = `${JSON.stringify(written, null, 2)}\n`
-      if (emit === 'stdout') return { output: written, exit: 0 }
-      const target = emit === 'sidecar' ? `${sdd}.contract.json` : sdd
-      if (emit === 'sidecar') writeFileSync(target, rendered)
-      else writeFileSync(sdd, replaceContractBlock(text, rendered))
-      return {
-        output: {
-          protocol: 'create-sdd-contract/v2',
-          sdd,
-          written: target,
-          emit,
-          fields: derived.map((field) => field.path),
-          contract_source: 'generated',
-          note: 'The derived fields in this document are now computed. Editing one by hand will be reported as drift on the next --check; change the prose it comes from instead.'
-        },
-        exit: 0
-      }
-    }
-    return {
-      output: {
-        protocol: 'create-sdd-contract/v2',
-        sdd,
-        valid: !checking || drift.length === 0,
-        applicability: 'APPLICABLE',
-        contract_source:
-          (block.value as { contract_source?: unknown }).contract_source === 'generated'
-            ? 'generated'
-            : 'authored',
-        derived_fields: derived.map((field) => field.path),
-        drift,
-        note: 'A derived field is computed from the document; if a derived value looks wrong, the generator is wrong, not the block.'
-      },
-      exit: checking && drift.length ? 1 : 0
-    }
-  }
   if (command === 'document-next-id') {
     const prefix = value('--prefix')
     if (!sdd || !prefix) throw new Error('SDD_AND_PREFIX_REQUIRED: pass --sdd and --prefix')
     return { output: nextDocumentId(sdd, prefix), exit: 0 }
   }
-  for (const policy of ['--document-policy', '--design-policy'])
-    if (options.has(policy) && value(policy) !== 'current')
-      throw new Error(`DOCUMENT_POLICY_INVALID:${policy}`)
-  // Without the flag an existing document that never opted into the current policy stays readable.
-  const policy: DocumentPolicy = options.has('--document-policy') ? 'current' : 'legacy'
   if (command === 'validate-draft' && options.has('--documents-file')) {
     const file = value('--documents-file')
     if (!file || !sdd || !isAbsolute(sdd) || options.has('--draft-file'))
@@ -195,7 +82,6 @@ export async function run(
         roots[0]!.content as string,
         sdd,
         entries as { path: string; content: string }[],
-        policy,
         repository
       )
     )
@@ -203,13 +89,13 @@ export async function run(
   if (command === 'validate-draft' && !sdd) {
     const draftFile = value('--draft-file')
     const text = draftFile ? readFileSync(draftFile, 'utf8') : await new Response(Bun.stdin).text()
-    return byValidity(validateDraftText(text, draftFile ?? '<stdin>', [], policy, repository))
+    return byValidity(validateDraftText(text, draftFile ?? '<stdin>', [], repository))
   }
   if (!sdd) throw new Error('SDD_REQUIRED: pass --sdd /absolute/path/to/document.sdd.md')
   const evidence = value('--evidence')
   if (command === 'validate' && evidence) {
     // Converge: compare a host's evidence report with this leaf's acceptance and revision.
-    const result = validateDocument(sdd, policy, repository)
+    const result = validateDocument(sdd, repository)
     const index = contractBlock(readFileSync(sdd, 'utf8')).value
     if (!('handoff' in result) || result.handoff.protocol !== 'create-sdd-handoff/v2' || !index)
       throw new Error('EVIDENCE_REQUIRES_V2_LEAF')
@@ -226,9 +112,9 @@ export async function run(
   }
   return byValidity(
     command === 'validate'
-      ? validateDocument(sdd, policy, repository)
+      ? validateDocument(sdd, repository)
       : command === 'validate-draft'
-        ? validateDraft(sdd, policy, repository)
+        ? validateDraft(sdd, repository)
         : documentCheck(sdd)
   )
 }
@@ -272,6 +158,30 @@ function candidatesOf(output: unknown): readonly string[] {
     : []
 }
 
+/**
+ * OD-50: the skill version that produced a result, so a handoff or closure can be reproduced and
+ * compared across skill updates. `commit` is null for an install that is not a Git checkout; `dirty`
+ * means the checkout has uncommitted changes, so the commit alone does not identify the validator.
+ */
+function validatorVersion(): { commit: string | null; dirty: boolean } {
+  const root = resolve(import.meta.dir, '..')
+  const git = (...args: string[]) =>
+    Bun.spawnSync(['git', '-C', root, ...args], { stdout: 'pipe', stderr: 'pipe' })
+  const head = git('rev-parse', '--short', 'HEAD')
+  if (head.exitCode !== 0) return { commit: null, dirty: false }
+  return {
+    commit: head.stdout.toString().trim(),
+    dirty: git('status', '--porcelain', '--', 'scripts', 'references', 'SKILL.md').stdout.length > 0
+  }
+}
+
+/** Attach the validator version to the result's top level; non-object output passes through. */
+function withValidator(output: unknown): unknown {
+  return output && typeof output === 'object' && !Array.isArray(output)
+    ? { ...(output as Record<string, unknown>), validator: validatorVersion() }
+    : output
+}
+
 if (import.meta.main) {
   const [command, ...argv] = Bun.argv.slice(2)
   try {
@@ -283,9 +193,11 @@ if (import.meta.main) {
         tool: `validate:${command}`,
         sddSha: documentDigest(readFileSync(sdd, 'utf8')),
         codes: codesOf(output),
-        candidateCodes: candidatesOf(output)
+        candidateCodes: candidatesOf(output),
+        review: (output as { handoff?: { review?: Record<string, Record<string, number>> } })
+          ?.handoff?.review
       })
-    console.log(JSON.stringify(output))
+    console.log(JSON.stringify(withValidator(output)))
     process.exit(exit)
   } catch (error) {
     console.error(error instanceof Error ? error.message : String(error))

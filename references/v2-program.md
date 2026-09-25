@@ -43,6 +43,4 @@ The root body defines `E1` as the user outcome. The foundation child exports the
 
 `validate` checks path resolution, missing children, cycles, duplicate Meta IDs, unowned or conflicting requirement/batch/write ownership, broken Module origins, Bundle/Asset dependency edges, producer/consumer versions and integration ownership. It cannot prove that the split is semantically complete or that a claimed Asset has been built. A root handoff lists child paths, dependency edges and `parallel_children` (children grouped in dependency layers; a layer may start once earlier layers have delivered) without loading every child's full text. A root may declare `principles` and Entry `priority` as a leaf does. A child handoff carries the root summary and constraints, its Bundle/Chunks/Module Sources, and the direct dependency Assets and exact versions; its implementing host then reads that child and those direct dependencies. Host scheduling, parallelism, permissions and progress remain the host's responsibility.
 
-Do not restore mandatory minute ranges, test allocations, leases, fixed roles, reading receipts or a second program state. The legacy `sdd-program/v1` reader remains available for existing documents.
-
-<!-- reading-receipt: ab01ef70 -->
+Do not restore mandatory minute ranges, test allocations, leases, fixed roles, reading receipts or a second program state.

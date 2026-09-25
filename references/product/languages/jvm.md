@@ -45,5 +45,3 @@ When a key decision depends on version, types or call shape and no applicable co
 - Mixing blocking JDBC calls into reactive pipelines.
 - A `common` module that every module depends on and that accumulates domain logic.
 - Tests that pass only against H2 for a PostgreSQL product.
-
-<!-- reading-receipt: 3da3e1d0 -->

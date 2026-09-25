@@ -89,5 +89,3 @@ Route `kind` is one of `home`, `article`, `index`, `taxonomy`, `series`, `search
 ## Planning impact
 
 Templates, style hooks and the route skeleton are foundation work: put tokens and base templates in an early batch that later page batches depend on, so pages never invent visual values. Readability and journey acceptance join the final verification shard for the affected templates.
-
-<!-- reading-receipt: a4508e34 -->

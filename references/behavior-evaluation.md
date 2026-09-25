@@ -93,5 +93,3 @@ close as `RECORDED`.
 That the change improved anything outside the mechanical cases. That an authoring agent reads,
 understands or follows any rule involved. That nobody could have edited a case — only that the edit
 would show.
-
-<!-- reading-receipt: 5eab3a0c -->

@@ -44,5 +44,3 @@ When a key decision depends on version, types or call shape and no applicable co
 - `requirements.txt` and `pyproject.toml` both declaring dependencies.
 - Tests that pass only because of import path hacks instead of an installed package.
 - Mutable default arguments and module-level singletons holding connections.
-
-<!-- reading-receipt: 268ffda2 -->

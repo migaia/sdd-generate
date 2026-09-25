@@ -43,5 +43,3 @@ When a key decision depends on version, types or call shape and no applicable co
 - `exports` pointing at source files that are not in `files`.
 - Business logic inside route handlers or command callbacks.
 - Tests importing workspace source paths that consumers can never import.
-
-<!-- reading-receipt: 765f76a3 -->

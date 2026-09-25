@@ -50,5 +50,3 @@ Keep the repository's route unless a required capability is impossible in it; re
 - Shipping unsigned builds or an updater that does not verify signatures.
 - Designing web routes first and treating windows, menus and file associations as polish.
 - One Electron major version pinned for years.
-
-<!-- reading-receipt: 0ed9843e -->

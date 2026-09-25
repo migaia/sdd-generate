@@ -49,5 +49,3 @@ Each case names device, OS version and a timeout within the loop limit; a full d
 - One shared "network manager" singleton reachable from every view.
 - Permission prompts on first launch before the user sees value.
 - Deep links that assume the user is signed in and the target exists.
-
-<!-- reading-receipt: ee2a97c3 -->

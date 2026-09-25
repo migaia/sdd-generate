@@ -9,5 +9,3 @@ Read this reference only when consolidating multiple SDDs.
 5. Deduplicate rationale and examples, but do not copy detailed contracts that remain owned by another live SDD.
 6. Mark superseded source documents and redirect readers only when the user authorized those edits.
 7. Audit the merged result for orphan references, conflicting statuses, duplicated normative clauses or semantic owners, causal expansion, and lost deferred items.
-
-<!-- reading-receipt: b9820584 -->

@@ -13,5 +13,3 @@ Before the first implementation batch, inventory every known change to package o
 ## Authorization brief
 
 Each genuine request is self-contained: the scenario and cause, current and proposed behavior (short repository-language examples or precise pseudocode only when they distinguish the options), affected packages and consumers, runtime and compatibility impact, destructive or irreversible effects and reversibility, every real option with trade-offs, the evidence-backed recommendation, the exact authority boundary crossed, the effect of declining or deferring, and the authority-effect delta. When only one viable route exists, say so and ask only for permission to cross the boundary; do not manufacture alternatives. Scale detail to the decision.
-
-<!-- reading-receipt: 1462e525 -->

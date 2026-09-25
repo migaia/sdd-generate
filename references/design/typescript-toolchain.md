@@ -28,5 +28,3 @@ Prefer the smallest route that owns the complete required responsibility. If no 
 Repository-native does not mean lockfile-native. A transitive esbuild entry, historical benchmark, stale config, copied example, or previous SDD is not proof that esbuild is the current owner. Inspect direct dependencies, scripts, configuration, emitted artifacts, plugins, public exports, and consumers. A tool migration remains outside scope unless the requested observable delta requires it or the user explicitly requests modernization. Record the selected route, rejected viable route, compatibility evidence, and cheapest falsifier; benchmark only when performance is material to the decision.
 
 When the activation condition is false, record no Oxc/tsdown/esbuild preference. Use the actual ecosystem's repository-native toolchain and evidence.
-
-<!-- reading-receipt: 12236ef6 -->

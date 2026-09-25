@@ -11,7 +11,6 @@ import {
 import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
 import { applyOverlay, contractOf, withContract, type Json } from '../scripts/lib/example-overlay'
-import { validateDraftText } from '../scripts/validator/controllers/document.controller'
 import { drainObservations, observations } from '../scripts/rsi'
 import { checkClosure } from '../scripts/validator/domain/v2-closure'
 import { replay, type Oracle } from '../scripts/validator/domain/v2-replay'
@@ -95,25 +94,6 @@ test('OD-30: sample errors in touched tests are not error text the leaf owns', (
   } finally {
     rmSync(root, { recursive: true, force: true })
   }
-})
-
-test('a CONVERGED legacy document that now fails reports stale convergence', () => {
-  const example = readFileSync(
-    join(import.meta.dir, '..', 'references', 'examples', 'loop-ready-example.md'),
-    'utf8'
-  )
-  const document = /^````(?:markdown)?\n([\s\S]*?)\n````$/m.exec(example)?.[1] ?? example
-  const broken = withContract(
-    document,
-    applyOverlay(contractOf(document), {
-      delivery_plan: { batches: { merge_by_id: [{ id: 'PC01', requirement_ids: ['XQ99'] }] } }
-    })
-  )
-  const found = validateDraftText(broken).diagnostics.map((item) => item.code)
-  expect(found).toContain('DESIGN_CONVERGENCE_STALE')
-  expect(validateDraftText(document).diagnostics.map((item) => item.code)).not.toContain(
-    'DESIGN_CONVERGENCE_STALE'
-  )
 })
 
 test('closure links a PASS to its declared oracle and the design to the delivered code', () => {

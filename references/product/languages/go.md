@@ -44,5 +44,3 @@ When a key decision depends on version, types or call shape and no applicable co
 - Goroutines started in libraries without a way to stop them.
 - `panic` for expected errors; `log.Fatal` outside `main`.
 - One `models` package imported by every layer.
-
-<!-- reading-receipt: 5cb995af -->

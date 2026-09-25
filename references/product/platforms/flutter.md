@@ -42,5 +42,3 @@ Golden files are pinned to one rendering environment; regenerate them only insid
 - A plugin chosen for one target that silently breaks another shipped target.
 - Hard-coded `Colors.*` and `TextStyle(fontSize: …)` in feature widgets.
 - One integration test that walks the whole app instead of named journeys.
-
-<!-- reading-receipt: 81d5e035 -->

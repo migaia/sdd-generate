@@ -3,7 +3,7 @@ import { join } from 'node:path'
 
 /**
  * Aggregate automated checks for this skill. They prove structure only: that scripts type-check
- * and pass their tests, references carry current receipts, links resolve and behavior cases are
+ * and pass their tests, links resolve and behavior cases are
  * well formed. They do not prove that an authoring agent reads, understands or follows the rules.
  */
 const ROOT = join(import.meta.dir, '..')
@@ -14,15 +14,12 @@ const checks: readonly (readonly [name: string, argv: readonly string[]])[] = [
   ['format', ['run', 'format:check']],
   ['lint', ['run', 'lint']],
   ['typecheck', ['run', 'typecheck']],
-  ['receipts', ['scripts/reading-receipt.ts', 'verify']],
   ['links', ['scripts/check-links.ts']],
-  ['examples', ['scripts/check-examples.ts']],
   [
     'behavior-cases',
     ['scripts/behavior-eval.ts', '--suite', 'cases/behavior-cases.json', '--runs', '1']
   ],
   ['defect-cases', ['scripts/behavior-eval.ts', '--mechanical']],
-  ['contract-drift', ['scripts/check-contract-drift.ts']],
   ['budget', ['scripts/check-budget.ts']]
 ]
 

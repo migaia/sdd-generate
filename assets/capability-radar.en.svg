@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 600" width="940" height="600" role="img" aria-label="create-sdd capability map">
+<title>create-sdd capability map</title>
+<style>
+:root{--bg:#ffffff;--ring:#d6d9e0;--ring-fill:#f4f6fa;--axis:#c3c8d2;--text:#2b303b;--muted:#6b7280;--line:#3b6fe0;--fill:rgba(59,111,224,.18)}
+@media (prefers-color-scheme: dark){:root{--bg:#1b1e24;--ring:#3a3f4a;--ring-fill:#22262e;--axis:#4a505c;--text:#e6e8ec;--muted:#9aa1ad;--line:#7aa2ff;--fill:rgba(122,162,255,.22)}}
+text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;fill:var(--text)}
+.label{font-size:17px;font-weight:600}.score{font-size:13px;fill:var(--muted)}
+</style>
+<rect width="940" height="600" rx="16" fill="var(--bg)"/>
+<g transform="translate(90 0)">
+<polygon points="380.0,100.0 521.4,158.6 580.0,300.0 521.4,441.4 380.0,500.0 238.6,441.4 180.0,300.0 238.6,158.6" fill="var(--ring-fill)" stroke="var(--ring)" stroke-width="1"/>
+<polygon points="380.0,140.0 493.1,186.9 540.0,300.0 493.1,413.1 380.0,460.0 266.9,413.1 220.0,300.0 266.9,186.9" fill="var(--bg)" stroke="var(--ring)" stroke-width="1"/>
+<polygon points="380.0,180.0 464.9,215.1 500.0,300.0 464.9,384.9 380.0,420.0 295.1,384.9 260.0,300.0 295.1,215.1" fill="var(--ring-fill)" stroke="var(--ring)" stroke-width="1"/>
+<polygon points="380.0,220.0 436.6,243.4 460.0,300.0 436.6,356.6 380.0,380.0 323.4,356.6 300.0,300.0 323.4,243.4" fill="var(--bg)" stroke="var(--ring)" stroke-width="1"/>
+<polygon points="380.0,260.0 408.3,271.7 420.0,300.0 408.3,328.3 380.0,340.0 351.7,328.3 340.0,300.0 351.7,271.7" fill="var(--ring-fill)" stroke="var(--ring)" stroke-width="1"/>
+<line x1="380" y1="300" x2="380.0" y2="100.0" stroke="var(--axis)" stroke-width="1"/>
+<line x1="380" y1="300" x2="521.4" y2="158.6" stroke="var(--axis)" stroke-width="1"/>
+<line x1="380" y1="300" x2="580.0" y2="300.0" stroke="var(--axis)" stroke-width="1"/>
+<line x1="380" y1="300" x2="521.4" y2="441.4" stroke="var(--axis)" stroke-width="1"/>
+<line x1="380" y1="300" x2="380.0" y2="500.0" stroke="var(--axis)" stroke-width="1"/>
+<line x1="380" y1="300" x2="238.6" y2="441.4" stroke="var(--axis)" stroke-width="1"/>
+<line x1="380" y1="300" x2="180.0" y2="300.0" stroke="var(--axis)" stroke-width="1"/>
+<line x1="380" y1="300" x2="238.6" y2="158.6" stroke="var(--axis)" stroke-width="1"/>
+<polygon points="380.0,120.0 507.3,172.7 560.0,300.0 464.9,384.9 380.0,460.0 266.9,413.1 220.0,300.0 295.1,215.1" fill="var(--fill)" stroke="var(--line)" stroke-width="3" stroke-linejoin="round"/>
+<circle cx="380.0" cy="120.0" r="6" fill="var(--line)"/>
+<circle cx="507.3" cy="172.7" r="6" fill="var(--line)"/>
+<circle cx="560.0" cy="300.0" r="6" fill="var(--line)"/>
+<circle cx="464.9" cy="384.9" r="6" fill="var(--line)"/>
+<circle cx="380.0" cy="460.0" r="6" fill="var(--line)"/>
+<circle cx="266.9" cy="413.1" r="6" fill="var(--line)"/>
+<circle cx="220.0" cy="300.0" r="6" fill="var(--line)"/>
+<circle cx="295.1" cy="215.1" r="6" fill="var(--line)"/>
+<text class="label" x="380.0" y="62.0" text-anchor="middle">Host implementability</text>
+<text class="score" x="380.0" y="80.0" text-anchor="middle">9 / 10</text>
+<text class="label" x="544.0" y="136.0" text-anchor="start">Requirement traceability</text>
+<text class="score" x="544.0" y="154.0" text-anchor="start">9 / 10</text>
+<text class="label" x="612.0" y="300.0" text-anchor="start">Verifiable convergence</text>
+<text class="score" x="612.0" y="318.0" text-anchor="start">9 / 10</text>
+<text class="label" x="544.0" y="464.0" text-anchor="start">Design-defect detection</text>
+<text class="score" x="544.0" y="482.0" text-anchor="start">6 / 10</text>
+<text class="label" x="380.0" y="548.0" text-anchor="middle">Context economy</text>
+<text class="score" x="380.0" y="566.0" text-anchor="middle">8 / 10</text>
+<text class="label" x="216.0" y="464.0" text-anchor="end">Repository fit</text>
+<text class="score" x="216.0" y="482.0" text-anchor="end">8 / 10</text>
+<text class="label" x="148.0" y="300.0" text-anchor="end">Host neutrality</text>
+<text class="score" x="148.0" y="318.0" text-anchor="end">8 / 10</text>
+<text class="label" x="216.0" y="136.0" text-anchor="end">Ease of adoption</text>
+<text class="score" x="216.0" y="154.0" text-anchor="end">6 / 10</text>
+</g>
+</svg>

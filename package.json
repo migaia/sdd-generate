@@ -1,7 +1,22 @@
 {
-  "name": "create-sdd",
-  "private": true,
+  "name": "@migaia/sdd-generate",
+  "version": "0.1.0",
+  "license": "MIT",
   "type": "module",
+  "bin": {
+    "sdd-generate": "bin/sdd-generate.mjs"
+  },
+  "files": [
+    "bin/",
+    "install.sh"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/migaia/sdd-generate.git"
+  },
   "scripts": {
     "test": "bun test tests",
     "format:check": "oxfmt --config oxfmt.json --check scripts tests",
@@ -15,5 +30,6 @@
     "oxfmt": "0.67.0",
     "oxlint": "1.82.0",
     "typescript": "7.0.2"
-  }
+  },
+  "description": "Installer for the create-sdd agent skill: links it into Claude Code, Codex, Cursor, Copilot, OpenCode, Pi, Kimi, ZCode, Devin, Doubao and other coding agents"
 }

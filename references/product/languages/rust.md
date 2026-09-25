@@ -44,5 +44,3 @@ When a key decision depends on version, types or call shape and no applicable co
 - `Box<dyn Error>` or strings as the public error type of a library.
 - `clone()` sprinkled to silence the borrow checker instead of redesigning ownership.
 - Features that change behavior of existing APIs.
-
-<!-- reading-receipt: daf89895 -->

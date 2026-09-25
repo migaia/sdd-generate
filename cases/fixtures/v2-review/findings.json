@@ -1,0 +1,20 @@
+{
+  "protocol": "sdd-review-findings/v1",
+  "sdd": "review.md",
+  "findings": [
+    {
+      "id": "F1",
+      "lens": "L2",
+      "clauses": ["R1", "A1"],
+      "evidence": [],
+      "claim": "A1 measures only a leaf use, so an implementation bounding use alone passes."
+    },
+    {
+      "id": "F2",
+      "lens": "L3",
+      "clauses": ["S1"],
+      "evidence": [{ "path": "packages/feature-a/index.ts", "line": 1 }],
+      "claim": "S1 does not say whether featureA replaces or wraps the existing export."
+    }
+  ]
+}

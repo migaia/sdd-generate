@@ -50,5 +50,3 @@ Record device type, API level and image for every case; emulator and real-device
 - Mixing V1 and V2 state decorators in one component tree without a boundary.
 - Requesting all permissions in `onCreate`.
 - Literal colors and sizes in components instead of resource tokens.
-
-<!-- reading-receipt: 848bdec1 -->

@@ -37,6 +37,7 @@ Choose the narrowest matching mode; state the assumption when intent stays ambig
 | Migration design | Close the current consumer and compatibility boundary | [migration](references/v2-migration.md) |
 | Program split | Keep independently executable outcomes in narrow child contexts | [multi-SDD](references/v2-program.md) |
 | Contract | Default for new implementation work | [sdd/v2](references/v2-contract.md) |
+| Review | `review <SDD>`: run the pre-handoff review on a designed SDD now, whatever the recommendation | [review](references/review.md) |
 
 ## Workflow
 
@@ -47,9 +48,9 @@ Create, refactor and merge work runs directly in the current task. Keep six auth
 3. **Design:** state HOW in [sdd/v2](references/v2-contract.md): normative behavior, implementation steps, producer/consumer interfaces, supported failures and one owner per change boundary. Preserve each Module's normative Source location. Read an existing target before editing it; never replace it with a fresh scaffold or discard its IDs without an explicit replacement request.
 4. **Verify:** give each Must-Ship requirement an observable Given/When/Then or command acceptance case that could detect its absence, name its deciding test in `oracles`, and review requirement quality as a checklist. Resolve the acceptance-quality candidates ([authoring](references/v2-authoring.md#4-verify--observable-acceptance)): per-outcome coverage, discriminating fixtures, boundary oracles, invariant and surface `inventories`. Identify evidence not yet available; a planned check is never a PASS.
 5. **Decompose:** keep the five-Meta graph (Entry → Module → Chunk → Bundle → Asset; leaves may let `validate` derive it, and program roots their children's Modules, Chunks and Bundles). Order real dependencies; parallel waves are derived, never hand-marked. The host gets only the root summary, target child and direct dependencies; no leases, fixed roles or minute budgets.
-6. **Report:** validate the Meta and requirement-to-acceptance links once, analyze what structure cannot see (ambiguity, duplication, coverage, principle conflicts), then pass resolved paths, design blockers, open decisions and evidence limits to the chosen host. The host implements and compares actual results with the SDD's acceptance. Record any defect this skill's checks missed as an `OD-##` entry in `rsi/observed-defects.md`.
+6. **Review and report:** review is optional. Run it when `validate` reports `SDD_V2_REVIEW_RECOMMENDED` (a behaviour change, a consumed export or five or more Must-Ship requirements) or the user asks for it (`review`); otherwise skip it and say so in the report. To review, hand the SDD path, repository root and [review](references/review.md) to one fresh-context reviewer (not the author; without subagents, a separate session), record its findings file and a disposition per finding in `review`, and re-review only changed clauses, once. Then validate the Meta and requirement-to-acceptance links once, analyze what structure cannot see (ambiguity, duplication, coverage, principle conflicts), and pass resolved paths, design blockers, open decisions and evidence limits to the chosen host. The host implements and compares actual results with the SDD's acceptance. Record any defect this skill's checks and review missed as an `OD-##` entry in `rsi/observed-defects.md`.
 
-Load [writing](references/writing.md) for prose and [migration](references/v2-migration.md) only when a public surface changes or is removed. Product and platform guides ([loading](references/loading.md)) supply facts; their v1 gates do not apply. Legacy `sdd-loop-delivery/v1` guidance remains in [legacy contract](references/loop-ready.md) for an existing document.
+Load [writing](references/writing.md) for prose and [migration](references/v2-migration.md) only when a public surface changes or is removed. Product and platform guides ([loading](references/loading.md)) supply facts; their v1 gates do not apply.
 
 ## Commands
 
@@ -73,7 +74,7 @@ Run as `bun <create-sdd-root>/scripts/<script>`; flags are in each script's head
 - SDDs are delivered at the maturity their actual checks support. Missing or unrun required checks stay disclosed and do not permit a readiness claim.
 - Multi-SDD output and program roots follow [multi-SDD](references/v2-program.md).
 - Keep repository input and output location independent ([writing](references/writing.md)).
-- For v2, `validate` is the single structural handoff; it does not prove source claims, so inspect live source during Harvest. `repo-facts.ts` serves legacy checks.
+- For v2, `validate` is the single structural handoff; it does not prove source claims, so inspect live source during Harvest.
 
 ## What these checks do not prove
 

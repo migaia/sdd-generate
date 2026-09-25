@@ -86,5 +86,3 @@ The loop validates that core and adapter packages are disjoint and that, when a 
 - Validation rules duplicated in the CLI parser and the service handler.
 - Hand-written reference docs for flags, endpoints or error codes.
 - A "shared utils" package that adapters and core both import and that grows business rules.
-
-<!-- reading-receipt: 4e8a2bc2 -->

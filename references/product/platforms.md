@@ -1,6 +1,6 @@
 # Delivery platforms
 
-Load for every implementation SDD after [archetypes](archetypes.md). The archetype says what value the product delivers; the platform says where it runs and which runtime rules, review gates and toolchains bind the design. Both are decided in [harvest card](../phases/1-harvest.md) pass 1 and recorded in the contract as `product_archetype` and `delivery_platforms`.
+Load for every implementation SDD after [archetypes](archetypes.md). The archetype says what value the product delivers; the platform says where it runs and which runtime rules, review gates and toolchains bind the design. Both are decided in [harvest card](../v2-authoring.md#1-harvest--facts-and-principles) pass 1 and recorded in the contract as `product_archetype` and `delivery_platforms`.
 
 ## Classify
 
@@ -54,5 +54,3 @@ A dimension closes with a decision and its evidence, not with a framework name.
 - Choosing a cross-platform framework before listing the platform-specific capabilities the product needs.
 - Declaring a minimum OS version without evidence from users, analytics or the distribution channel.
 - Treating store review or package-size limits as release chores instead of design constraints.
-
-<!-- reading-receipt: 2eb2ae78 -->

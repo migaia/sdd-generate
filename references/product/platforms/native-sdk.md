@@ -47,5 +47,3 @@ Record the interface definition that is the single source of the public API and 
 - Callbacks invoked on an arbitrary internal thread without documentation.
 - A binding that silently differs from the others because it was hand-written later.
 - Testing bindings only from inside the SDK repository instead of through the packaged artifact.
-
-<!-- reading-receipt: dd16dc42 -->

@@ -25,12 +25,11 @@ const run = (...args: string[]) => {
 test('validate runs from create-sdd with the loop-compatible exit codes', () => {
   const root = mkdtempSync(join(tmpdir(), 'validate-cli-'))
   try {
-    // A worked example this skill ships is a valid document by construction.
-    const example = readFileSync(
-      join(import.meta.dir, '..', 'references', 'examples', 'loop-ready-example.md'),
+    // A fixture this skill ships is a valid sdd/v2 document by construction.
+    const body = readFileSync(
+      join(import.meta.dir, '..', 'cases', 'fixtures', 'v2-scope', 'enum.ok.md'),
       'utf8'
     )
-    const body = /^````(?:markdown)?\n([\s\S]*?)\n````$/m.exec(example)![1]!
     const sdd = join(root, 'example.sdd.md')
     writeFileSync(sdd, body)
     const valid = run('validate-draft', '--draft-file', sdd)
@@ -53,7 +52,6 @@ test('validate runs from create-sdd with the loop-compatible exit codes', () => 
 
     // A usage error is distinguishable from an invalid document.
     expect(run('validate').exit).toBe(2)
-    expect(run('validate', '--sdd', sdd, '--document-policy', 'legacy').exit).toBe(2)
     expect(run('no-such-command').exit).toBe(2)
   } finally {
     rmSync(root, { recursive: true, force: true })

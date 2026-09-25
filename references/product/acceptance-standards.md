@@ -92,5 +92,3 @@ possible declaration". A parser nobody trusts is worse than a narrow check whose
 The same restraint applies to the checks in this skill: the authoring-time patterns are an early
 warning whose guarantee lives elsewhere, and a boundary recorded honestly outranks coverage claimed
 loosely.
-
-<!-- reading-receipt: 1ef8d5ed -->

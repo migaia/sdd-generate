@@ -86,7 +86,7 @@ test('OD-29: program children may sit beside the root inside the repository, not
   })
   try {
     const codes = (sdd: string) =>
-      validateDocument(join(root, sdd), 'legacy').diagnostics.map((d) => d.message)
+      validateDocument(join(root, sdd)).diagnostics.map((d) => d.message)
     expect(codes('docs/a/root.sdd.md').filter((m) => m.startsWith('child-path-escape'))).toEqual([])
     expect(codes('docs/a/escape.sdd.md').some((m) => m.startsWith('child-path-escape'))).toBe(true)
   } finally {
@@ -96,10 +96,7 @@ test('OD-29: program children may sit beside the root inside the repository, not
 
 test('OD-32: a program root may leave child Modules, Chunks and Bundles to derivation', () => {
   const fixture = (name: string) =>
-    validateDocument(
-      join(import.meta.dir, '..', 'cases', 'fixtures', 'v2-program-derived', name),
-      'legacy'
-    )
+    validateDocument(join(import.meta.dir, '..', 'cases', 'fixtures', 'v2-program-derived', name))
   const root = fixture('root.sdd.md')
   expect(root.diagnostics).toEqual([])
   // An Entry naming a requirement the child does not have still fails.

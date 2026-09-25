@@ -51,5 +51,3 @@ Unit logic runs in Node/Jest/Vitest with platform APIs behind an adapter; never 
 - Calling `wx.getUserProfile`-style APIs on launch instead of at the moment of need.
 - Storing the session key or AppSecret on the client.
 - Designing H5 routes first and mapping them to pages afterward.
-
-<!-- reading-receipt: 409b656b -->
