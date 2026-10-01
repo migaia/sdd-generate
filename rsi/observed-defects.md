@@ -25,17 +25,6 @@ a cause outside this skill, needs no existing root asset), and `close` archives 
 text into `rsi/rounds/<round>.json` and removes it here. After an update this file holds only this
 header; anything below it is waiting to be settled.
 
-## OD-87 completion preflight overwrites the start report, so base-red evidence disappears
-
-Observed 2026-09-29 (codex, migai `pipeline-internal-cleanup`, `plugin-host-async-prepare`): the host ran preflight
-before implementation (base RED / candidate PASS) and again at completion; the completion run rewrote the single
-report file, and `validate` then reported `change-base-uncovered` for acceptances whose base failure had been
-shown only in the overwritten report. For `plugin-host-async-prepare` the host never ran the base oracles at all
-and still marked the leaf verified, because nothing distinguishes "base red proven earlier" from "never proven".
-A fix would keep the start report (or its base-red receipts) alongside the completion report and let closure
-read both.
-**Class:** blast-radius
-
 ## OD-88 step gates cover only the touched package, so consumer-graph gates go red between commits
 
 Observed 2026-09-29 (codex, migai I6–I8, 15 commits across `guarded-property-read`, `abort-reason-read`,
@@ -44,7 +33,7 @@ passed, while `packages/rpc` A9 (root bundle size, a direct-consumer gate) was r
 fixed later by a threshold adjustment. The leaves listed rpc as a direct consumer but their step gates did not
 include its bundle check. A detector would require every step that changes a package in a consumer's retained
 graph to run that consumer's declared scaling gates.
-**Class:** gate-scope
+**Root cause:** `scripts/validator/domain/v2-document.ts` — the same ownership model as OD-94/OD-98: a leaf's obligations derive only from its own `writes`, never from the consumers that retain those files, so a consumer's scaling gate is no step's gate (`references/v2-authoring.md` §6 states the same scope).
 
 ## OD-89 change-base RED is demanded for pure-new modules, so hosts write existence stubs that pass it
 
@@ -61,48 +50,7 @@ must-ship acceptance not in `preserve`; there is no third acceptance class (new 
 Needs: let an acceptance whose subject is absent at base (new file/export in `writes`) satisfy the check with a
 perturbation item on the candidate (patch + `expect:"fail"`) instead of a base run, and report stubs whose only
 failure is load/resolve (see OD-90).
-**Class:** feasibility
-
-## OD-90 `expect:"fail"` counts any non-zero exit as RED, so prep, install, build and import failures pass
-
-Observed 2026-09-30 (Claude delta reviews A-2/A-6/A-7/A-15 and B F2/F4/F9 on 11 rpc leaves; ledger K161/K162):
-base-RED items passed because the copy lacked a fresh dist (`withDistFreshness` throws `DIST_STALE`), a new module
-failed to import, or the discriminator itself threw and exited 1. Every leaf had to hand-roll a Vitest-JSON
-discriminator wrapped in `try{…}catch{process.exit(0)}` (root X14 rules 1–2) to make "red" mean an assertion failure.
-Why missed: `scripts/preflight.ts:144` judges `expect:"fail"` as `run.exitCode !== 0`; the result records only exit
-and a 240-char tail (`:145-158`). The OD-44 shared-cause detector exists only for `--evidence` closure
-(`scripts/validator/domain/v2-closure.ts:206-278`), not for preflight reports, so it never fired here.
-Needs: a fail item states what must fail (the acceptance ID marker, or an assertion-failure pattern) and the runner
-checks it; an exit with no matching marker, a signal, or a failure before any test ran is ERROR, not PASS. Reuse the
-closure's shared-baseline rule across items of one report.
-**Class:** feasibility
-
-## OD-91 `--only` reruns mark un-run items ERROR or silently keep stale ones, so no clean completion record exists
-
-Observed 2026-09-30 (codex, migai I12 `rpc-error-text-cleanup` completion, ledger K183; ipc P3 likewise): following
-the OD-87 workaround (start report kept via `--out`, completion via `--only P4`), P4 passed but P0–P3/P5/P6 were
-written as `ERROR "not run"`, status FAILED, exit 1; the separate report was not the default path, so `validate`
-still said `SDD_V2_PREFLIGHT_REQUIRED`. Without `--out`, `--only` instead copies the start run's results into the
-completion report under the new `repository_head`/`sdd_sha`, so start-time and end-time results are indistinguishable.
-Why missed: `scripts/preflight.ts:191-194,211-223` fills unselected items from the previous report at `out` or with
-ERROR, and `:224-240` stamps one head/dirty/digest for all items; `v2-preflight.ts:189-193,266-310` reads one report.
-Needs: per-item run metadata (head, dirty, time, sdd digest) plus a "not selected" outcome that neither fails nor
-passes, and a validator that accepts a start report + completion report pair (the OD-87 fix) as one record.
-**Class:** blast-radius
-
-## OD-92 a preflight report is not bound to the patch bytes it ran, so a PASS cannot be tied to its patch
-
-Observed 2026-09-30 (codex/Claude, migai I10 `rpc-handshake-redaction` evidence custody): the default report was
-written 08:56 with P0–P5 PASS for `red`/BC1/BC2 patch paths whose files are dated 09:07; at 09:23 the host renamed and
-aggregated reports into `…preflight.start.json`/`start-failed.json` after the implementation commits. Nothing in any
-report proves which patch bytes produced the PASS; custody had to be rebuilt by SHA256 and `cmp` against commits.
-Evidence: `docs/rpc/rpc-handshake-redaction.sdd.md` §8 row "证据保管时间与补丁身份", revision 4 Clarifications.
-Why missed: `scripts/validator/domain/v2-preflight.ts:65-67` digests only the declared items and `writes` (patch
-*path*, not content), `:285-288` therefore never stales on a patch edit, and `scripts/preflight.ts:227-240` records no
-patch hash, run time or input hash, so reports are freely renameable and mergeable (OD-87's overwrite is one case).
-Needs: record each item's patch/inputs SHA and run time in the result, include patch content in `inputs_sha`, and
-have `validate` recompute patch hashes and report a mismatch as STALE.
-**Class:** blast-radius
+**Root cause:** `scripts/validator/domain/v2-preflight.ts` — the obligation rule knows two acceptance classes (change: base fails; preserve: base passes) and assumes a base run can discriminate; for a subject absent at base it can only prove absence, so it demands evidence that cannot exist and invites stubs.
 
 ## OD-93 export fingerprints hash raw clause prose, so editorial edits force whole-chain re-pins
 
@@ -117,7 +65,7 @@ Why missed: `scripts/validator/domain/v2-semantics.ts:15-18` hashes each listed 
 there is no notion of normative content versus annotations (layer/revision labels, K-refs, notes).
 Needs: fingerprint a normalized normative form (strip program layer/revision tokens, ledger refs and parenthetical
 history), or fingerprint the exported contract (signature fences, codes) that consumers actually rely on.
-**Class:** blast-radius
+**Root cause:** `scripts/validator/domain/v2-semantics.ts` — an export fingerprint hashes clause prose rather than the contract consumers rely on, so editorial text is treated as interface and real interface edits outside listed clauses are not.
 
 ## OD-94 a shared generated file in `writes` serializes every writer; there is no mergeable co-write
 
@@ -131,31 +79,39 @@ exclusive ownership (OD-71 only exempted already-ordered pairs); `writes` cannot
 per owner (one package's entry in a baseline, one row in a registry).
 Needs: a co-write declaration (e.g. `shared_writes: [{path, key}]`) whose writers touch disjoint keys, checked by
 preflight's `writes_outside` diff at key granularity, so such writers need no ordering edge.
-**Class:** gate-scope
+**Root cause:** `scripts/validator/domain/v2-document.ts` — `writes` models only exclusive whole-path ownership per leaf; keyed shared writes and bounded writes into another leaf have no form, so every overlap becomes forced ordering.
 
 ## OD-95 claims about an implemented dependency's API are never checked against its public exports or behaviour
 
 Observed 2026-09-30 (codex, migai I13 `rpc-remote`; ledger K184/K185/K187, impl log "S2 预查"): the frozen leaf
 required (a) a JSON Schema 2020-12 constraint that key equals `value.plugin`, which the dialect cannot express;
-(b) a stream-open `IRpcContext`, but `IRpcStreamRun` received only `{signal}`; (c) a trusted-plugin check via
-`readDefinedPluginDefinition`, exported only inside `packages/plugin-host/src/define-plugin.ts:366`, not from the
-package entry; (d) plugin name `migaia.remote.serve#`, which `definePlugin` rejects (dots). Each stopped
+(b) a stream-open `IRpcContext`, but `IRpcStreamRun` received only `{signal}`; (c) a trusted-plugin check through a
+symbol the package does not export (split out as OD-102); (d) plugin name `migaia.remote.serve#`, which `definePlugin` rejects (dots). Each stopped
 implementation after two design review rounds; (b) and (c) forced public API changes in other packages.
-Why missed: `scripts/validator/domain/v2-symbols.ts:78-98` accepts a symbol defined anywhere in the workspace (OD-74
-fallback) without checking it is reachable through the owning package's `exports`; `type-probe.ts` compiles only the
-SDD's own exported fences; preflight is required only for BCs, program `consumes` and scaling gates
+Why missed: `type-probe.ts` compiles only the SDD's own exported fences; preflight is required only for BCs, program `consumes` and scaling gates
 (`v2-preflight.ts:113-120,257-259`), and cross-program/standalone producers must keep `consumes` empty (OD-85), so
 no feasibility item ever calls the dependency.
-Needs: resolve each step's imported symbol through the dependency's package entry/exports and report internal-only
-hits; type-check declared calls against the real dependency types; require a preflight item for each stated
+Needs: type-check declared calls against the real dependency types; require a preflight item for each stated
 external capability or constraint (name format, schema keyword) the design depends on.
-**Class:** feasibility
+**Root cause:** `scripts/validator/domain/v2-preflight.ts` — executable obligations trigger only on BCs, consumed exports and scaling gates; claims about an implemented dependency (API shape, export reachability, schema or naming rules) are checked as text and never executed against it.
 
 Additional evidence 2026-10-01 (I16 `rpc-process-resilience`, ledger K207): the start-of-leaf API check verified
 `pending.accept` and the existing channel offer but not the offer built inside the opaque client
 `IProcessPluginEstablish` closure (`packages/rpc/test/process/plugin-native.test.ts:94-107`,
 `src/process/plugin/types.ts:34-69`). Resilience A5 needs to audit the offer before spawn/dial, so S2 stopped. A claim
 check must follow values that a dependency builds inside caller-supplied callbacks, not only the declared signatures.
+
+## OD-102 a step's dependency symbol resolves anywhere in the workspace, not through the package's exports
+
+Split from OD-95 (c). Observed 2026-09-30 (codex, migai I13 `rpc-remote`; ledger K187): the frozen leaf's trusted-plugin
+check called `readDefinedPluginDefinition`, which is defined in `packages/plugin-host/src/define-plugin.ts:366` but not
+exported from the package entry. `validate` accepted the call; implementation stopped, and K187 had to add a public
+`isDefinedPlugin` to `@migaia/plugin-host` (see OD-98).
+Why missed: the OD-74 fallback in `scripts/validator/domain/v2-symbols.ts` (around line 78) accepts a symbol defined
+anywhere under a dependency package without checking that the package's `exports`/entry re-exports it.
+Needs: resolve a dependency symbol through the owning package's `exports` (or `main`/`types` entry) and report an
+internal-only hit as a candidate. Mechanical, so it can be a detector pinned by a case.
+**Root cause:** `scripts/validator/domain/v2-symbols.ts` — dependency symbols are resolved by definition site rather than by the package's public entry, so an internal symbol counts as available API.
 
 ## OD-96 no review lens checks what untrusted input reaches errors, summaries or logs
 
@@ -172,28 +128,13 @@ carry. `closure-evidence.md:33` covers secret scanning only at closure.
 Needs: a trust-boundary lens (or a recommendation trigger) for leaves that parse peer/user input: enumerate every
 sink (message, `cause`, summary, log, serialized error) and require each to be allowlist-projected, with an
 acceptance that plants a sentinel in every input position and asserts it never appears.
-**Class:** gate-scope
+**Root cause:** `references/review.md` — the lenses are a fixed generic set (behaviour change, discrimination, dry-run) not derived from the design's risk surfaces, so where untrusted input reaches errors, logs or disk is never asked.
 
 Additional evidence 2026-10-01 (Claude I15 audit, `docs/rpc/audit-m1/i15-plugin-out.txt` P7): the persisted process
 descriptor (R7) stores `env.set.API_TOKEN=…` and `args --token=…` literally, because its secret check matches only the
 literal key `token` at any depth. That check also wrongly rejects legitimate features, methods or plugins named
 `token`. Untrusted or secret values flowing to disk belong to the same missing lens. The user ruled that the env
 descriptor stores references only.
-
-## OD-97 a failed preflight item keeps a 240-character tail and no log, so hosts misattribute the failure
-
-Observed 2026-10-01 (codex, migai rpc I15 `rpc-process-plugin` start preflight): P2 failed twice. The report reason
-held only the last lines, so the host first suspected an unrelated PluginHost timing flake (PHV3-T10, seen in a
-separate custody run) and stopped the leaf. The real cause, found only after re-running the command by hand and
-saving the full output (`docs/rpc/scratch/k198-p2-full.log`), was a coverage-custody total drift: rpc functions went
-2017→2018 after an interstitial commit (`7a95436`, K197) and the baseline had not been re-signed (ledger K198).
-Why missed: `scripts/preflight.ts:145-158` keeps `slice(-3)` lines of stderr-or-stdout, cut to 240 characters, as
-`reason`. The full output is discarded, and stdout is dropped whenever stderr is non-empty. A multi-gate item (fmt →
-lint → … → custody) whose failing gate prints early cannot be attributed from its report.
-Needs: write each item's full stdout and stderr to a log file next to the report, recorded by path and hash in the
-item result, and name the first failing sub-command when the item is a `&&` chain. Related: OD-90 (what counts as
-RED) and OD-92 (run identity) need the same per-run artifact.
-**Class:** feasibility
 
 ## OD-98 no path amends a delivered producer from inside a consumer leaf, so its gates and status drift
 
@@ -215,25 +156,7 @@ Needs: a declared "producer amendment" item in the consumer leaf: producer leaf 
 files, additive-only flag, and the producer gates to re-run, including custody and exports baselines. Validate then
 marks the producer revision stale until those gates pass. At minimum, `validate` should report a delivered leaf
 whose `writes` files changed after its closure evidence head.
-**Class:** gate-scope
-
-## OD-99 new detectors are never swept over delivered or legacy SDDs, so known-bad oracles keep failing downstream
-
-Observed 2026-09-30/10-01 (codex, migai): three timing-ratio flakes in default test suites stopped unrelated leaves:
-- K167, capability A17;
-- K174, plugin-host A18/A27;
-- K199, plugin-host PHV3-T10, ratio 11.5–12.5 against a limit of 10 under load.
-Each was fixed by hand, by moving the ratio to a bench script.
-Re-running `validate` today gives `SDD_V2_TIMING_ORACLE_UNISOLATED` on `docs/capability/capability-dependency-planner.sdd.md`
-and `docs/plugin-host/plugin-host-r3.sdd.md`. Both are delivered leaves whose oracles predate OD-69, and nobody
-re-validated them after the detector landed. PHV3-T10 lives in `docs/plugin-host/plugin-host-v3.sdd.md`, a legacy
-v1-format document that the v2 detector never sees.
-Why missed: `scripts/validator/domain/v2-scope.ts:189-195` (OD-69) runs only when a document is validated. RSI rounds
-that add a detector do not sweep existing documents, and the legacy route does not apply v2 quality checks.
-Needs: when a round adds or tightens a detector, run it across the repository's SDDs (`validate` over `docs/**`) and
-report the hits as follow-up debt with owners. For legacy documents, run at least the timing-isolation and
-scaling-oracle checks as a lint over their acceptance tables.
-**Class:** blast-radius
+**Root cause:** `scripts/validator/domain/v2-document.ts` — the same exclusive ownership model: a consumer cannot declare a bounded write into a delivered producer, and a producer's closure is never staled by another leaf's commit to its writes.
 
 ## OD-100 timing gates are "isolated" from other test files but not from host load, so moved benches still fail
 
@@ -249,7 +172,7 @@ repetitions, the statistic, and what happens when the host is loaded.
 Needs: a timing oracle must declare its noise protocol: repetitions and statistic (median of N runs, or a ratio
 computed inside one run on interleaved sizes), and a host-load guard that reports ERROR (environment), not FAIL, when
 the host is not idle. Gates must not run timing oracles in parallel with other gates.
-**Class:** feasibility
+**Root cause:** `scripts/validator/domain/v2-scope.ts` — the timing rule treats file isolation as sufficient and assumes one wall-clock run is deterministic; it never asks the oracle for a noise protocol.
 
 ## OD-101 no lens asks whether an old handle still has authority after replacement or a new generation
 
@@ -270,4 +193,4 @@ references held across a state transition, and `FAILURE_CLAUSE_UNBOUND` only bin
 Needs: when an SDD defines replace/restart/generation/re-adopt operations, require a "stale reference" table. It lists
 every handle or definition a caller can hold, by operation, after each transition: its allowed operations, the error
 it gets, and the acceptance that proves it. Review then asks for the old-handle case of each mutating operation.
-**Class:** feasibility
+**Root cause:** `references/review.md` — the same fixed lens set: no lens is derived from state transitions, so what an old handle may do after replacement or a new generation is never asked.
