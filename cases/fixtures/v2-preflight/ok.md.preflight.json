@@ -1,7 +1,7 @@
 {
   "protocol": "sdd-preflight/v1",
   "sdd": "/Users/kaeo/.codex/skills/create-sdd/cases/fixtures/v2-preflight/ok.md",
-  "sdd_sha": "be9b118f3e5b",
+  "sdd_sha": "7112069718c7",
   "repository": "/Users/kaeo/.codex/skills/create-sdd/cases/fixtures/v2-preflight/repo",
   "repository_head": null,
   "dirty": false,
@@ -19,6 +19,16 @@
       ],
       "expect": "pass",
       "exit": 0,
+      "outcome": "PASS",
+      "writes_outside": []
+    },
+    {
+      "id": "P3",
+      "covers": [
+        "A1"
+      ],
+      "expect": "fail",
+      "exit": 1,
       "outcome": "PASS",
       "writes_outside": []
     },

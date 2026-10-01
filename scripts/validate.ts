@@ -175,11 +175,24 @@ function validatorVersion(): { commit: string | null; dirty: boolean } {
   }
 }
 
-/** Attach the validator version to the result's top level; non-object output passes through. */
+/**
+ * What the implementing host owes this skill. The host reads the handoff, not SKILL.md, so the duty
+ * to report the skill's own defects travels with every handoff instead of depending on the author.
+ */
+const DEFECT_DUTY =
+  'If this skill or its checks pass a wrong result, block a correct design or implementation, or make you invent a marker, override, wrapper or threshold change, or stop with no defined path: append an OD-<n> entry to <create-sdd-root>/rsi/observed-defects.md with what happened, the evidence and a **Root cause:** line naming the skill file, script line or rule code whose gap allowed it (not the symptom); add to an existing entry with the same root cause instead of opening another.'
+
+/** Attach the validator version (and to a handoff, the defect duty); non-object output passes through. */
 function withValidator(output: unknown): unknown {
-  return output && typeof output === 'object' && !Array.isArray(output)
-    ? { ...(output as Record<string, unknown>), validator: validatorVersion() }
-    : output
+  if (!output || typeof output !== 'object' || Array.isArray(output)) return output
+  const result: Record<string, unknown> = {
+    ...(output as Record<string, unknown>),
+    validator: validatorVersion()
+  }
+  const handoff = result.handoff
+  if (handoff && typeof handoff === 'object')
+    result.handoff = { ...(handoff as Record<string, unknown>), defect_duty: DEFECT_DUTY }
+  return result
 }
 
 if (import.meta.main) {

@@ -72,7 +72,7 @@ test('a consolidation must shrink the skill and may not grow any dimension', () 
   expect(consolidationFindings(before, { measured: before.measured, rules: 9 })).toEqual([])
   // Recording decisions alone removes nothing.
   expect(consolidationFindings(before, before)).toEqual([
-    'neither the rule count nor the measured lines went down'
+    'neither the rule count nor any measured dimension went down'
   ])
   // Moving growth from one dimension to another is still growth.
   expect(

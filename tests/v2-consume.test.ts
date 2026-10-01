@@ -85,3 +85,10 @@ test('delegation gaps: error dispositions, and preservation claims in either lan
   )
   expect(defects(delegate('ok', local))).toEqual([])
 })
+
+test('OD-86: a clause fingerprint hashes the normative list item, not a clause-map row', () => {
+  const body = '| R1 | mapping |\n\n## Requirements\n\n- R1 The real clause.\n'
+  expect(fingerprint(body, ['R1'])).toBe(fingerprint('- R1 The real clause.\n', ['R1']))
+  // Without a list item or heading, the row is still the anchor.
+  expect(fingerprint('| R1 | mapping |\n', ['R1'])).toBe(fingerprint('| R1 | mapping |', ['R1']))
+})

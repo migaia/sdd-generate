@@ -7,6 +7,17 @@ import { stepRecords } from './v2-tasks.ts'
 export const SOURCE = /\.(ts|tsx|js|jsx|mjs|cjs|go|rs|py|java|kt|swift)$/
 /** A call in pseudocode: a lower-case identifier followed by `(`, not a method on another value. */
 const CALL = /(?:^|[^.\w])([a-z][A-Za-z0-9_]{3,})\s*\(/g
+/** Language keywords a call pattern can match (`import(`, `typeof(`); never a symbol to resolve. */
+const KEYWORDS = new Set([
+  'import',
+  'require',
+  'typeof',
+  'super',
+  'switch',
+  'while',
+  'catch',
+  'function'
+])
 /** Where a name is declared: a function, class, binding or assigned function. */
 const definition = (name: string) =>
   new RegExp(
@@ -26,10 +37,13 @@ export const sourceCorpus = (repository: string, roots: readonly string[], skip?
  */
 export function stepText(body: string, id: string): string {
   const lines = body.split('\n')
-  const anchor = new RegExp(
-    `^(?:#{1,6}\\s+|[-*]\\s+|\\|\\s*)(?:\\*\\*)?${escape(id)}(?:\\*\\*)?(?=\\s|[:：|]|$)`
-  )
-  const start = lines.findIndex((line) => anchor.test(line))
+  const tail = `(?:\\*\\*)?${escape(id)}(?:\\*\\*)?(?=\\s|[:：|]|$)`
+  // The normative definition is a heading or list item; a table row that starts with the ID (a
+  // clause map, a traceability table) is the anchor only when no such definition exists (OD-86).
+  const definition = new RegExp(`^(?:#{1,6}\\s+|[-*]\\s+)${tail}`)
+  const row = new RegExp(`^\\|\\s*${tail}`)
+  let start = lines.findIndex((line) => definition.test(line))
+  if (start < 0) start = lines.findIndex((line) => row.test(line))
   if (start < 0) return ''
   const out = [lines[start]!]
   let fenced = false
@@ -61,15 +75,27 @@ export function symbolCandidates(
   )
   if (!roots.length) return []
   const corpus = sourceCorpus(repository, roots)
+  // A step may call what a dependency package already defines (OD-74); read the rest of the
+  // workspace only when the owned and read source does not declare a name.
+  let workspace: string | undefined
+  const elsewhere = () =>
+    (workspace ??= walk(repository)
+      .filter((file) => SOURCE.test(file))
+      .map((file) => read(join(repository, file)))
+      .join('\n'))
   const candidates: { code: string; detail: string }[] = []
   // A step defined through step_sources lives in its source document, which may also declare names.
   const documents = [body, ...external.values()].join('\n')
   for (const { id } of stepRecords(index).records) {
-    const step = stepText(external.get(id) ?? body, id)
+    // Comments inside a fence describe, they do not call.
+    const step = stepText(external.get(id) ?? body, id).replace(
+      /\/\*[\s\S]*?\*\/|(?<!:)\/\/.*$/gm,
+      ''
+    )
     for (const name of new Set([...step.matchAll(CALL)].map((match) => match[1]!))) {
-      if (PSEUDOCODE_BUILTINS.has(name)) continue
+      if (PSEUDOCODE_BUILTINS.has(name) || KEYWORDS.has(name)) continue
       const declares = definition(name)
-      if (declares.test(documents) || declares.test(corpus)) continue
+      if (declares.test(documents) || declares.test(corpus) || declares.test(elsewhere())) continue
       candidates.push({ code: 'PSEUDOCODE_SYMBOL_UNRESOLVED', detail: `${id}: ${name}` })
     }
   }

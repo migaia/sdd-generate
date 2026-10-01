@@ -78,7 +78,19 @@ function unlinked(oracle: Oracle, id: string, row: Item, repository: string | nu
     if (command !== expected) return `command is not ${expected}`
     return text(row.observed) ? null : 'no observed result recorded'
   }
-  if (!command.includes(oracle)) return `command does not run ${oracle}`
+  // A command may run the oracle from its package (`--filter ./pkg`, `--dir pkg`, `-C pkg`,
+  // `cd pkg`) with a package-relative path (OD-76).
+  const packages = [
+    ...command.matchAll(
+      /(?:--filter[= ]|--dir[= ]|--prefix[= ]|-C\s+|\bcd\s+)["']?\.?\/?([\w@./-]+)/g
+    )
+  ].map((match) => match[1]!.replace(/\/$/, ''))
+  const runs =
+    command.includes(oracle) ||
+    packages.some(
+      (dir) => oracle.startsWith(`${dir}/`) && command.includes(oracle.slice(dir.length + 1))
+    )
+  if (!runs) return `command does not run ${oracle}`
   const path = repository ? resolve(repository, oracle) : null
   if (path && !(existsSync(path) && new RegExp(`\\b${id}\\b`).test(readFileSync(path, 'utf8'))))
     return `${oracle} does not name ${id}`

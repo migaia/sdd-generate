@@ -2460,6 +2460,191 @@
       "observed_at": "2026-09-26",
       "owning_test": "tests/v2-preflight.test.ts",
       "introduced_detector_at": "2026-09-26"
+    },
+    {
+      "id": "CSDD-V2-SYMBOL-103",
+      "defect_class": "symbol-defined-in-dependency-package",
+      "statement": "S1's pseudocode imports and calls attachErrorIdentity, defined in packages/utils outside the leaf's writes and reads; the probe reports it (and the import keyword) as unresolved, so the host rewrites the fence as prose to silence it.",
+      "root_cause": "The symbol probe scans only writes and Bundle reads and reads fence keywords as calls.",
+      "evidence": {
+        "file": "rsi/observed-defects.md",
+        "line": 1,
+        "quote": "OD-74"
+      },
+      "fixture": "cases/fixtures/v2-symbol-dep.md",
+      "negative_fixture": "cases/fixtures/v2-symbol-dep-missing.md",
+      "detector": {
+        "command": "bun scripts/validate.ts validate --sdd <fixture> --repository <repository>",
+        "expected_code": "PSEUDOCODE_SYMBOL_UNRESOLVED",
+        "must_fire": false
+      },
+      "source_delivery": "migai rpc program delivery and audit 2026-09-26/27, OD-74",
+      "observed_at": "2026-09-27",
+      "owning_test": "tests/v2-preflight.test.ts",
+      "introduced_detector_at": "2026-09-27",
+      "repository": "cases/fixtures/v2-repo-deps",
+      "negative_expectation": {
+        "must_fire": true
+      }
+    },
+    {
+      "id": "CSDD-V2-PREFLIGHT-104",
+      "defect_class": "change-acceptance-never-run-at-base",
+      "statement": "A1 is a change acceptance but no preflight item runs its oracle at base expecting FAIL; a case that already passes at base surfaces only at closure.",
+      "root_cause": "Preflight requires runs for preserve cases and BC patches, never a base run of a change acceptance.",
+      "evidence": {
+        "file": "rsi/observed-defects.md",
+        "line": 1,
+        "quote": "OD-75"
+      },
+      "fixture": "cases/fixtures/v2-preflight/polarity.md",
+      "negative_fixture": "cases/fixtures/v2-preflight/ok.md",
+      "detector": {
+        "command": "bun scripts/validate.ts validate --sdd <fixture> --repository <repository>",
+        "expected_code": "SDD_V2_PREFLIGHT_REQUIRED",
+        "must_fire": true
+      },
+      "source_delivery": "migai rpc program delivery and audit 2026-09-26/27, OD-75",
+      "observed_at": "2026-09-27",
+      "owning_test": "tests/v2-preflight.test.ts",
+      "introduced_detector_at": "2026-09-27",
+      "repository": "cases/fixtures/v2-preflight/repo"
+    },
+    {
+      "id": "CSDD-V2-PREFLIGHT-105",
+      "defect_class": "clarification-invalidates-preflight",
+      "statement": "Only a Clarifications record was appended after a passing preflight; validate reports SDD_V2_PREFLIGHT_STALE and the host re-runs preflight though no item, patch or clause changed.",
+      "root_cause": "The report is bound to the digest of the whole document, including append-only history.",
+      "evidence": {
+        "file": "rsi/observed-defects.md",
+        "line": 1,
+        "quote": "OD-77"
+      },
+      "fixture": "cases/fixtures/v2-preflight/clarified.md",
+      "negative_fixture": "cases/fixtures/v2-preflight/stale.md",
+      "detector": {
+        "command": "bun scripts/validate.ts validate --sdd <fixture> --repository <repository>",
+        "expected_code": "SDD_V2_PREFLIGHT_STALE",
+        "must_fire": false
+      },
+      "source_delivery": "migai rpc program delivery and audit 2026-09-26/27, OD-77",
+      "observed_at": "2026-09-27",
+      "owning_test": "tests/v2-preflight.test.ts",
+      "introduced_detector_at": "2026-09-27",
+      "repository": "cases/fixtures/v2-preflight/repo",
+      "negative_expectation": {
+        "must_fire": true
+      }
+    },
+    {
+      "id": "CSDD-V2-PREFLIGHT-106",
+      "defect_class": "gate-list-drops-package-scripts",
+      "statement": "The touched package defines test and typecheck:e2e; the gate items run only test, and validate accepts the subset, so the change can break typecheck:e2e unseen.",
+      "root_cause": "Nothing compares the declared gates with the touched packages' own gate scripts.",
+      "evidence": {
+        "file": "rsi/observed-defects.md",
+        "line": 1,
+        "quote": "OD-79"
+      },
+      "fixture": "cases/fixtures/v2-preflight/gates.md",
+      "negative_fixture": "cases/fixtures/v2-preflight/gates.ok.md",
+      "detector": {
+        "command": "bun scripts/validate.ts validate --sdd <fixture> --repository <repository>",
+        "expected_code": "SDD_V2_PREFLIGHT_REQUIRED",
+        "must_fire": true
+      },
+      "source_delivery": "migai rpc program delivery and audit 2026-09-26/27, OD-79",
+      "observed_at": "2026-09-27",
+      "owning_test": "tests/v2-preflight.test.ts",
+      "introduced_detector_at": "2026-09-27",
+      "repository": "cases/fixtures/v2-preflight/repo-gates"
+    },
+    {
+      "id": "CSDD-V2-PROGRAM-WRITES-101",
+      "defect_class": "serial-children-write-conflict",
+      "statement": "Two program children edit one package, and b depends on a, so they write in sequence; validate reports SDD_V2_OWNER_CONFLICT as if they ran in parallel, and a sequential migration program cannot use sdd-program/v2.",
+      "root_cause": "The write-owner check compares every pair of child writes with no regard to depends_on.",
+      "evidence": {
+        "file": "scripts/validator/domain/v2-document.ts",
+        "line": 751,
+        "quote": "'write-owner-conflict'"
+      },
+      "fixture": "cases/fixtures/v2-program-writes/parallel/root.sdd.md",
+      "negative_fixture": "cases/fixtures/v2-program-writes/serial/root.sdd.md",
+      "detector": {
+        "command": "bun scripts/validate.ts validate --sdd <fixture>",
+        "expected_code": "SDD_V2_OWNER_CONFLICT",
+        "must_fire": true
+      },
+      "negative_expectation": {
+        "must_fire": false
+      },
+      "source_delivery": "migai rpc program authoring 2026-09-26, OD-71",
+      "observed_at": "2026-09-26",
+      "owning_test": "tests/v2-boundaries.test.ts"
+    },
+    {
+      "id": "CSDD-V2-CLOSURE-PKGCMD-101",
+      "defect_class": "package-relative-oracle-unlinked",
+      "statement": "The host runs the declared oracle packages/feature-a/other.test.ts from the package (pnpm --filter ./packages/feature-a exec vitest run other.test.ts); closure reports oracle-unlinked and the host re-runs every oracle with repository-root paths.",
+      "root_cause": "unlinked() requires the repository-relative oracle path to appear verbatim in the command.",
+      "evidence": {
+        "file": "scripts/validator/domain/v2-closure.ts",
+        "line": 74,
+        "quote": "if (!command.includes(oracle)) return `command does not run ${oracle}`"
+      },
+      "repository": "cases/fixtures/v2-closure-pkgcmd",
+      "fixture": {
+        "base": "cases/fixtures/v2-leaf.md",
+        "overlay": {
+          "oracles": {
+            "A1": "packages/feature-a/feature.test.ts"
+          }
+        }
+      },
+      "negative_fixture": {
+        "base": "cases/fixtures/v2-leaf.md",
+        "overlay": {
+          "oracles": {
+            "A1": "packages/feature-a/other.test.ts"
+          }
+        }
+      },
+      "detector": {
+        "command": "bun scripts/validate.ts validate --sdd <fixture> --evidence <repository>/evidence.json",
+        "expected_code": "SDD_V2_CLOSURE_OPEN",
+        "must_fire": true
+      },
+      "negative_expectation": {
+        "must_fire": false
+      },
+      "source_delivery": "migai rpc-layering closure 2026-09-27, OD-76",
+      "observed_at": "2026-09-27",
+      "owning_test": "tests/v2-converge.test.ts"
+    },
+    {
+      "id": "CSDD-V2-FINGERPRINT-ANCHOR-101",
+      "defect_class": "fingerprint-anchor-table-row",
+      "statement": "A clause map lists | R1 | … | before the normative - R1 bullet; the export fingerprint hashes the table row, so an edit to the real requirement would not stale consumers, and the recorded bullet fingerprint reads as stale.",
+      "root_cause": "stepText() anchors on the first line that starts with the ID, table rows included, before any list item or heading.",
+      "evidence": {
+        "file": "scripts/validator/domain/v2-symbols.ts",
+        "line": 30,
+        "quote": "`^(?:#{1,6}\\\\s+|[-*]\\\\s+|\\\\|\\\\s*)(?:\\\\*\\\\*)?${escape(id)}"
+      },
+      "fixture": "cases/fixtures/v2-fingerprint-anchor-row.md",
+      "negative_fixture": "cases/fixtures/v2-fingerprint-anchor.md",
+      "detector": {
+        "command": "bun scripts/validate.ts validate --sdd <fixture>",
+        "expected_code": "SDD_V2_EXPORT_FINGERPRINT_STALE",
+        "must_fire": true
+      },
+      "negative_expectation": {
+        "must_fire": false
+      },
+      "source_delivery": "migai supervision-threads 2026-09-29, OD-86",
+      "observed_at": "2026-09-29",
+      "owning_test": "tests/v2-consume.test.ts"
     }
   ],
   "held_out": [

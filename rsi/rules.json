@@ -259,7 +259,7 @@
       "weight": {
         "sites": 1,
         "mentions": 1,
-        "test_mentions": 1
+        "test_mentions": 2
       }
     },
     {
@@ -1067,7 +1067,7 @@
       "weight": {
         "sites": 1,
         "mentions": 1,
-        "test_mentions": 0
+        "test_mentions": 1
       }
     },
     {

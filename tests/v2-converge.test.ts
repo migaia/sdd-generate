@@ -156,6 +156,26 @@ test('OD-35: a preserved case closes on PASS then PASS; an unmarked one must be 
   }
 })
 
+test('OD-76: an oracle run from its package directory is linked', () => {
+  const root = workspace('v2-closure-pkgcmd')
+  try {
+    const evidence = JSON.parse(readFileSync(join(root, 'evidence.json'), 'utf8'))
+    const leaf = fixture('v2-leaf.md')
+    const run = (oracle: string) => {
+      const text = withContract(leaf, applyOverlay(contractOf(leaf), { oracles: { A1: oracle } }))
+      const result = validateV2Document(join(root, 'leaf.sdd.md'), text, [], root)!
+      return checkClosure(result, contractOf(text) as Record<string, unknown>, evidence, root)
+    }
+    // `pnpm --filter ./packages/feature-a exec vitest run other.test.ts` runs the declared oracle.
+    expect(run('packages/feature-a/other.test.ts').status).toBe('CLOSED')
+    expect(run('packages/feature-a/feature.test.ts').findings[0]!.message).toBe(
+      'oracle-unlinked: A1: command does not run packages/feature-a/feature.test.ts'
+    )
+  } finally {
+    rmSync(root, { recursive: true, force: true })
+  }
+})
+
 test('observation queue: settled entries leave, commentary goes once the queue is empty', () => {
   const queue = [
     '# Observed',

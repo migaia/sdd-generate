@@ -57,6 +57,7 @@ Minimal sdd/v2 fixture for create-sdd defect cases.
   ],
   "preflight": [
     { "id": "P1", "covers": ["BC1"], "patch": "bc1.patch", "command": "grep -q \"'new'\" packages/feature-a/index.ts", "expect": "pass" },
+    { "id": "P3", "covers": ["A1"], "command": "grep -q \"'new'\" packages/feature-a/index.ts", "expect": "fail" },
     { "id": "P2", "covers": ["A1"], "command": "test -f packages/feature-a/index.ts", "expect": "pass", "gate": true }
   ],
   "writes": [

@@ -113,3 +113,44 @@ test('OD-32: a program root may leave child Modules, Chunks and Bundles to deriv
   expect(metas.find((meta) => meta.kind === 'Bundle')?.members).toEqual(['K-b'])
   expect(metas.some((meta) => meta.kind === 'Entry')).toBe(false)
 })
+
+test('OD-71: serial children may share a write path; children without an order may not', () => {
+  const contract = (json: object) =>
+    `<!-- sdd-contract:start -->\n\`\`\`json\n${JSON.stringify(json)}\n\`\`\`\n<!-- sdd-contract:end -->\n`
+  const child = (id: string, writes: string[]) =>
+    `# ${id}\n\n${contract({ protocol: 'sdd/v2', id, revision: '1', root: 'root.sdd.md', writes })}`
+  const program = `# P\n\n## Shared Constraints\n\nNone\n\n<!-- sdd-program:start -->\n\`\`\`json\n${JSON.stringify(
+    {
+      protocol: 'sdd-program/v2',
+      id: 'p',
+      revision: '1',
+      children: [
+        { id: 'a', sdd: 'a.sdd.md', depends_on: [] },
+        { id: 'b', sdd: 'b.sdd.md', depends_on: ['a'] },
+        { id: 'c', sdd: 'c.sdd.md', depends_on: ['b'] },
+        { id: 'd', sdd: 'd.sdd.md', depends_on: ['a'] }
+      ],
+      metas: [],
+      unresolved_user_decisions: []
+    }
+  )}\n\`\`\`\n<!-- sdd-program:end -->\n`
+  const root = workspace({
+    'docs/p/root.sdd.md': program,
+    'docs/p/a.sdd.md': child('a', ['packages/x']),
+    'docs/p/b.sdd.md': child('b', ['packages/x/src']),
+    'docs/p/c.sdd.md': child('c', ['packages/x/src/deep']),
+    'docs/p/d.sdd.md': child('d', ['packages/x/src/d.ts'])
+  })
+  try {
+    const conflicts = validateDocument(join(root, 'docs/p/root.sdd.md'))
+      .diagnostics.map((d) => d.message)
+      .filter((m) => m.startsWith('write-owner-conflict'))
+      .sort()
+    // a → b → c is one chain and a → d: a overlaps everyone but precedes them all (transitively
+    // for c) and b precedes c, so only b–d, which overlap without an order, still conflict.
+    // c and d do not overlap (sibling paths), so they are not reported either way.
+    expect(conflicts).toEqual(['write-owner-conflict: b:packages/x/src, d:packages/x/src/d.ts'])
+  } finally {
+    rmSync(root, { recursive: true, force: true })
+  }
+})

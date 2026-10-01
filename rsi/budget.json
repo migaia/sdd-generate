@@ -4,11 +4,11 @@
   "set_at": "2026-09-23",
   "ceilings": {
     "SKILL.md.characters": 11600,
-    "references.lines": 1900,
+    "references.characters": 190000,
     "validator.lines": 5700,
     "behavior_cases": 46,
-    "scripts.lines": 9500,
-    "tests.lines": 2400,
+    "scripts.lines": 9800,
+    "tests.lines": 2550,
     "review.md.characters": 3500
   },
   "raises": [
@@ -515,6 +515,30 @@
       "at": "2026-09-26",
       "round": "R-20260925160655",
       "reason": "The user approved six process controls on 2026-09-26 after OD-65 (seven host stops on documents validate called clean): an executable preflight that gates valid, one source per contract fact with rendered regions, amendment closure, a host batch preflight in the handoff, a leaf size limit and class-level RSI. They add a preflight runner and a renderer (scripts), their checks (validator) and the phase-6 contract text (SKILL.md, references)."
+    },
+    {
+      "dimension": "scripts.lines",
+      "from": 9500,
+      "to": 9800,
+      "at": "2026-09-27",
+      "round": "budget-change",
+      "reason": "OD-72..OD-79 (migai rpc program delivery and audit, 2026-09-26/27): the preflight and replay trees must re-point workspace links and copy git-ignored inputs, the report must bind to its clauses instead of the whole document, preflight must run change acceptance at base and cover the touched packages' gate scripts, the symbol probe must see dependency packages, and closure must link package-relative oracle commands. Measured headroom was 55 script lines and 45 test lines."
+    },
+    {
+      "dimension": "tests.lines",
+      "from": 2400,
+      "to": 2550,
+      "at": "2026-09-27",
+      "round": "budget-change",
+      "reason": "OD-72..OD-79 (migai rpc program delivery and audit, 2026-09-26/27): the preflight and replay trees must re-point workspace links and copy git-ignored inputs, the report must bind to its clauses instead of the whole document, preflight must run change acceptance at base and cover the touched packages' gate scripts, the symbol probe must see dependency packages, and closure must link package-relative oracle commands. Measured headroom was 55 script lines and 45 test lines."
+    },
+    {
+      "dimension": "references.characters",
+      "from": null,
+      "to": 190000,
+      "at": "2026-10-01",
+      "round": "budget-change",
+      "reason": "Replaces references.lines (ceiling 1900, measured 1697): references are prose and a line can grow without limit, so they are now counted in characters (measured 180646). The ceiling keeps the earlier ~5% headroom; cumulative growth is bounded separately by GROWTH_RATIO in scripts/rsi.ts against the last accepted consolidation."
     }
   ],
   "introduced": [

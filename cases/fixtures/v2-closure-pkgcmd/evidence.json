@@ -1,0 +1,17 @@
+{
+  "protocol": "sdd-evidence/v1",
+  "sdd": "feature-a",
+  "revision": "1",
+  "results": [
+    {
+      "acceptance": "A1",
+      "status": "PASS",
+      "evidence": "packages/feature-a/other.test.ts",
+      "command": "pnpm --filter ./packages/feature-a exec vitest run other.test.ts",
+      "baseline": {
+        "status": "FAIL",
+        "evidence": "ci run 11"
+      }
+    }
+  ]
+}

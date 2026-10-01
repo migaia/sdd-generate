@@ -1,9 +1,11 @@
 import {
   existsSync,
+  lstatSync,
   mkdirSync,
   mkdtempSync,
   readdirSync,
   readFileSync,
+  realpathSync,
   rmSync,
   symlinkSync
 } from 'node:fs'
@@ -138,14 +140,44 @@ function packages(tree: string, dir = ''): string[] {
   return found
 }
 
-/** Recreate the dependency layout in exported trees: the root's and every package's node_modules. */
+/**
+ * Recreate the dependency layout in exported trees: the root's and every package's node_modules.
+ * Each is a real directory of links to the repository's entries, except that a workspace package
+ * link (pnpm's `@scope/b -> ../../b`) is re-pointed at the tree's own copy, so a dependent loads
+ * the patched or changed sibling, not the repository's (OD-72, OD-73).
+ */
 export function linkInstalled(repository: string, trees: readonly string[]): void {
+  const root = realpathSync(repository)
+  /** The repository-relative package a link resolves to, or null outside the workspace sources. */
+  const workspacePackage = (from: string): string | null => {
+    try {
+      if (!lstatSync(from).isSymbolicLink()) return null
+      const rel = relative(root, realpathSync(from))
+      return rel.startsWith('..') || /(?:^|\/)node_modules(?:\/|$)/.test(rel) ? null : rel
+    } catch {
+      return null
+    }
+  }
   // Every tree's packages, so a package that exists only in one tree (added by the change) is linked.
-  for (const dir of new Set(trees.flatMap((tree) => packages(tree)).concat('')))
-    if (existsSync(join(repository, dir, 'node_modules')))
-      for (const tree of trees)
-        if (existsSync(join(tree, dir)) && !existsSync(join(tree, dir, 'node_modules')))
-          symlinkSync(join(repository, dir, 'node_modules'), join(tree, dir, 'node_modules'))
+  for (const dir of new Set(trees.flatMap((tree) => packages(tree)).concat(''))) {
+    const source = join(repository, dir, 'node_modules')
+    if (!existsSync(source)) continue
+    for (const tree of trees) {
+      const target = join(tree, dir, 'node_modules')
+      if (!existsSync(join(tree, dir)) || existsSync(target)) continue
+      const link = (name: string) => {
+        const pkg = workspacePackage(join(source, name))
+        mkdirSync(dirname(join(target, name)), { recursive: true })
+        symlinkSync(pkg === null ? join(source, name) : join(tree, pkg), join(target, name))
+      }
+      mkdirSync(target)
+      for (const entry of readdirSync(source, { withFileTypes: true }))
+        if (entry.name.startsWith('@') && entry.isDirectory())
+          for (const scoped of readdirSync(join(source, entry.name)))
+            link(`${entry.name}/${scoped}`)
+        else link(entry.name)
+    }
+  }
 }
 
 /**

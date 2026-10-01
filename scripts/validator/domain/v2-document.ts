@@ -748,11 +748,15 @@ export function validateV2Document(
         )
     }
   }
+  // Children ordered by `depends_on` (transitively) write in sequence, so shared paths are serial
+  // ownership, not a conflict; only children with no order between them may not overlap (OD-71).
+  const serial = ancestors(new Map(children.map((child) => [child.id, new Set(child.depends_on)])))
   for (let left = 0; left < writes.length; left++)
     for (let right = left + 1; right < writes.length; right++) {
       const a = writes[left]!,
         b = writes[right]!
       if (a.owner === b.owner) continue
+      if (serial.get(a.owner)?.has(b.owner) || serial.get(b.owner)?.has(a.owner)) continue
       if (a.path === b.path || a.path.startsWith(`${b.path}/`) || b.path.startsWith(`${a.path}/`))
         report(
           'SDD_V2_OWNER_CONFLICT',
@@ -978,7 +982,8 @@ export function validateV2Document(
         withoutHistory(selectedBody),
         selected.text,
         selected.path,
-        report
+        report,
+        repo
       )
     : null
   if (selected) {

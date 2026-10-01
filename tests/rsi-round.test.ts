@@ -63,7 +63,7 @@ test('the budget dimensions are measured, not asserted', () => {
   expect(Object.keys(measured).sort()).toEqual([
     'SKILL.md.characters',
     'behavior_cases',
-    'references.lines',
+    'references.characters',
     'review.md.characters',
     'scripts.lines',
     'tests.lines',

@@ -7,7 +7,10 @@
  *   bun scripts/preflight.ts run --sdd <abs SDD> [--repository <abs root>] [--affected | --only P1,P2] [--out <path>]
  *
  * - The copy is the repository's HEAD (`git archive`), or the directory itself when it is not a Git
- *   repository; installed node_modules are linked in, as `--replay` does.
+ *   repository; installed node_modules are linked in, as `--replay` does, with workspace package
+ *   links pointing into the copy.
+ * - An item's `inputs` (repository-relative, usually git-ignored) are copied from the working tree
+ *   into the copy, for gates that read files `git archive` leaves out.
  * - An item's `patch` (relative to the SDD) is applied first: a BC's candidate change, or the
  *   perturbation a scaling gate must catch (`expect: "fail"`).
  * - The command runs through `sh -c` from `cwd` (repository-relative). Its exit decides PASS or FAIL
@@ -32,6 +35,7 @@ import {
   affectedClauses,
   clauseHashes,
   digest,
+  inputsDigest,
   preflightItems,
   reportPath,
   type PreflightItem,
@@ -47,7 +51,7 @@ const sh = (cwd: string, argv: readonly string[], timeout?: number) =>
   Bun.spawnSync([...argv], { cwd, stdout: 'pipe', stderr: 'pipe', timeout })
 
 /** A fresh copy of the repository to run one item in, as a throwaway Git repository. */
-function materialise(repository: string): string {
+function materialise(repository: string, inputs: readonly string[] = []): string {
   const tree = mkdtempSync(join(tmpdir(), 'sdd-preflight-'))
   const isGit = existsSync(join(repository, '.git'))
   if (!isGit || !exportTree(repository, 'HEAD', tree))
@@ -56,14 +60,31 @@ function materialise(repository: string): string {
       filter: (src) => !/\/(?:\.git|node_modules)(?:\/|$)/.test(src)
     })
   linkInstalled(repository, [tree])
+  // Git-ignored inputs a gate reads (generated docs, local registries) are copied as they are (OD-78).
+  for (const path of inputs)
+    if (existsSync(join(repository, path)))
+      cpSync(join(repository, path), join(tree, path), { recursive: true })
   // A private repository in the copy, so what the command writes can be read back with status.
-  const git = (...args: string[]) =>
-    sh(tree, ['git', '-c', 'user.name=preflight', '-c', 'user.email=preflight@invalid', ...args])
-  git('init', '-q')
-  git('add', '-A')
-  git('commit', '-q', '--no-verify', '-m', 'preflight base')
+  // Linked dependencies stay out of it, and its commits run no hooks without `--no-verify` (OD-84).
+  commit(tree, ['init', '-q'])
+  writeFileSync(join(tree, '.git', 'info', 'exclude'), 'node_modules\n')
+  commit(tree, ['add', '-A'])
+  commit(tree, ['commit', '-q', '-m', 'preflight base'])
   return tree
 }
+
+/** Git in a disposable tree, with a throwaway identity and hooks disabled. */
+const commit = (tree: string, args: readonly string[]) =>
+  sh(tree, [
+    'git',
+    '-c',
+    'user.name=preflight',
+    '-c',
+    'user.email=preflight@invalid',
+    '-c',
+    'core.hooksPath=/dev/null',
+    ...args
+  ])
 
 /** Paths the command changed or created, ignoring linked dependencies. */
 function written(tree: string): string[] {
@@ -82,7 +103,7 @@ function runItem(
   writes: readonly string[]
 ): PreflightResult {
   const base = { id: item.id, covers: item.covers, expect: item.expect }
-  const tree = materialise(repository)
+  const tree = materialise(repository, item.inputs ?? [])
   try {
     if (item.patch) {
       const applied = sh(tree, [
@@ -100,19 +121,8 @@ function runItem(
           reason: `patch does not apply: ${applied.stderr.toString().trim().slice(0, 200)}`
         }
       // The patched state becomes the base, so status afterwards shows only what the command wrote.
-      sh(tree, ['git', 'add', '-A'])
-      sh(tree, [
-        'git',
-        '-c',
-        'user.name=preflight',
-        '-c',
-        'user.email=preflight@invalid',
-        'commit',
-        '-q',
-        '--no-verify',
-        '-m',
-        'patch'
-      ])
+      commit(tree, ['add', '-A'])
+      commit(tree, ['commit', '-q', '-m', 'patch'])
     }
     const run = sh(
       join(tree, item.cwd ?? ''),
@@ -224,6 +234,7 @@ function main(argv: readonly string[]): number {
       ? sh(repository, ['git', 'status', '--porcelain', '--untracked-files=no']).stdout.length > 0
       : false,
     clause_hashes: clauseHashes(index, body),
+    inputs_sha: inputsDigest(index),
     items: results,
     status: results.every((result) => result.outcome === 'PASS') ? 'PASSED' : 'FAILED'
   }

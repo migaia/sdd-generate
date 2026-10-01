@@ -1,7 +1,7 @@
 import { createHash } from 'node:crypto'
 import { existsSync, readFileSync } from 'node:fs'
-import { basename, dirname, resolve } from 'node:path'
-import { list, object, text, type Item, type Report } from './v2-meta.ts'
+import { basename, dirname, join, resolve } from 'node:path'
+import { escape, list, object, pathForm, text, type Item, type Report } from './v2-meta.ts'
 import { SCALING } from './v2-scope.ts'
 import { stepText } from './v2-symbols.ts'
 
@@ -15,6 +15,7 @@ import { stepText } from './v2-symbols.ts'
  * Contract fields:
  * - `preflight`: `[{"id": "P1", "covers": ["A3"], "command": "…", "expect": "pass" | "fail",
  *   "patch"?: "<patch relative to the SDD>", "cwd"?: "<repository-relative dir>", "gate"?: true,
+ *   "inputs"?: ["<git-ignored path a gate reads>"],
  *   "timeout_s"?: 600}]`. `expect: "fail"` with a patch is a perturbation: the gate must catch it.
  * - `preflight_report` (optional): the report path relative to the SDD; the default is
  *   `<sdd file>.preflight.json` beside it.
@@ -26,6 +27,8 @@ export type PreflightItem = Readonly<{
   expect: 'pass' | 'fail'
   patch?: string
   cwd?: string
+  /** Repository-relative paths (usually git-ignored) copied into the disposable tree (OD-78). */
+  inputs?: readonly string[]
   gate?: boolean
   timeout_s?: number
 }>
@@ -49,6 +52,8 @@ export type PreflightReport = Readonly<{
   repository_head: string | null
   dirty: boolean
   clause_hashes: Readonly<Record<string, string>>
+  /** Digest of the preflight items and `writes` the run used; absent in reports before OD-77. */
+  inputs_sha?: string
   items: readonly PreflightResult[]
   status: 'PASSED' | 'FAILED'
 }>
@@ -56,6 +61,37 @@ export type PreflightReport = Readonly<{
 /** The document digest a report is bound to; the same function `telemetry.ts` uses. */
 export const digest = (value: string) =>
   createHash('sha256').update(value).digest('hex').slice(0, 12)
+
+/** What a run depends on besides clause prose: the items as declared and the write scope. */
+export const inputsDigest = (index: Item) =>
+  digest(JSON.stringify({ preflight: index.preflight ?? [], writes: index.writes ?? [] }))
+
+/** Package scripts a touched package's own gates run: every `test*` and `typecheck*` script. */
+const GATE_SCRIPT = /^(?:test|typecheck)(?:$|:)/
+
+/**
+ * The gate scripts of each package a leaf writes (OD-79): the nearest `package.json` above each
+ * `writes` path, below the repository root. A change can break any of them, so each needs a gate.
+ */
+function packageGateScripts(repository: string, writes: readonly string[]): string[] {
+  const scripts = new Set<string>()
+  for (const path of writes) {
+    for (let dir = path.replace(/\/$/, ''); dir && dir !== '.'; dir = dirname(dir)) {
+      const manifest = join(repository, dir, 'package.json')
+      if (!existsSync(manifest)) continue
+      try {
+        const names = Object.keys(
+          (JSON.parse(readFileSync(manifest, 'utf8')) as { scripts?: object }).scripts ?? {}
+        )
+        for (const name of names.filter((n) => GATE_SCRIPT.test(n))) scripts.add(`${dir}:${name}`)
+      } catch {
+        // An unreadable manifest has no scripts to require.
+      }
+      break
+    }
+  }
+  return [...scripts]
+}
 
 /** A declared behaviour change: a list item that starts with its ID (`- BC3 old behaviour: …`). */
 const DECLARED_BC = /^\s*[-*]\s+(BC\d+[a-z]?)\b/gm
@@ -138,7 +174,8 @@ export function preflightItems(index: Item, report?: Report, path = ''): Preflig
       text(value.id) &&
       text(value.command) &&
       (value.expect === 'pass' || value.expect === 'fail') &&
-      list(value.covers).every(text)
+      list(value.covers).every(text) &&
+      list(value.inputs).every((path) => text(path) && pathForm(path))
     if (!ok) {
       report?.('SDD_V2_INDEX_SHAPE_INVALID', `${path}: ${JSON.stringify(value)}`, 'preflight-item')
       continue
@@ -168,7 +205,8 @@ export function checkPreflight(
   body: string,
   documentText: string,
   sdd: string,
-  report: Report
+  report: Report,
+  repository: string | null = null
 ): { required: boolean; reasons: string[]; report: string; status: string } {
   const reasons = preflightReasons(index, body)
   const at = sdd === '<stdin>' ? '' : reportPath(index, sdd)
@@ -194,6 +232,28 @@ export function checkPreflight(
     if (!covering(id, (item) => !!item.patch && item.expect === 'fail'))
       need(`${id} needs a perturbation its gate must catch`, 'scaling-perturbed-uncovered')
   }
+  // OD-75: a change acceptance must be seen failing at base, or it may already hold (and prove nothing).
+  const preserved = new Set(list(index.preserve).filter(text))
+  const changes = list(index.requirements)
+    .filter(object)
+    .filter((r) => r.kind === 'must-ship')
+    .flatMap((r) => list(r.acceptance).filter(text))
+    .filter((id) => !preserved.has(id))
+  for (const id of new Set(changes))
+    if (!covering(id, (item) => !item.patch && item.expect === 'fail'))
+      need(`${id} needs a run of its oracle at base that fails`, 'change-base-uncovered')
+  const gates = items.filter((item) => item.gate)
+  for (const script of repository
+    ? packageGateScripts(repository, list(index.writes).filter(text))
+    : []) {
+    const name = script.slice(script.indexOf(':') + 1)
+    const runs = new RegExp(`(?:^|[\\s/])${escape(name)}(?=$|[\\s;&|'"])`)
+    if (!gates.some((item) => runs.test(item.command)))
+      need(
+        `${script} is a gate of a touched package; run it in a gate item`,
+        'gate-script-uncovered'
+      )
+  }
   const relied = object(index.relies_on) ? Object.keys(index.relies_on) : []
   for (const id of relied)
     if (!covering(id, () => true)) need(`${id} relies on a consumed export`, 'consumed-uncovered')
@@ -217,8 +277,15 @@ export function checkPreflight(
     need(`${at} is not JSON`, 'preflight-report-invalid')
     return summary
   }
-  if (recorded.sdd_sha !== digest(documentText)) {
-    const { changed, citing } = affectedClauses(index, body, recorded.clause_hashes ?? {})
+  // OD-77: history (Clarifications, implementation records) and revision bumps do not stale a
+  // report; a changed clause or a changed item, patch path or write scope does.
+  const { changed, citing } = affectedClauses(index, body, recorded.clause_hashes ?? {})
+  const shape = (list: readonly { id: string; covers: readonly string[]; expect: string }[]) =>
+    JSON.stringify(list.map(({ id, covers, expect }) => [id, covers, expect]))
+  const inputsChanged = recorded.inputs_sha
+    ? recorded.inputs_sha !== inputsDigest(index)
+    : shape(recorded.items ?? []) !== shape(items)
+  if (recorded.sdd_sha !== digest(documentText) && (changed.length || inputsChanged)) {
     report(
       'SDD_V2_PREFLIGHT_STALE',
       `${sdd}: changed ${changed.join(', ') || '(prose outside clauses)'}; citing ${citing.join(', ') || '(none)'}: run preflight.ts run --affected, then re-validate${index.review ? ' and re-review those clauses' : ''}`

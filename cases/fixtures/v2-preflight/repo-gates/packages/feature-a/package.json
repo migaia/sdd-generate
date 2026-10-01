@@ -1,0 +1,1 @@
+{ "name": "feature-a", "private": true, "scripts": { "test": "exit 0", "typecheck:e2e": "exit 0" } }

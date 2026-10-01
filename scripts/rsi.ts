@@ -240,6 +240,8 @@ export type ClosedRound = Readonly<{
   kind: Kind
   verdict: string
   closed_at?: string
+  /** What the skill measured at close; an unrejected consolidation's is the growth baseline. */
+  measured_at_close?: Record<string, number>
   snapshot?: Readonly<{ supersession_additions: number }>
 }>
 
@@ -384,7 +386,7 @@ export function debt(input: {
 
 /**
  * What a consolidation has to show before it may close: no measured dimension grew, and the skill
- * lost rules or lines. Keeping a rule with a written reason is a disposition, not a consolidation —
+ * lost rules or some measured size. Keeping a rule with a written reason is a disposition, not a consolidation —
  * a round that only records decisions has removed nothing and cannot claim to have converged.
  */
 export function consolidationFindings(
@@ -396,13 +398,78 @@ export function consolidationFindings(
     if (value > (before.measured[dimension] ?? value))
       findings.push(`${dimension} grew from ${before.measured[dimension]} to ${value}`)
   if (after.rules > before.rules) findings.push(`rules grew from ${before.rules} to ${after.rules}`)
-  const lines = (m: Record<string, number>) =>
-    Object.entries(m)
-      .filter(([key]) => key.endsWith('.lines'))
-      .reduce((sum, [, value]) => sum + value, 0)
-  if (after.rules >= before.rules && lines(after.measured) >= lines(before.measured))
-    findings.push('neither the rule count nor the measured lines went down')
+  // Any unit counts: with no dimension grown, one that shrank is a net loss, characters included.
+  const shrank = Object.entries(after.measured).some(
+    ([dimension, value]) => value < (before.measured[dimension] ?? value)
+  )
+  if (after.rules >= before.rules && !shrank)
+    findings.push('neither the rule count nor any measured dimension went down')
   return findings
+}
+
+/**
+ * Cumulative growth allowed since the last accepted consolidation. A ceiling caps absolute size, but
+ * a budget-change round can raise it one reasoned step at a time; this window caps the sum of those
+ * steps. Each dimension may exceed its baseline by this share of it (at least 1, so small counts such
+ * as behavior_cases can still move). A source constant, so changing it is a reviewed diff.
+ */
+export const GROWTH_RATIO = 0.02
+
+/**
+ * The growth baseline: what the latest unrejected consolidation measured when it closed. Derived
+ * from round records rather than stored, so no round can move it by editing a file; null until one
+ * such consolidation exists, and then no window applies.
+ */
+export function growthBaseline(
+  rounds: readonly ClosedRound[] = closedRounds()
+): Readonly<{ round: string; measured: Record<string, number> }> | null {
+  const last = rounds
+    .filter((r) => r.kind === 'consolidation' && r.verdict !== 'REJECTED' && r.measured_at_close)
+    .sort((a, b) => String(a.closed_at).localeCompare(String(b.closed_at)))
+    .at(-1)
+  return last ? { round: last.id, measured: last.measured_at_close! } : null
+}
+
+/**
+ * Dimensions beyond the window. Every round kind is held to it: past it only a consolidation can
+ * close, and only by paying the overage back, after which its own measurement becomes the baseline.
+ * Growth is therefore bounded per consolidation cycle and each cycle needs a real removal.
+ */
+export function growthOver(
+  measured: Record<string, number>,
+  baseline = growthBaseline()
+): { dimension: string; baseline: number; allowed: number; measured: number }[] {
+  if (!baseline) return []
+  return Object.entries(baseline.measured)
+    .map(([dimension, base]) => ({
+      dimension,
+      baseline: base,
+      allowed: base + Math.max(1, Math.ceil(base * GROWTH_RATIO)),
+      measured: measured[dimension] ?? 0
+    }))
+    .filter((entry) => entry.measured > entry.allowed)
+}
+
+/**
+ * The skill asset an observation's `**Root cause:**` line names: a file under SKILL.md, references/,
+ * scripts/ or cases/ (`:line` dropped), or a rule code from the ledger. The asset replaces the old defect class: it
+ * groups observations by what must change, so entries sharing one merge and settle together. Null
+ * when the line is absent or names no asset; `rsi/` is excluded, since the queue is never the cause.
+ */
+export function rootAssetOf(text: string): string | null {
+  const line = /\*\*Root cause:\*\*\s*(.+)/.exec(text)?.[1] ?? ''
+  return (
+    /\b(SKILL\.md|(?:references|scripts|cases)\/[\w./-]*\w|[A-Z][A-Z0-9]+_[A-Z0-9_]+)/.exec(
+      line
+    )?.[1] ?? null
+  )
+}
+
+/** Whether a root asset exists now: the file on disk, or the rule code in the rule ledger. */
+export function rootAssetExists(asset: string): boolean {
+  return /^[A-Z]/.test(asset) && asset !== 'SKILL.md'
+    ? existsSync(RULES_FILE) && readFileSync(RULES_FILE, 'utf8').includes(`"code:${asset}"`)
+    : existsSync(join(ROOT, asset))
 }
 
 /** Parse a JSON file, or return the fallback when it is absent. */
@@ -430,10 +497,14 @@ export type SkillHealth = Readonly<{
   redundant_pairs: readonly (readonly [string, string])[]
   measured: Record<string, number>
   over_budget: readonly { dimension: string; ceiling: number; measured: number }[]
+  /** Dimensions past the growth window; non-empty means the next round must be a consolidation. */
+  over_growth?: ReturnType<typeof growthOver>
+  /** Queued observation IDs grouped by a root asset two or more of them share; merge each group. */
+  shared_roots?: Readonly<Record<string, readonly string[]>>
   /** Pre-handoff review precision per lens, from recorded dispositions (one entry per revision). */
   review_lenses: Readonly<Record<string, LensHealth>>
-  /** Settled observations per defect class, the unit RSI converges by. */
-  defect_classes?: Readonly<Record<string, number>>
+  /** Settled observations per root asset, the unit RSI converges by. */
+  root_causes?: Readonly<Record<string, number>>
   limits: readonly string[]
 }>
 
@@ -483,37 +554,28 @@ const OBSERVED = join(ROOT, 'rsi', 'observed-defects.md')
  * all hold, acceptance a wrong implementation passes) settle as lenses; only a mechanical criterion
  * with no false positives becomes a detector.
  */
-const SETTLEMENTS = ['detector', 'lens', 'class', 'ruling', 'rejected'] as const
+const SETTLEMENTS = ['detector', 'lens', 'ruling', 'rejected'] as const
 
-/**
- * The four defect classes (OD-65 item 6) and the class-level mechanism that answers each. An
- * observation declares its class with a `**Class:** <class>` line. `--as class` settles it by the
- * mechanism, with no new detector, when the evidence names that mechanism; RSI succeeds by fewer
- * host stops per delivery (sdd-bench `stops`), not by more detectors.
- */
-export const CLASS_MECHANISM = {
-  duplication: 'SDD_V2_CONTRACT_FIELD_RESTATED',
-  'blast-radius': 'SDD_V2_PREFLIGHT_STALE',
-  feasibility: 'SDD_V2_PREFLIGHT_FAILED',
-  'gate-scope': 'writes_outside'
-} as const
-export type DefectClass = keyof typeof CLASS_MECHANISM
-
-/** The class an observation declares, or null. */
-export function classOf(text: string): DefectClass | null {
-  const found = /\*\*Class:\*\*\s*`?([\w-]+)/.exec(text)?.[1]
-  return found && found in CLASS_MECHANISM ? (found as DefectClass) : null
-}
-
-/** Settled observations per class across closed rounds; older ones without a class are counted apart. */
-export function classCounts(rounds: readonly ClosedRound[]): Record<string, number> {
+/** Settled observations per root asset across closed rounds; older ones without one count apart. */
+export function rootCounts(rounds: readonly ClosedRound[]): Record<string, number> {
   const counts: Record<string, number> = {}
   for (const round of rounds)
     for (const entry of (round as { settled_observations?: { text?: string }[] })
-      .settled_observations ?? [])
-      counts[classOf(entry.text ?? '') ?? 'unclassified'] =
-        (counts[classOf(entry.text ?? '') ?? 'unclassified'] ?? 0) + 1
+      .settled_observations ?? []) {
+      const asset = rootAssetOf(entry.text ?? '') ?? 'unrooted'
+      counts[asset] = (counts[asset] ?? 0) + 1
+    }
   return counts
+}
+
+/** Queued observations that share a root asset; each group is one cause and settles as one. */
+export function sharedRoots(queue: readonly { id: string; text: string }[]) {
+  const groups: Record<string, string[]> = {}
+  for (const entry of queue) {
+    const asset = rootAssetOf(entry.text)
+    if (asset) (groups[asset] ??= []).push(entry.id)
+  }
+  return Object.fromEntries(Object.entries(groups).filter(([, ids]) => ids.length > 1))
 }
 export type Settlement = Readonly<{
   id: string
@@ -555,7 +617,8 @@ export function skillHealth(now = new Date()): SkillHealth {
   const dispositions =
     readJson<{ dispositions?: Disposition[] }>(DISPOSITIONS, {}).dispositions ?? []
   const runs = new Set(entries.map((entry) => entry.sdd_sha)).size
-  const queued = existsSync(OBSERVED) ? observations(readFileSync(OBSERVED, 'utf8')).length : 0
+  const queue = existsSync(OBSERVED) ? observations(readFileSync(OBSERVED, 'utf8')) : []
+  const queued = queue.length
   const undisposed = undisposedDormant({
     health: report,
     pinned: pinnedCodes(),
@@ -591,8 +654,10 @@ export function skillHealth(now = new Date()): SkillHealth {
     over_budget: Object.entries(ceilings)
       .filter(([key, limit]) => (measured[key] ?? 0) > limit)
       .map(([key, limit]) => ({ dimension: key, ceiling: limit, measured: measured[key] ?? 0 })),
+    over_growth: growthOver(measured),
+    shared_roots: sharedRoots(queue),
     review_lenses: reviewLenses(entries),
-    defect_classes: classCounts(closedRounds()),
+    root_causes: rootCounts(closedRounds()),
     limits: [
       'dormant means unfired in this corpus, not useless: a structural guard is dormant whenever documents are well formed',
       'debt is advisory until calibrated against repair outcomes; it does not gate SDD readiness or repair rounds',
@@ -625,14 +690,19 @@ export function updateAgenda(
     steps.push({
       step: 'settle-observations',
       command:
-        'bun scripts/rsi.ts settle --id <OD-n> --as class|detector|lens|ruling|rejected --evidence <text>',
-      detail: `${queued} observation(s) queued in rsi/observed-defects.md: settle every one inside a round; prefer --as class when the class mechanism (${Object.entries(
-        CLASS_MECHANISM
-      )
-        .map(([c, m]) => `${c}: ${m}`)
-        .join(
-          ', '
-        )}) catches it, a detector only for what no mechanism sees; close archives them into the round record and empties the queue`
+        'bun scripts/rsi.ts settle --id <OD-n> --as detector|lens|ruling|rejected --evidence <text>',
+      detail: `${queued} observation(s) queued in rsi/observed-defects.md: settle every one inside a round, by fixing its root asset; entries sharing one (${
+        Object.entries(h.shared_roots ?? {})
+          .map(([asset, ids]) => `${asset}: ${ids.join(' ')}`)
+          .join('; ') || 'none'
+      }) are one cause and settle with one fix; close archives them into the round record and empties the queue`
+    })
+  if (h.over_growth?.length)
+    steps.push({
+      step: 'consolidation-required',
+      command:
+        'bun scripts/rsi.ts open --kind consolidation --goal <what is merged, retired or ablated>',
+      detail: `${h.over_growth.map((o) => `${o.dimension} ${o.measured}>${o.allowed} (baseline ${o.baseline})`).join(', ')}; past the growth window only a consolidation round may close`
     })
   if (state.catalog_drifted)
     steps.push({
@@ -929,14 +999,18 @@ function commitments(): Record<string, string> {
  * it; the validator figure stays because its ceiling history is recorded against it.
  */
 export function measure(): Record<string, number> {
-  const lines = (dir: string) => {
+  // References are prose, so they count in characters: a line can grow without limit there.
+  const lines = (dir: string, unit: 'lines' | 'characters' = 'lines') => {
     let total = 0
     const walkAll = (base: string, match: (name: string) => boolean) => {
       for (const entry of readdirSync(base)) {
         if (entry === 'node_modules' || entry.startsWith('.')) continue
         const full = join(base, entry)
         if (statSync(full).isDirectory()) walkAll(full, match)
-        else if (match(entry)) total += readFileSync(full, 'utf8').split('\n').length
+        else if (match(entry)) {
+          const text = readFileSync(full, 'utf8')
+          total += unit === 'lines' ? text.split('\n').length : text.length
+        }
       }
     }
     walkAll(dir, (name) => name.endsWith('.md') || name.endsWith('.ts'))
@@ -951,7 +1025,7 @@ export function measure(): Record<string, number> {
     : 0
   return {
     'SKILL.md.characters': readFileSync(join(ROOT, 'SKILL.md'), 'utf8').length,
-    'references.lines': lines(join(ROOT, 'references')),
+    'references.characters': lines(join(ROOT, 'references'), 'characters'),
     'review.md.characters': existsSync(join(ROOT, 'references', 'review.md'))
       ? readFileSync(join(ROOT, 'references', 'review.md'), 'utf8').length
       : 0,
@@ -993,6 +1067,7 @@ type Round = {
   prune?: {
     source_version: string
     over_budget: readonly unknown[]
+    over_growth?: readonly unknown[]
     unjustified_additions: readonly string[]
     undecided_removals: readonly string[]
     not_net_negative: readonly string[]
@@ -1434,8 +1509,12 @@ function main(argv: readonly string[]): number {
             { measured: now, rules: catalog().length }
           )
         : []
+    // Every kind is held to the window: raising a ceiling is growth, and a consolidation must pay
+    // the overage back before its measurement may become the next baseline.
+    const grown = growthOver(now)
     const blocking = [
       ...(round.kind === 'budget-change' ? [] : over),
+      ...grown,
       ...unjustified,
       ...undecidedRemovals,
       ...net
@@ -1443,6 +1522,7 @@ function main(argv: readonly string[]): number {
     round.prune = {
       source_version: skillVersion(),
       over_budget: over,
+      over_growth: grown,
       unjustified_additions: unjustified,
       undecided_removals: undecidedRemovals,
       not_net_negative: net
@@ -1455,6 +1535,7 @@ function main(argv: readonly string[]): number {
           round: round.id,
           measured: now,
           over_budget: over,
+          ...(grown.length ? { code: 'RSI_GROWTH_WINDOW_EXCEEDED', over_growth: grown } : {}),
           unjustified_additions: unjustified,
           undecided_removals: undecidedRemovals,
           ...(round.kind === 'consolidation'
@@ -1489,17 +1570,12 @@ function main(argv: readonly string[]): number {
       )
       return 1
     }
-    // Every observation declares its class, so settlements converge by class (OD-65 item 6).
-    const cls = classOf(queue.find((entry) => entry.id === id)!.text)
-    if (!cls) {
+    // Settle the cause, not the symptom. A rejection is exempt: it is how an entry whose cause lies
+    // outside this skill leaves the queue, and such an entry cannot name a skill asset.
+    const asset = rootAssetOf(queue.find((entry) => entry.id === id)!.text)
+    if (as !== 'rejected' && !(asset && rootAssetExists(asset))) {
       console.error(
-        `SETTLEMENT_CLASS_REQUIRED: ${id} needs a **Class:** line (${Object.keys(CLASS_MECHANISM).join(', ')})`
-      )
-      return 1
-    }
-    if (as === 'class' && !evidence.includes(CLASS_MECHANISM[cls])) {
-      console.error(
-        `SETTLEMENT_MECHANISM_REQUIRED: a class settlement shows ${CLASS_MECHANISM[cls]} catching ${id}`
+        `SETTLEMENT_ROOT_CAUSE_REQUIRED: ${id} needs a **Root cause:** line naming an existing skill asset (SKILL.md, references/, scripts/, cases/ path or ledger rule code) whose gap produced it`
       )
       return 1
     }
@@ -1587,6 +1663,7 @@ function main(argv: readonly string[]): number {
     const heldOutFailures = heldOut.filter((result) => !result.pass).map((result) => result.id)
     const pruneFindings = [
       ...(round.kind === 'budget-change' ? [] : round.prune.over_budget),
+      ...(round.prune.over_growth ?? []),
       ...round.prune.unjustified_additions,
       ...round.prune.undecided_removals,
       ...round.prune.not_net_negative
@@ -1607,6 +1684,7 @@ function main(argv: readonly string[]): number {
     const closed = {
       ...round,
       closed_at: new Date().toISOString(),
+      measured_at_close: measure(),
       verdict,
       repair_ids: verdict === 'ACCEPTED' ? repairs : [],
       rejection_reasons:

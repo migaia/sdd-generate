@@ -1,5 +1,5 @@
 #!/usr/bin/env bun
-import { measure } from './rsi.ts'
+import { growthOver, measure } from './rsi.ts'
 import { existsSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 
@@ -22,17 +22,22 @@ const measured = measure()
 const over = Object.entries(ceilings)
   .filter(([dimension, limit]) => (measured[dimension] ?? 0) > limit)
   .map(([dimension, limit]) => ({ dimension, ceiling: limit, measured: measured[dimension] ?? 0 }))
+// Raised ceilings cannot hide cumulative growth: past the window only a consolidation helps.
+const grown = growthOver(measured)
 
 console.log(
   JSON.stringify({
     protocol: 'create-sdd-budget/v1',
-    valid: over.length === 0,
+    valid: over.length === 0 && grown.length === 0,
     measured,
     ceilings,
     over,
-    hint: over.length
-      ? 'raise it in a rsi.ts open --kind budget-change round, with the reason'
-      : undefined
+    over_growth: grown,
+    hint: grown.length
+      ? 'growth window exceeded: run a rsi.ts open --kind consolidation round'
+      : over.length
+        ? 'raise it in a rsi.ts open --kind budget-change round, with the reason'
+        : undefined
   })
 )
-process.exit(over.length ? 1 : 0)
+process.exit(over.length || grown.length ? 1 : 0)
