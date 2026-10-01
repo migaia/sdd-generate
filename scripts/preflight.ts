@@ -14,7 +14,11 @@
  * - An item's `patch` (relative to the SDD) is applied first: a BC's candidate change, or the
  *   perturbation a scaling gate must catch (`expect: "fail"`).
  * - The command runs through `sh -c` from `cwd` (repository-relative). Its exit decides PASS or FAIL
- *   against `expect`; a timeout is ERROR.
+ *   against `expect`; a timeout is ERROR. An `expect: "fail"` item with `fails_with` passes only when
+ *   its output matches the pattern; any other failure is ERROR, not the expected RED (OD-90).
+ * - Each result keeps its own run record (time, head, patch hash) and its full output in
+ *   `<report>.logs/<id>.log`; items a run did not select keep their earlier record unchanged, so a
+ *   completion run with `--only <gates>` leaves the start-of-leaf base runs intact (OD-87, OD-91).
  * - Afterwards every tracked or new file the command changed is compared with the leaf's `writes`;
  *   a write outside them fails the item, which is how a gate that formats or builds other workspace
  *   members is caught.
@@ -24,9 +28,17 @@
  * Exit codes: 0 every item passed, 1 some did not, 2 usage or an unreadable document.
  */
 import './lib/require-bun.ts'
-import { cpSync, existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import {
+  cpSync,
+  existsSync,
+  mkdirSync,
+  mkdtempSync,
+  readFileSync,
+  rmSync,
+  writeFileSync
+} from 'node:fs'
 import { tmpdir } from 'node:os'
-import { dirname, isAbsolute, join, resolve } from 'node:path'
+import { basename, dirname, isAbsolute, join, resolve } from 'node:path'
 import { contractBlock } from './lib/contract-source.ts'
 import { repositoryRoot } from './facts/repository.ts'
 import { prose, withoutHistory } from './validator/domain/v2-document.ts'
@@ -40,7 +52,8 @@ import {
   reportPath,
   type PreflightItem,
   type PreflightReport,
-  type PreflightResult
+  type PreflightResult,
+  type PreflightRun
 } from './validator/domain/v2-preflight.ts'
 import { exportTree, linkInstalled } from './validator/domain/v2-replay.ts'
 
@@ -100,18 +113,23 @@ function runItem(
   item: PreflightItem,
   sdd: string,
   repository: string,
-  writes: readonly string[]
+  writes: readonly string[],
+  out: string,
+  at: Pick<PreflightRun, 'head' | 'dirty'>
 ): PreflightResult {
-  const base = { id: item.id, covers: item.covers, expect: item.expect }
+  const patchFile = item.patch ? resolve(dirname(sdd), item.patch) : ''
+  const run: PreflightRun = {
+    at: new Date().toISOString(),
+    ...at,
+    ...(patchFile && existsSync(patchFile)
+      ? { patch_sha: digest(readFileSync(patchFile, 'utf8')) }
+      : {})
+  }
+  const base = { id: item.id, covers: item.covers, expect: item.expect, run }
   const tree = materialise(repository, item.inputs ?? [])
   try {
     if (item.patch) {
-      const applied = sh(tree, [
-        'git',
-        'apply',
-        '--whitespace=nowarn',
-        resolve(dirname(sdd), item.patch)
-      ])
+      const applied = sh(tree, ['git', 'apply', '--whitespace=nowarn', patchFile])
       if (applied.exitCode !== 0)
         return {
           ...base,
@@ -141,14 +159,32 @@ function runItem(
         writes_outside: outside,
         reason: `timed out or killed (${run.signalCode})`
       }
-    const passed = item.expect === 'pass' ? run.exitCode === 0 : run.exitCode !== 0
-    const tail = (run.stderr.toString() || run.stdout.toString())
-      .trim()
-      .split('\n')
-      .slice(-3)
-      .join(' | ')
-    return {
+    // The full output stays beside the report; the reason keeps only a pointer-sized tail.
+    const output = `${run.stdout.toString()}${run.stderr.toString()}`
+    const logs = `${out}.logs`
+    mkdirSync(logs, { recursive: true })
+    writeFileSync(join(logs, `${item.id}.log`), output)
+    const logged = {
       ...base,
+      run: { ...base.run, log: `${basename(logs)}/${item.id}.log`, log_sha: digest(output) }
+    }
+    const tail = output.trim().split('\n').slice(-3).join(' | ')
+    if (
+      item.expect === 'fail' &&
+      run.exitCode !== 0 &&
+      item.fails_with &&
+      !new RegExp(item.fails_with, 'm').test(output)
+    )
+      return {
+        ...logged,
+        exit: run.exitCode,
+        outcome: 'ERROR',
+        writes_outside: outside,
+        reason: `failed without matching fails_with: exit ${run.exitCode}${tail ? ` — ${tail.slice(0, 240)}` : ''}`
+      }
+    const passed = item.expect === 'pass' ? run.exitCode === 0 : run.exitCode !== 0
+    return {
+      ...logged,
       exit: run.exitCode,
       outcome: passed && !outside.length ? 'PASS' : 'FAIL',
       writes_outside: outside,
@@ -201,9 +237,15 @@ function main(argv: readonly string[]): number {
     )
   }
   const writes = list(index.writes).filter(text)
+  const head = existsSync(join(repository, '.git'))
+    ? sh(repository, ['git', 'rev-parse', '--short', 'HEAD']).stdout.toString().trim() || null
+    : null
+  const dirty = head
+    ? sh(repository, ['git', 'status', '--porcelain', '--untracked-files=no']).stdout.length > 0
+    : false
   const fresh = new Map(
     selected.map((item) => {
-      const result = runItem(item, sdd, repository, writes)
+      const result = runItem(item, sdd, repository, writes, out, { head, dirty })
       console.error(`${result.outcome} ${item.id}${result.reason ? ` — ${result.reason}` : ''}`)
       return [item.id, result] as const
     })
@@ -221,18 +263,13 @@ function main(argv: readonly string[]): number {
         reason: 'not run'
       }
   )
-  const head = existsSync(join(repository, '.git'))
-    ? sh(repository, ['git', 'rev-parse', '--short', 'HEAD']).stdout.toString().trim() || null
-    : null
   const report: PreflightReport = {
     protocol: 'sdd-preflight/v1',
     sdd,
     sdd_sha: digest(documentText),
     repository,
     repository_head: head,
-    dirty: head
-      ? sh(repository, ['git', 'status', '--porcelain', '--untracked-files=no']).stdout.length > 0
-      : false,
+    dirty,
     clause_hashes: clauseHashes(index, body),
     inputs_sha: inputsDigest(index),
     items: results,

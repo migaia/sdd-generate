@@ -2645,6 +2645,29 @@
       "source_delivery": "migai supervision-threads 2026-09-29, OD-86",
       "observed_at": "2026-09-29",
       "owning_test": "tests/v2-consume.test.ts"
+    },
+    {
+      "id": "CSDD-V2-PREFLIGHT-107",
+      "defect_class": "preflight-patch-unbound",
+      "statement": "BC1's patch was edited after its preflight item passed; the report still reads as passing for the old patch bytes. The current leaf's report has no recorded patch hash and stays valid.",
+      "root_cause": "A preflight result was bound to the run as a whole, never to the patch bytes its item applied.",
+      "evidence": {
+        "file": "rsi/observed-defects.md",
+        "line": 1,
+        "quote": "OD-92"
+      },
+      "fixture": "cases/fixtures/v2-preflight/patched.md",
+      "negative_fixture": "cases/fixtures/v2-preflight/ok.md",
+      "detector": {
+        "command": "bun scripts/validate.ts validate --sdd <fixture> --repository <repository>",
+        "expected_code": "SDD_V2_PREFLIGHT_STALE",
+        "must_fire": true
+      },
+      "source_delivery": "migai rpc I10 rpc-handshake-redaction evidence custody rebuilt by SHA256 (OD-92)",
+      "observed_at": "2026-09-30",
+      "owning_test": "tests/v2-preflight.test.ts",
+      "introduced_detector_at": "2026-10-01",
+      "repository": "cases/fixtures/v2-preflight/repo"
     }
   ],
   "held_out": [

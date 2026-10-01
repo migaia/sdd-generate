@@ -15,8 +15,10 @@ import { stepText } from './v2-symbols.ts'
  * Contract fields:
  * - `preflight`: `[{"id": "P1", "covers": ["A3"], "command": "…", "expect": "pass" | "fail",
  *   "patch"?: "<patch relative to the SDD>", "cwd"?: "<repository-relative dir>", "gate"?: true,
- *   "inputs"?: ["<git-ignored path a gate reads>"],
+ *   "inputs"?: ["<git-ignored path a gate reads>"], "fails_with"?: "<regex>",
  *   "timeout_s"?: 600}]`. `expect: "fail"` with a patch is a perturbation: the gate must catch it.
+ *   `fails_with` states what the failure must show (an acceptance marker or assertion text), so
+ *   an install, build or import error is not taken for the expected RED (OD-90).
  * - `preflight_report` (optional): the report path relative to the SDD; the default is
  *   `<sdd file>.preflight.json` beside it.
  */
@@ -30,7 +32,24 @@ export type PreflightItem = Readonly<{
   /** Repository-relative paths (usually git-ignored) copied into the disposable tree (OD-78). */
   inputs?: readonly string[]
   gate?: boolean
+  /** Pattern the output of an `expect: "fail"` run must match; a non-matching failure is ERROR. */
+  fails_with?: string
   timeout_s?: number
+}>
+
+/**
+ * When and against what one item ran. Each item keeps its own record, so a partial re-run never
+ * restamps results it did not produce and a start-of-leaf base run survives a completion run
+ * (OD-87, OD-91); `patch_sha` binds a PASS to the patch bytes it applied (OD-92); `log` is the full
+ * output beside the report, relative to it (OD-97).
+ */
+export type PreflightRun = Readonly<{
+  at: string
+  head: string | null
+  dirty: boolean
+  patch_sha?: string
+  log?: string
+  log_sha?: string
 }>
 
 /** One executed item in `sdd-preflight/v1`. `outcome` PASS means the result matched `expect`. */
@@ -42,6 +61,8 @@ export type PreflightResult = Readonly<{
   outcome: 'PASS' | 'FAIL' | 'ERROR'
   writes_outside: readonly string[]
   reason?: string
+  /** Absent in reports before OD-92. */
+  run?: PreflightRun
 }>
 
 export type PreflightReport = Readonly<{
@@ -175,7 +196,8 @@ export function preflightItems(index: Item, report?: Report, path = ''): Preflig
       text(value.command) &&
       (value.expect === 'pass' || value.expect === 'fail') &&
       list(value.covers).every(text) &&
-      list(value.inputs).every((path) => text(path) && pathForm(path))
+      list(value.inputs).every((path) => text(path) && pathForm(path)) &&
+      (value.fails_with === undefined || text(value.fails_with))
     if (!ok) {
       report?.('SDD_V2_INDEX_SHAPE_INVALID', `${path}: ${JSON.stringify(value)}`, 'preflight-item')
       continue
@@ -294,6 +316,20 @@ export function checkPreflight(
     return summary
   }
   const results = new Map((recorded.items ?? []).map((item) => [item.id, item]))
+  // OD-92: a result is bound to the patch bytes it applied; an edited patch needs a new run.
+  const repatched = items.filter((item) => {
+    const ran = results.get(item.id)?.run?.patch_sha
+    const file = item.patch ? resolve(dirname(sdd), item.patch) : ''
+    return !!ran && existsSync(file) && ran !== digest(readFileSync(file, 'utf8'))
+  })
+  if (repatched.length) {
+    report(
+      'SDD_V2_PREFLIGHT_STALE',
+      `${sdd}: patch changed since its run: ${repatched.map((item) => `${item.id} ${item.patch}`).join(', ')}; run preflight.ts run --only ${repatched.map((item) => item.id).join(',')}`
+    )
+    summary.status = 'STALE'
+    return summary
+  }
   const failed = items
     .map((item) => ({ item, result: results.get(item.id) }))
     .filter(({ result }) => result?.outcome !== 'PASS')
