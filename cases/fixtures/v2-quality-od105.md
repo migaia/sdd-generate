@@ -1,6 +1,6 @@
 # Feature A dependency guard
 
-Repaired sdd/v2 fixture for the acceptance-quality cases (OD-15..OD-28). Each `v2-quality-od*.md`
+Defective sdd/v2 fixture for the acceptance-quality cases (OD-15..OD-28). Each `v2-quality-od*.md`
 variant changes exactly one decisive fact of this document. Delivery may run on a dirty worktree.
 
 ## Outcome
@@ -35,7 +35,7 @@ variant changes exactly one decisive fact of this document. Delivery may run on 
 - `pnpm -r run test` runs every package; pre-existing failures outside the write scope are recorded as existing defects and cannot block R1–R3.
 - `node scripts/coverage-custody.mjs` guards branch totals; the baseline update path for this feature's growth is owned by S1 and is feasible within scope.
 - `bun bench/latency.ts` keeps the 1 MiB RPC p50 at or under 300 µs and fails when any cell of the full matrix regresses past same-window A/A noise against the frozen pre-change baseline.
-- Timing gates hold the shared exclusive measurement window through `node scripts/exclusive-window.mjs acquire`, which owns its heartbeat, release and the reaping of malformed or stale locks.
+- Timing gates take the shared exclusive measurement lock, write its heartbeat every minute and release it when done.
 
 ## Principle check
 - `AGENTS.md` error contract: complies — R1 throws the dependency code itself (A1).

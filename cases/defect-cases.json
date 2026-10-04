@@ -1529,6 +1529,48 @@
       "owning_test": "tests/v2-quality.test.ts"
     },
     {
+      "id": "CSDD-V2-QUALITY-036",
+      "defect_class": "coordination-protocol-in-prose",
+      "statement": "Parallel timing gates share an exclusive measurement lock that the SDD specifies only in prose (take it, heartbeat, release); each thread implements it, so one malformed lock with no pid or expected end blocks every waiter.",
+      "root_cause": "A shared coordination resource is accepted as prose; nothing requires one checked tool that owns the lock format and its malformed or stale outcome.",
+      "evidence": {
+        "file": "scripts/validator/domain/v2-quality.ts",
+        "line": 55,
+        "quote": "const TEMP = /temporary checkout"
+      },
+      "fixture": "cases/fixtures/v2-quality-od105.md",
+      "negative_fixture": "cases/fixtures/v2-quality.md",
+      "detector": {
+        "command": "bun scripts/validate.ts validate --sdd <fixture>",
+        "expected_code": "SDD_V2_ORACLE_PROCEDURE_UNSCRIPTED",
+        "must_fire": true
+      },
+      "source_delivery": "migai rpc parallel threads blocked ~594 minutes by a malformed exclusive-window lock, OD-105",
+      "observed_at": "2026-10-04",
+      "owning_test": "tests/v2-quality.test.ts"
+    },
+    {
+      "id": "CSDD-V2-QUALITY-037",
+      "defect_class": "performance-budget-without-baseline-guard",
+      "statement": "A latency gate checks only an absolute p50 budget; a x16 regression on a cell that stays under the budget, or on a cell outside the sampled ones, passes.",
+      "root_cause": "Performance acceptance is checked against absolute budgets only; nothing asks for a full-matrix no-regression check against a frozen pre-change baseline.",
+      "evidence": {
+        "file": "references/v2-authoring.md",
+        "line": 47,
+        "quote": "a budget or custody gate states its feasibility"
+      },
+      "fixture": "cases/fixtures/v2-quality-od106.md",
+      "negative_fixture": "cases/fixtures/v2-quality.md",
+      "detector": {
+        "command": "bun scripts/validate.ts validate --sdd <fixture>",
+        "expected_code": "SDD_V2_PERF_BASELINE_UNGUARDED",
+        "must_fire": true
+      },
+      "source_delivery": "migai rpc K266 Node Worker 1 MiB p50 242.5 to 3886.8 us shipped under absolute budgets, OD-106",
+      "observed_at": "2026-10-04",
+      "owning_test": "tests/v2-quality.test.ts"
+    },
+    {
       "id": "CSDD-V2-PRESERVE-101",
       "defect_class": "preserved-baseline-unclassified",
       "statement": "A host honestly reports a must-ship case passing at base and at change with the same command; closure accepts the row as an unproven PASS instead of asking whether the case preserves a property or lacks a failing baseline, and a preserved case can never count as proven.",
