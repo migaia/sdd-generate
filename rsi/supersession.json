@@ -1082,6 +1082,16 @@
       "counterexample": "migai plugin-host R3 program: seven host stops, each on a document validate called valid (OD-65); CSDD-V2-SIZE-101.",
       "scope": "Blocking when a leaf's prose exceeds 800 lines or it declares more than 12 steps.",
       "tradeoff": "The limits are round numbers from one failing document, not calibrated; a program root is not limited."
+    },
+    {
+      "asset": "code:SDD_V2_PERF_BASELINE_UNGUARDED",
+      "added_at": "2026-10-04",
+      "round": "R-20261004151621",
+      "supersedes": [],
+      "supersedes_nothing_because": "No rule read performance budgets; BUDGET_GATE_UNOWNED covers coverage and size custody feasibility, not regressions against a baseline.",
+      "counterexample": "migai rpc K266: Node Worker 1 MiB p50 242.5 to 3886.8 us (x16) shipped under absolute budgets and four representative cells (OD-106); CSDD-V2-QUALITY-037.",
+      "scope": "Advisory candidate on a prose line that sets a percentile latency (p50/p9x with a time unit) or throughput budget and names no baseline or regression guard.",
+      "tradeoff": "Regex on one line: a guard stated on another line still fires, and the word baseline alone silences it; it cannot check that the guard covers the full matrix."
     }
   ]
 }

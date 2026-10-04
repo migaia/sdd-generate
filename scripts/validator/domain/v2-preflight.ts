@@ -94,7 +94,7 @@ const GATE_SCRIPT = /^(?:test|typecheck)(?:$|:)/
  * The gate scripts of each package a leaf writes (OD-79): the nearest `package.json` above each
  * `writes` path, below the repository root. A change can break any of them, so each needs a gate.
  */
-function packageGateScripts(repository: string, writes: readonly string[]): string[] {
+export function packageGateScripts(repository: string, writes: readonly string[]): string[] {
   const scripts = new Set<string>()
   for (const path of writes) {
     for (let dir = path.replace(/\/$/, ''); dir && dir !== '.'; dir = dirname(dir)) {

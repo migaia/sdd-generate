@@ -26,7 +26,7 @@ import { applyPreset, loadPreset } from './v2-preset.ts'
 import { checkDelegations, checkSemantics, exportVersionCandidates } from './v2-semantics.ts'
 import { reviewCandidates, type ReviewSummary } from './v2-review.ts'
 import { listCandidates } from './v2-lists.ts'
-import { checkPreflight, HOST_PROTOCOL } from './v2-preflight.ts'
+import { checkPreflight, HOST_PROTOCOL, packageGateScripts } from './v2-preflight.ts'
 import { checkSingleSource } from './v2-render.ts'
 import { scopeCandidates } from './v2-scope.ts'
 import { symbolCandidates } from './v2-symbols.ts'
@@ -69,6 +69,8 @@ export type V2Handoff = Readonly<{
   meta_source: 'declared' | 'derived' | 'mixed'
   /** Project principle files (constitution, AGENTS.md) the design records a check against. */
   principles: readonly string[]
+  /** OD-104: `<package>:<script>` gates derived from each written package's manifest; run all. */
+  gates?: readonly string[]
   /** `bug` adds reproduction, root cause and regression acceptance to a feature SDD. */
   intent: 'feature' | 'bug'
   /** Acceptance cases that must fail before the fix and pass after it. */
@@ -1078,6 +1080,9 @@ export function validateV2Document(
       regression: list(selected?.index.regression).filter(nonempty),
       assessment,
       principles,
+      ...(selected && repo
+        ? { gates: packageGateScripts(repo, list(selected.index.writes).filter(nonempty)) }
+        : {}),
       ...(root && !selected ? { parallel_children: parallelChildren } : {}),
       // Principles first: the host reads the rules the design was checked against.
       read_order: [

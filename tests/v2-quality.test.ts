@@ -35,7 +35,9 @@ test.each([
   ['od26b', 'SDD_V2_INVENTORY_ENTRY_UNCOVERED'],
   ['od27', 'SDD_V2_ERROR_POSITION_UNSTATED'],
   ['od28a', 'SDD_V2_PRINCIPLE_CHECK_UNBOUND'],
-  ['od28b', 'SDD_V2_CAUSE_OVERWRITE_PRESCRIBED']
+  ['od28b', 'SDD_V2_CAUSE_OVERWRITE_PRESCRIBED'],
+  ['od105', 'SDD_V2_ORACLE_PROCEDURE_UNSCRIPTED'],
+  ['od106', 'SDD_V2_PERF_BASELINE_UNGUARDED']
 ])('%s reports only %s', (variant, code) => {
   // One decisive change per variant must surface as exactly its own finding.
   expect(codes(`v2-quality-${variant}.md`)).toEqual([code])

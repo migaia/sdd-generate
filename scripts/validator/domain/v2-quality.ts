@@ -54,6 +54,12 @@ const COUNT =
 const RENAME_MAP = /rename map|重命名映射|case IDs?|用例\s*ID|stable IDs?/i
 const TEMP = /temporary checkout|临时检出|scratch (?:checkout|clone)|fresh clone|临时目录/i
 const SCRIPTED = /`[^`]*\b(?:node|bun|pnpm|npm|deno|bash|sh)\b[^`]*\/[^`]*`/
+/** A coordination resource several threads or leaves share (OD-105); its protocol lives in one tool. */
+const COORDINATION =
+  /exclusive (?:measurement )?(?:window|lock)|\block ?file\b|\bheartbeat|独占窗口|锁文件|心跳/i
+/** An absolute latency or throughput budget (OD-106), and the baseline-relative guard it needs. */
+const PERF = /\bp(?:50|9\d(?:\.\d+)?)\b.*?\d\s*(?:µs|us|ms|ns)\b|\d\s*(?:ops\/s|req\/s|rps)\b/i
+const REGRESSION_GUARD = /baseline|regress|基线|回归/i
 const TEST = /(?:^|\/)(?:tests?|__tests__)\/|\.(?:test|spec)\.[cm]?[jt]sx?$/
 /** A removal clause; its code spans name what the requirement takes away. */
 const REMOVES = /(?:\bremov\w*|\bdelet\w*|\bdrop\w*|删除|移除)([^;；。\n]*)/gi
@@ -354,6 +360,12 @@ export function qualityCandidates(
       found.push({ code: 'SDD_V2_REPO_GATE_NO_DISPOSITION', detail: line.trim().slice(0, 80) })
     if (BUDGET.test(line) && !FEASIBLE.test(line))
       found.push({ code: 'SDD_V2_BUDGET_GATE_UNOWNED', detail: line.trim().slice(0, 80) })
+    // OD-105: a shared lock or window is one checked tool, not a protocol each thread re-implements.
+    if (COORDINATION.test(line) && !SCRIPTED.test(line))
+      found.push({ code: 'SDD_V2_ORACLE_PROCEDURE_UNSCRIPTED', detail: line.trim().slice(0, 80) })
+    // OD-106: an absolute budget misses a regression that stays under it; compare with a baseline.
+    if (PERF.test(line) && !REGRESSION_GUARD.test(line))
+      found.push({ code: 'SDD_V2_PERF_BASELINE_UNGUARDED', detail: line.trim().slice(0, 80) })
   }
   return found
 }

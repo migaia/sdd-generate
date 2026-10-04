@@ -172,6 +172,11 @@ test('OD-75, OD-77, OD-79: base polarity, history-only edits and touched package
   const gates = join(FIXTURES, 'repo-gates')
   expect(has('gates.md', 'packages/feature-a:typecheck:e2e', gates)).toBe(true)
   expect(has('gates.ok.md', 'gate-script-uncovered', gates)).toBe(false)
+  // OD-104: the handoff lists every derived package gate, e2e included, for the host to run.
+  const ok = join(FIXTURES, 'gates.ok.md')
+  expect(validateV2Document(ok, readFileSync(ok, 'utf8'), [], gates)!.handoff.gates).toContain(
+    'packages/feature-a:typecheck:e2e'
+  )
 })
 
 test('OD-74: a symbol a dependency package defines resolves; an undefined one and no keyword is reported', () => {
