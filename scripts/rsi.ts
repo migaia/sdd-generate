@@ -499,6 +499,8 @@ export type SkillHealth = Readonly<{
   over_budget: readonly { dimension: string; ceiling: number; measured: number }[]
   /** Dimensions past the growth window; non-empty means the next round must be a consolidation. */
   over_growth?: ReturnType<typeof growthOver>
+  /** Observations, queued or settled, whose root cause is a rule dormancy deleted. */
+  ghost_hits?: ReturnType<typeof ghostHits>
   /** Queued observation IDs grouped by a root asset two or more of them share; merge each group. */
   shared_roots?: Readonly<Record<string, readonly string[]>>
   /** Pre-handoff review precision per lens, from recorded dispositions (one entry per revision). */
@@ -566,6 +568,27 @@ export function rootCounts(rounds: readonly ClosedRound[]): Record<string, numbe
       counts[asset] = (counts[asset] ?? 0) + 1
     }
   return counts
+}
+
+/**
+ * Ghost hits, ARC's signal: an observation whose root cause names a rule code that dormancy
+ * deleted. Deleted rules are the ghost list; a hit on one means that deletion let a real defect
+ * through, so the dormancy window (or that decision) was wrong. Covers queued and settled entries.
+ */
+export function ghostHits(
+  entries: readonly { id: string; text: string }[],
+  dispositions: readonly Disposition[]
+): { id: string; code: string; deleted_in: string }[] {
+  const deleted = new Map(
+    dispositions.filter((d) => d.disposition === 'delete').map((d) => [d.asset, d.decided_in])
+  )
+  return entries.flatMap((entry) => {
+    const line = /\*\*Root cause:\*\*\s*(.+)/.exec(entry.text)?.[1] ?? ''
+    const codes = new Set(line.match(/\b[A-Z][A-Z0-9]+_[A-Z0-9_]+\b/g) ?? [])
+    return [...codes]
+      .filter((code) => deleted.has(`code:${code}`))
+      .map((code) => ({ id: entry.id, code, deleted_in: deleted.get(`code:${code}`)! }))
+  })
 }
 
 /** Queued observations that share a root asset; each group is one cause and settles as one. */
@@ -656,6 +679,17 @@ export function skillHealth(now = new Date()): SkillHealth {
       .map(([key, limit]) => ({ dimension: key, ceiling: limit, measured: measured[key] ?? 0 })),
     over_growth: growthOver(measured),
     shared_roots: sharedRoots(queue),
+    ghost_hits: ghostHits(
+      [
+        ...queue,
+        ...closedRounds().flatMap(
+          (round) =>
+            (round as { settled_observations?: { id: string; text?: string }[] })
+              .settled_observations ?? []
+        )
+      ].map((entry) => ({ id: entry.id, text: entry.text ?? '' })),
+      dispositions
+    ),
     review_lenses: reviewLenses(entries),
     root_causes: rootCounts(closedRounds()),
     limits: [
@@ -703,6 +737,11 @@ export function updateAgenda(
       command:
         'bun scripts/rsi.ts open --kind consolidation --goal <what is merged, retired or ablated>',
       detail: `${h.over_growth.map((o) => `${o.dimension} ${o.measured}>${o.allowed} (baseline ${o.baseline})`).join(', ')}; past the growth window only a consolidation round may close`
+    })
+  if (h.ghost_hits?.length)
+    steps.push({
+      step: 'review-deletions',
+      detail: `${h.ghost_hits.map((g) => `${g.id} -> ${g.code} (deleted in ${g.deleted_in})`).join(', ')}: a deleted rule's defect came back; restore it or record why not, and weigh a longer dormancy window`
     })
   if (state.catalog_drifted)
     steps.push({
