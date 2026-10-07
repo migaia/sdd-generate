@@ -52,6 +52,12 @@ const DIFFERENCE = /\bminus\b|\bsubtract|扣除|减去|\s[−–]\s|\s-\s(?=\d|`
 /** A timing oracle's own execution isolation: serial, single-file or a dedicated script (OD-69). */
 const ISOLATED =
   /serial|isolat|single[- ]file|dedicated|own (?:script|project)|fileParallelism|no-file-parallelism|runInBand|max-?workers[= ]1|串行|单独|隔离|非并行|独立(?:脚本|项目)/i
+/** A timing oracle's noise protocol (OD-100): repetitions and a statistic, or an in-run comparison. */
+const NOISE =
+  /median|p\d{2}\b|percentile|best of|min(?:imum)? of|mean of \d+|\d+\s*(?:runs|repetitions|reps|samples|trials)|warm-?up|interleav|中位数|分位|预热|交错|重复\s*\d+|\d+\s*次/i
+/** A measured timing quantity, as opposed to a deadline or header value a test computes. */
+const MEASURED =
+  /\d+(?:\.\d+)?\s*[x×倍]|ratio|\bmean\b|average|median|p\d{2}\b|throughput|ops\/s|per (?:call|op)|比值|平均|吞吐|每次/i
 /** A status word claiming delivery (OD-70): only the closure `validate --evidence` computes says so. */
 const STATUS_CLAIM =
   /^\s*[-*]?\s*(?:\*\*)?(?:status|文档状态|状态)(?:\*\*)?\s*[:：][^\n]*\b(?:verified|SHIP(?:PED)?|delivered|closed)\b|^\s*[-*]?\s*(?:文档状态|状态)\s*[:：][^\n]*(?:已验证|已交付|已关闭)/im
@@ -193,6 +199,20 @@ export function scopeCandidates(index: Item, body: string): Candidate[] {
           found.push({
             code: 'SDD_V2_TIMING_ORACLE_UNISOLATED',
             detail: `${id} gates a timing: name how it runs isolated (a dedicated serial script or project, no file parallelism), not in the parallel default gate`
+          })
+        // OD-100: isolation from other files is not isolation from host load; one run decides nothing.
+        // Only a measured quantity (ratio, mean, percentile, rate), never a computed deadline value.
+        const line = stepText(body, id).split('\n')[0] ?? ''
+        if (
+          MEASURED.test(sentence) &&
+          !NOISE.test(line) &&
+          !found.some(
+            (f) => f.code === 'SDD_V2_TIMING_NOISE_UNSTATED' && f.detail.startsWith(`${id} `)
+          )
+        )
+          found.push({
+            code: 'SDD_V2_TIMING_NOISE_UNSTATED',
+            detail: `${id} gates a timing on one run: state its noise protocol (warm-up, N runs and the statistic judged, or a ratio within one interleaved run) and report a loaded host as ERROR, not FAIL`
           })
       }
   const claimed = STATUS_CLAIM.exec(body)
