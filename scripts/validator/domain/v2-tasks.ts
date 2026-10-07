@@ -6,6 +6,7 @@ import {
   pathStatus,
   rank,
   text,
+  under,
   type Item,
   type Report
 } from './v2-meta.ts'
@@ -63,10 +64,8 @@ export function stepRecords(index: Item): { records: StepRecord[]; invalid: unkn
   return { records, invalid }
 }
 
-/** Whether repository path `inner` is `outer` or lies under it. */
-const within = (outer: string, inner: string) => inner === outer || inner.startsWith(`${outer}/`)
 /** Whether two repository paths overlap: equal, or one a directory containing the other. */
-const overlaps = (a: string, b: string) => within(a, b) || within(b, a)
+const overlaps = (a: string, b: string) => under(a, b) || under(b, a)
 
 /** Steps in batch-then-`after` order: every step follows its batch's dependencies and its own `after`. */
 function edges(records: readonly StepRecord[], batches: readonly Item[]): Map<string, Set<string>> {
@@ -137,7 +136,7 @@ export function checkStepRecords(
     for (const touch of record.touches) {
       if (!pathForm(touch))
         report('SDD_V2_PATH_INVALID', `${path}: ${record.id} -> ${touch}`, 'step-touch-invalid')
-      else if (!writes.some((w) => within(w, posix.normalize(touch))))
+      else if (!writes.some((w) => under(w, posix.normalize(touch))))
         report(
           'SDD_V2_META_SOURCE_MISMATCH',
           `${record.id} -> ${touch}`,
