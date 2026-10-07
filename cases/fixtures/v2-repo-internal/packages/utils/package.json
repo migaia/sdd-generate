@@ -1,0 +1,4 @@
+{
+  "name": "@fixture/utils",
+  "main": "src/index.ts"
+}
