@@ -2781,6 +2781,56 @@
       "observed_at": "2026-10-01",
       "owning_test": "tests/v2-scope.test.ts",
       "introduced_detector_at": "2026-10-07"
+    },
+    {
+      "id": "CSDD-V2-PROGRAM-WRITES-102",
+      "defect_class": "keyed-shared-write-serialized",
+      "statement": "Two unordered program children each update only their own entry in packages/shared and declare it in shared_writes; validate reports SDD_V2_OWNER_CONFLICT, and the root adds an ordering edge only to silence it, serializing every writer.",
+      "root_cause": "writes modelled only exclusive whole-path ownership per leaf; a keyed co-write had no form.",
+      "evidence": {
+        "file": "rsi/observed-defects.md",
+        "line": 1,
+        "quote": "OD-94"
+      },
+      "fixture": "cases/fixtures/v2-program-writes/shared/root.sdd.md",
+      "negative_fixture": "cases/fixtures/v2-program-writes/parallel/root.sdd.md",
+      "negative_expectation": {
+        "must_fire": true
+      },
+      "detector": {
+        "command": "bun scripts/validate.ts validate --sdd <fixture>",
+        "expected_code": "SDD_V2_OWNER_CONFLICT",
+        "must_fire": false
+      },
+      "source_delivery": "migai rpc program root r26-r27, coverage-baseline.json in every runtime leaf (OD-94, ledger K160)",
+      "observed_at": "2026-09-30",
+      "owning_test": "tests/v2-boundaries.test.ts",
+      "introduced_detector_at": "2026-10-07"
+    },
+    {
+      "id": "CSDD-V2-FINGERPRINT-NOTE-101",
+      "defect_class": "editorial-note-stales-export",
+      "statement": "An editorial note on R1, kept in an HTML comment, changes the export fingerprint, so every consumer must re-pin although the normative clause is unchanged; authors keep obsolete labels to avoid the cascade.",
+      "root_cause": "The export fingerprint hashed the clause's raw text, annotations included.",
+      "evidence": {
+        "file": "rsi/observed-defects.md",
+        "line": 1,
+        "quote": "OD-93"
+      },
+      "fixture": "cases/fixtures/v2-fingerprint-note.md",
+      "negative_fixture": "cases/fixtures/v2-fingerprint-anchor-row.md",
+      "negative_expectation": {
+        "must_fire": true
+      },
+      "detector": {
+        "command": "bun scripts/validate.ts validate --sdd <fixture>",
+        "expected_code": "SDD_V2_EXPORT_FINGERPRINT_STALE",
+        "must_fire": false
+      },
+      "source_delivery": "migai rpc program, process-plugin R5-R8 kept obsolete layer numbers to avoid re-pinning 18 consumers (OD-93)",
+      "observed_at": "2026-09-30",
+      "owning_test": "tests/v2-consume.test.ts",
+      "introduced_detector_at": "2026-10-07"
     }
   ],
   "held_out": [
