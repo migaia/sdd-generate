@@ -2710,6 +2710,77 @@
       "owning_test": "tests/v2-preflight.test.ts",
       "introduced_detector_at": "2026-10-01",
       "repository": "cases/fixtures/v2-preflight/repo"
+    },
+    {
+      "id": "CSDD-V2-PREFLIGHT-108",
+      "defect_class": "change-base-red-for-absent-subject",
+      "statement": "A1's subject does not exist at base, so its oracle is proven by a mutation patch that must fail instead of a base run; validate still demands a base run that can only prove absence, and hosts answer with existence stubs.",
+      "root_cause": "The obligation rule accepted only a no-patch base run as discrimination for a change acceptance.",
+      "evidence": {
+        "file": "rsi/observed-defects.md",
+        "line": 1,
+        "quote": "OD-89"
+      },
+      "fixture": "cases/fixtures/v2-preflight/mutated.md",
+      "negative_fixture": "cases/fixtures/v2-preflight/polarity.md",
+      "negative_expectation": {
+        "must_fire": true
+      },
+      "detector": {
+        "command": "bun scripts/validate.ts validate --sdd <fixture> --repository <repository>",
+        "expected_code": "SDD_V2_PREFLIGHT_REQUIRED",
+        "must_fire": false
+      },
+      "source_delivery": "migai rpc program I9 rpc-streaming and I13 rpc-remote existence sentinels (OD-89)",
+      "observed_at": "2026-09-30",
+      "owning_test": "tests/v2-preflight.test.ts",
+      "introduced_detector_at": "2026-10-07",
+      "repository": "cases/fixtures/v2-preflight/repo"
+    },
+    {
+      "id": "CSDD-V2-SYMBOL-104",
+      "defect_class": "dependency-symbol-not-exported",
+      "statement": "S1 imports readPluginRecord from @fixture/utils; it is defined in packages/utils/src/registry.ts but the package entry does not export it, yet the step reaches the host as resolved and implementation stops on a missing export.",
+      "root_cause": "Dependency symbols were resolved by definition site anywhere in the workspace, never through the owning package's entry.",
+      "evidence": {
+        "file": "rsi/observed-defects.md",
+        "line": 1,
+        "quote": "OD-102"
+      },
+      "repository": "cases/fixtures/v2-repo-internal",
+      "fixture": "cases/fixtures/v2-symbol-internal.md",
+      "negative_fixture": "cases/fixtures/v2-symbol-dep.md",
+      "detector": {
+        "command": "bun scripts/validate.ts validate --sdd <fixture> --repository <repository>",
+        "expected_code": "PSEUDOCODE_SYMBOL_UNRESOLVED",
+        "must_fire": true
+      },
+      "source_delivery": "migai I13 rpc-remote, readDefinedPluginDefinition internal to @migaia/plugin-host (OD-102, ledger K187)",
+      "observed_at": "2026-09-30",
+      "owning_test": "tests/v2-document.test.ts",
+      "introduced_detector_at": "2026-10-07"
+    },
+    {
+      "id": "CSDD-V2-TIMING-102",
+      "defect_class": "timing-gate-without-noise-protocol",
+      "statement": "A1 gates a wall-clock ratio in a dedicated serial script, as OD-69 asks, but judges one run; on a loaded shared host the bench fails (10.28 to 10.97 against a limit of 10) although the code did not regress.",
+      "root_cause": "The timing rule treated file isolation as sufficient and assumed one wall-clock run is deterministic.",
+      "evidence": {
+        "file": "rsi/observed-defects.md",
+        "line": 1,
+        "quote": "OD-100"
+      },
+      "fixture": "cases/fixtures/v2-scope/timing-noise.md",
+      "negative_fixture": "cases/fixtures/v2-scope/timing-noise.ok.md",
+      "detector": {
+        "command": "bun scripts/validate.ts validate --sdd <fixture>",
+        "expected_code": "SDD_V2_TIMING_NOISE_UNSTATED",
+        "must_fire": true
+      },
+      "source_delivery": "migai I15 audit, bench:mutation PHV3-T10 and bench:resume under load 16-20 (OD-100, ledger K199)",
+      "observed_at": "2026-10-01",
+      "owning_test": "tests/v2-scope.test.ts",
+      "introduced_detector_at": "2026-10-07"
     }
   ],
   "held_out": [

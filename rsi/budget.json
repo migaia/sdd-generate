@@ -5,10 +5,10 @@
   "ceilings": {
     "SKILL.md.characters": 11600,
     "references.characters": 190000,
-    "validator.lines": 5700,
+    "validator.lines": 5761,
     "behavior_cases": 46,
-    "scripts.lines": 9800,
-    "tests.lines": 2550,
+    "scripts.lines": 9920,
+    "tests.lines": 2592,
     "review.md.characters": 3500
   },
   "raises": [
@@ -539,6 +539,30 @@
       "at": "2026-10-01",
       "round": "budget-change",
       "reason": "Replaces references.lines (ceiling 1900, measured 1697): references are prose and a line can grow without limit, so they are now counted in characters (measured 180646). The ceiling keeps the earlier ~5% headroom; cumulative growth is bounded separately by GROWTH_RATIO in scripts/rsi.ts against the last accepted consolidation."
+    },
+    {
+      "dimension": "validator.lines",
+      "from": 5700,
+      "to": 5761,
+      "at": "2026-10-07",
+      "round": "R-20261007143649",
+      "reason": "Raised to the 2% growth window over the last accepted consolidation (R-20261001141732). Measured scripts 9785, validator 5669, tests 2548 left 15, 31 and 2 units, too little for any of the six queued OD groups; the window, which only a consolidation resets, now bounds cumulative growth, so the ceiling is set to it rather than above it."
+    },
+    {
+      "dimension": "scripts.lines",
+      "from": 9800,
+      "to": 9920,
+      "at": "2026-10-07",
+      "round": "R-20261007143649",
+      "reason": "Raised to the 2% growth window over the last accepted consolidation (R-20261001141732). Measured scripts 9785, validator 5669, tests 2548 left 15, 31 and 2 units, too little for any of the six queued OD groups; the window, which only a consolidation resets, now bounds cumulative growth, so the ceiling is set to it rather than above it."
+    },
+    {
+      "dimension": "tests.lines",
+      "from": 2550,
+      "to": 2592,
+      "at": "2026-10-07",
+      "round": "R-20261007143649",
+      "reason": "Raised to the 2% growth window over the last accepted consolidation (R-20261001141732). Measured scripts 9785, validator 5669, tests 2548 left 15, 31 and 2 units, too little for any of the six queued OD groups; the window, which only a consolidation resets, now bounds cumulative growth, so the ceiling is set to it rather than above it."
     }
   ],
   "introduced": [

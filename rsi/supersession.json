@@ -1092,6 +1092,16 @@
       "counterexample": "migai rpc K266: Node Worker 1 MiB p50 242.5 to 3886.8 us (x16) shipped under absolute budgets and four representative cells (OD-106); CSDD-V2-QUALITY-037.",
       "scope": "Advisory candidate on a prose line that sets a percentile latency (p50/p9x with a time unit) or throughput budget and names no baseline or regression guard.",
       "tradeoff": "Regex on one line: a guard stated on another line still fires, and the word baseline alone silences it; it cannot check that the guard covers the full matrix."
+    },
+    {
+      "asset": "code:SDD_V2_TIMING_NOISE_UNSTATED",
+      "added_at": "2026-10-07",
+      "round": "R-20261007144728",
+      "supersedes": [],
+      "supersedes_nothing_because": "SDD_V2_TIMING_ORACLE_UNISOLATED asks where a timing gate runs (isolation from other test files); nothing asked how many runs decide it, and tightening that code would flag every isolated gate already accepted under it.",
+      "counterexample": "migai I15 audit (OD-100, ledger K199): bench:mutation PHV3-T10 ratios 10.28, 10.92, 10.97 against a limit of 10 and bench:resume 2.80 against 2 on a host at load 16-20, after moving to dedicated serial scripts; CSDD-V2-TIMING-102.",
+      "scope": "Advisory candidate, once per acceptance, when its first line gates a measured timing quantity (a multiple, ratio, mean, median, percentile or rate) with a threshold and names no warm-up, repetition count, statistic or interleaved in-run comparison; a computed deadline or header value (timeoutMs <= 200) is not a measurement and does not fire.",
+      "tradeoff": "Regex on the acceptance line: a protocol stated in the oracle file or another line still fires, and any word like median silences it without checking the protocol is sound."
     }
   ]
 }

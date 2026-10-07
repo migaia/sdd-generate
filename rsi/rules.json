@@ -258,7 +258,7 @@
       ],
       "weight": {
         "sites": 1,
-        "mentions": 1,
+        "mentions": 2,
         "test_mentions": 2
       }
     },
@@ -1485,6 +1485,19 @@
     },
     {
       "id": "RL-0113",
+      "asset": "code:SDD_V2_TIMING_NOISE_UNSTATED",
+      "kind": "issue-code",
+      "sites": [
+        "scripts/validator/domain/v2-scope.ts"
+      ],
+      "weight": {
+        "sites": 1,
+        "mentions": 1,
+        "test_mentions": 0
+      }
+    },
+    {
+      "id": "RL-0114",
       "asset": "code:SDD_V2_TIMING_ORACLE_UNISOLATED",
       "kind": "issue-code",
       "sites": [
@@ -1497,7 +1510,7 @@
       }
     },
     {
-      "id": "RL-0114",
+      "id": "RL-0115",
       "asset": "code:SDD_V2_VARIANT_MATRIX_MISSING",
       "kind": "issue-code",
       "sites": [
@@ -1510,7 +1523,7 @@
       }
     },
     {
-      "id": "RL-0115",
+      "id": "RL-0116",
       "asset": "code:SDD_V2_WRITES_OWNED_ELSEWHERE",
       "kind": "issue-code",
       "sites": [
@@ -1523,7 +1536,7 @@
       }
     },
     {
-      "id": "RL-0116",
+      "id": "RL-0117",
       "asset": "code:TYPE_PROBE_MODULE_UNAVAILABLE",
       "kind": "issue-code",
       "sites": [
@@ -1536,7 +1549,7 @@
       }
     },
     {
-      "id": "RL-0117",
+      "id": "RL-0118",
       "asset": "code:TYPE_PROBE_PROJECT_UNAVAILABLE",
       "kind": "issue-code",
       "sites": [
@@ -1549,7 +1562,7 @@
       }
     },
     {
-      "id": "RL-0118",
+      "id": "RL-0119",
       "asset": "code:TYPE_PROBE_SOURCE_UNAVAILABLE",
       "kind": "issue-code",
       "sites": [

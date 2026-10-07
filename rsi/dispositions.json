@@ -1729,6 +1729,46 @@
       "counterexample": "TOOLCHAIN_VERSION_CONFLICT was raised only while validating an sdd-loop-delivery/v1 document (scripts/repo-facts.ts); validate now answers every non-v2 document with SDD_V1_UNSUPPORTED before any v1 check runs, so no supported input can reach it.",
       "scope": "sdd-loop-delivery/v1 documents and the v1 delivery loop, both retired by the user on 2026-09-25.",
       "tradeoff": "An existing v1 document gets one diagnostic instead of per-rule findings and must be rewritten as sdd/v2 to be checked again."
+    },
+    {
+      "asset": "code:DEFECT_CASE_DETECTOR_NOT_BUN",
+      "disposition": "retain",
+      "decided_in": "R-20261007143351",
+      "counterexample": "A case whose detector command starts with node or npx would otherwise be spawned with an arbitrary executable from cases/defect-cases.json; this guard is the only check that the frozen suite runs the skill's own bun scripts.",
+      "scope": "rsi.ts runSuite, for every frozen and held-out case.",
+      "tradeoff": "It never fires while cases are written correctly, so telemetry, which records validate output only, can never see it; dormancy is the wrong signal for a tooling input guard.",
+      "revisions_at_decision": 1269,
+      "review_after_revisions": 1000
+    },
+    {
+      "asset": "code:EXAMPLE_CONTRACT_BLOCK_MISSING",
+      "disposition": "retain",
+      "decided_in": "R-20261007143351",
+      "counterexample": "An example SDD edited without its sdd-contract fence would make every overlay fixture built on it silently empty instead of failing; tests/example-overlay.test.ts pins the throw.",
+      "scope": "scripts/lib/example-overlay.ts contractOf, used by overlay fixtures.",
+      "tradeoff": "A tooling invariant outside validate; it cannot appear in telemetry, so it stays dormant by construction.",
+      "revisions_at_decision": 1269,
+      "review_after_revisions": 1000
+    },
+    {
+      "asset": "code:EXAMPLE_OVERLAY_MERGE_TARGET_NOT_ARRAY",
+      "disposition": "retain",
+      "decided_in": "R-20261007143351",
+      "counterexample": "An overlay that appends to a field that is not an array would otherwise produce a malformed contract the case then judges; tests/example-overlay.test.ts pins the throw.",
+      "scope": "scripts/lib/example-overlay.ts merge.",
+      "tradeoff": "Same as EXAMPLE_CONTRACT_BLOCK_MISSING: a fixture-builder guard invisible to telemetry.",
+      "revisions_at_decision": 1269,
+      "review_after_revisions": 1000
+    },
+    {
+      "asset": "code:RSI_NO_OPEN_ROUND",
+      "disposition": "retain",
+      "decided_in": "R-20261007143351",
+      "counterexample": "Running rsi.ts baseline, evaluate, prune, settle or close with no open round would otherwise fail on an undefined round with an unreadable stack trace.",
+      "scope": "rsi.ts openRound, every round command.",
+      "tradeoff": "A usage error path of the skill's own tooling; telemetry records validate runs only, so it can never count as fired.",
+      "revisions_at_decision": 1269,
+      "review_after_revisions": 1000
     }
   ]
 }
