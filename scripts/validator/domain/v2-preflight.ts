@@ -254,7 +254,8 @@ export function checkPreflight(
     if (!covering(id, (item) => !!item.patch && item.expect === 'fail'))
       need(`${id} needs a perturbation its gate must catch`, 'scaling-perturbed-uncovered')
   }
-  // OD-75: a change acceptance must be seen failing at base, or it may already hold (and prove nothing).
+  // OD-75: a change acceptance must be seen failing, or it may already hold (and prove nothing):
+  // at base, or (OD-89, a subject absent at base) under a mutation patch of the change.
   const preserved = new Set(list(index.preserve).filter(text))
   const changes = list(index.requirements)
     .filter(object)
@@ -262,8 +263,11 @@ export function checkPreflight(
     .flatMap((r) => list(r.acceptance).filter(text))
     .filter((id) => !preserved.has(id))
   for (const id of new Set(changes))
-    if (!covering(id, (item) => !item.patch && item.expect === 'fail'))
-      need(`${id} needs a run of its oracle at base that fails`, 'change-base-uncovered')
+    if (!covering(id, (item) => item.expect === 'fail'))
+      need(
+        `${id} needs its oracle seen failing: at base, or under a mutation patch`,
+        'change-base-uncovered'
+      )
   const gates = items.filter((item) => item.gate)
   for (const script of repository
     ? packageGateScripts(repository, list(index.writes).filter(text))
