@@ -13,7 +13,9 @@ type Candidate = { code: string; detail: string }
  * it, so the recorded fingerprint and every consumer pin show the edit.
  */
 export function fingerprint(body: string, clauses: readonly string[]): string {
-  const texts = clauses.map((id) => stepText(body, id).split(/\s+/).join(' ').trim())
+  // OD-93: an HTML comment is an editorial note, not contract; editing it re-pins no consumer.
+  const normative = (id: string) => stepText(body, id).replace(/<!--[\s\S]*?-->/g, ' ')
+  const texts = clauses.map((id) => normative(id).split(/\s+/).join(' ').trim())
   return createHash('sha256').update(texts.join('\n')).digest('hex').slice(0, 12)
 }
 
