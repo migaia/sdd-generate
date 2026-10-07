@@ -714,9 +714,10 @@ export function validateV2Document(
   if (root && selected && !children.some((child) => child.path === source))
     report('SDD_V2_PROGRAM_LINK_INVALID', source, 'child-not-indexed')
 
-  const writes: { owner: string; path: string }[] = []
+  const writes: { owner: string; path: string; shared: boolean }[] = []
   const childById = new Map(children.map((child) => [child.id, child]))
   for (const leaf of leaves.values()) {
+    const shared = new Set(list(leaf.index.shared_writes).filter(nonempty).map(posix.normalize))
     for (const raw of list(leaf.index.writes)) {
       if (!nonempty(raw) || !pathForm(raw)) {
         report('SDD_V2_PATH_INVALID', `${leaf.path}: ${String(raw)}`, 'write-path-invalid')
@@ -727,7 +728,7 @@ export function validateV2Document(
         report('SDD_V2_PATH_ESCAPE', `${leaf.path}: ${path}`, 'write-path-escape')
         continue
       }
-      writes.push({ owner: leaf.id, path })
+      writes.push({ owner: leaf.id, path, shared: shared.has(path) })
     }
     for (const item of list(leaf.index.consumes)) {
       if (!object(item) || !nonempty(item.document)) continue
@@ -759,6 +760,8 @@ export function validateV2Document(
         b = writes[right]!
       if (a.owner === b.owner) continue
       if (serial.get(a.owner)?.has(b.owner) || serial.get(b.owner)?.has(a.owner)) continue
+      // OD-94: a path both declare in shared_writes is keyed per writer, so writers need no order.
+      if (a.shared && b.shared && a.path === b.path) continue
       if (a.path === b.path || a.path.startsWith(`${b.path}/`) || b.path.startsWith(`${a.path}/`))
         report(
           'SDD_V2_OWNER_CONFLICT',

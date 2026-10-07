@@ -87,6 +87,7 @@ export function ownershipCandidates(
     )
     return names.get(name)
   }
+  const mine = new Set(list(index.shared_writes).filter(text))
   const candidates: Candidate[] = []
   for (const file of files.filter((f) => f.endsWith('.sdd.md'))) {
     const path = join(repository, file)
@@ -112,7 +113,10 @@ export function ownershipCandidates(
       .filter(text)
       .map(dirOf)
       .filter((dir): dir is string => !!dir && dir !== '.')
+    const shared = new Set(list(other.shared_writes).filter(text).map(dirOf))
     for (const write of writes) {
+      // OD-94: both documents declare the path keyed per writer, so the overlap is not ownership.
+      if (shared.has(write) && mine.has(write)) continue
       const hit = owned.find(
         (dir) => write === dir || write.startsWith(`${dir}/`) || dir.startsWith(`${write}/`)
       )
