@@ -242,6 +242,8 @@ export type ClosedRound = Readonly<{
   closed_at?: string
   /** What the skill measured at close; an unrejected consolidation's is the growth baseline. */
   measured_at_close?: Record<string, number>
+  /** What the skill measured when the round opened. */
+  budget?: Record<string, number>
   snapshot?: Readonly<{ supersession_additions: number }>
 }>
 
@@ -415,16 +417,24 @@ export function consolidationFindings(
  */
 export const GROWTH_RATIO = 0.02
 
+/** The least share some dimension must shrink by in a consolidation before it resets the window. */
+export const RESET_SHRINK = 0.005
+
 /**
- * The growth baseline: what the latest unrejected consolidation measured when it closed. Derived
- * from round records rather than stored, so no round can move it by editing a file; null until one
- * such consolidation exists, and then no window applies.
+ * The growth baseline: what the latest unrejected consolidation measured when it closed, counting
+ * only one that shrank some dimension by RESET_SHRINK since it opened; a token removal must not buy a
+ * fresh window. Derived from round records rather than stored, so no round can move it by editing a
+ * file; null until one such consolidation exists, and then no window applies.
  */
 export function growthBaseline(
   rounds: readonly ClosedRound[] = closedRounds()
 ): Readonly<{ round: string; measured: Record<string, number> }> | null {
+  const shrank = (r: ClosedRound) =>
+    Object.entries(r.measured_at_close ?? {}).some(
+      ([key, value]) => value <= (r.budget?.[key] ?? 0) * (1 - RESET_SHRINK)
+    )
   const last = rounds
-    .filter((r) => r.kind === 'consolidation' && r.verdict !== 'REJECTED' && r.measured_at_close)
+    .filter((r) => r.kind === 'consolidation' && r.verdict !== 'REJECTED' && shrank(r))
     .sort((a, b) => String(a.closed_at).localeCompare(String(b.closed_at)))
     .at(-1)
   return last ? { round: last.id, measured: last.measured_at_close! } : null

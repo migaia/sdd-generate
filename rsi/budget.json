@@ -5,10 +5,10 @@
   "ceilings": {
     "SKILL.md.characters": 11600,
     "references.characters": 190000,
-    "validator.lines": 5761,
+    "validator.lines": 5867,
     "behavior_cases": 46,
-    "scripts.lines": 9920,
-    "tests.lines": 2592,
+    "scripts.lines": 10065,
+    "tests.lines": 2599,
     "review.md.characters": 3500
   },
   "raises": [
@@ -563,6 +563,30 @@
       "at": "2026-10-07",
       "round": "R-20261007143649",
       "reason": "Raised to the 2% growth window over the last accepted consolidation (R-20261001141732). Measured scripts 9785, validator 5669, tests 2548 left 15, 31 and 2 units, too little for any of the six queued OD groups; the window, which only a consolidation resets, now bounds cumulative growth, so the ceiling is set to it rather than above it."
+    },
+    {
+      "dimension": "validator.lines",
+      "from": 5761,
+      "to": 5867,
+      "at": "2026-10-07",
+      "round": "R-20261007151107",
+      "reason": "Raised to the 2% window over R-20261007150654, as the user authorized for the last four observations (OD-88, OD-93, OD-94, OD-98). That consolidation removed one validator line, so this window reset is an authorized raise, not space a removal freed; consolidation should be made to repay growth before it resets the baseline."
+    },
+    {
+      "dimension": "scripts.lines",
+      "from": 9920,
+      "to": 10065,
+      "at": "2026-10-07",
+      "round": "R-20261007151107",
+      "reason": "Raised to the 2% window over R-20261007150654, as the user authorized for the last four observations (OD-88, OD-93, OD-94, OD-98). That consolidation removed one validator line, so this window reset is an authorized raise, not space a removal freed; consolidation should be made to repay growth before it resets the baseline."
+    },
+    {
+      "dimension": "tests.lines",
+      "from": 2592,
+      "to": 2599,
+      "at": "2026-10-07",
+      "round": "R-20261007151107",
+      "reason": "Raised to the 2% window over R-20261007150654, as the user authorized for the last four observations (OD-88, OD-93, OD-94, OD-98). That consolidation removed one validator line, so this window reset is an authorized raise, not space a removal freed; consolidation should be made to repay growth before it resets the baseline."
     }
   ],
   "introduced": [
