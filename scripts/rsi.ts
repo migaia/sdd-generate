@@ -438,57 +438,54 @@ export const GROWTH_RATIO = 0.02
 export const RESET_SHRINK = 0.005
 
 /**
- * The growth baseline: what the latest unrejected consolidation measured when it closed, counting
- * only one that shrank some dimension by RESET_SHRINK since it opened; a token removal must not buy a
- * fresh window. Derived from round records rather than stored, so no round can move it by editing a
- * file; null until one such consolidation exists, and then no window applies.
+ * The growth baseline per dimension: the measurement the latest unrejected consolidation that shrank
+ * that dimension by RESET_SHRINK closed with, so a removal in one dimension buys no window in another;
+ * a dimension no consolidation has shrunk keeps the first recorded close. Derived from round records,
+ * so no round can move it by editing a file; empty until a consolidation records a close.
  */
 export function growthBaseline(
   rounds: readonly ClosedRound[] = closedRounds()
-): Readonly<{ round: string; measured: Record<string, number> }> | null {
-  const shrank = (r: ClosedRound) =>
-    Object.entries(r.measured_at_close ?? {}).some(
-      ([key, value]) => value <= (r.budget?.[key] ?? 0) * (1 - RESET_SHRINK)
-    )
-  const last = rounds
-    .filter((r) => r.kind === 'consolidation' && r.verdict !== 'REJECTED' && shrank(r))
-    .sort((a, b) => String(a.closed_at).localeCompare(String(b.closed_at)))
-    .at(-1)
-  return last ? { round: last.id, measured: last.measured_at_close! } : null
+): Record<string, { round: string; closed_at: string; value: number }> {
+  const base: Record<string, { round: string; closed_at: string; value: number }> = {}
+  for (const r of rounds
+    .filter((r) => r.kind === 'consolidation' && r.verdict !== 'REJECTED' && r.measured_at_close)
+    .sort((a, b) => String(a.closed_at).localeCompare(String(b.closed_at))))
+    for (const [key, value] of Object.entries(r.measured_at_close!))
+      if (!base[key] || value <= (r.budget?.[key] ?? 0) * (1 - RESET_SHRINK))
+        base[key] = { round: r.id, closed_at: String(r.closed_at), value }
+  return base
 }
 
 /**
- * The one size limit per dimension (no separate ceiling): the growth window over the last shrinking
- * consolidation, raised only by `budget.json` raises of budget-change rounds closed since it, or of
- * `own` (the open budget-change round). Empty until such a baseline exists.
+ * The one size limit per dimension (no separate ceiling): the growth window over that dimension's
+ * baseline, raised only by `budget.json` raises of budget-change rounds closed since it, or of `own`
+ * (the open budget-change round).
  */
 export function budgetLimits(
   rounds: readonly ClosedRound[] = closedRounds(),
   own?: string
 ): Record<string, number> {
   const baseline = growthBaseline(rounds)
-  if (!baseline) return {}
-  const since = rounds.find((r) => r.id === baseline.round)?.closed_at ?? ''
-  const counted = new Set(
+  const closed = new Map(
     rounds
       .filter((r) => r.kind === 'budget-change' && r.verdict !== 'REJECTED')
-      .filter((r) => String(r.closed_at) > String(since))
-      .map((r) => r.id)
+      .map((r) => [r.id, String(r.closed_at)])
   )
-  if (own) counted.add(own)
   const limits = Object.fromEntries(
-    Object.entries(baseline.measured).map(([key, base]) => [
+    Object.entries(baseline).map(([key, { value }]) => [
       key,
-      base + Math.max(1, Math.ceil(base * GROWTH_RATIO))
+      value + Math.max(1, Math.ceil(value * GROWTH_RATIO))
     ])
   )
   const recorded = readJson<{ raises?: { dimension: string; to: number; round: string }[] }>(
     BUDGET_FILE,
     {}
   ).raises
-  for (const raise of recorded ?? [])
-    if (counted.has(raise.round))
+  for (const raise of recorded ?? []) {
+    const at = raise.round === own ? '\uffff' : closed.get(raise.round)
+    if (at && baseline[raise.dimension] && at > baseline[raise.dimension]!.closed_at)
       limits[raise.dimension] = Math.max(limits[raise.dimension] ?? 0, raise.to)
+  }
   return limits
 }
 
