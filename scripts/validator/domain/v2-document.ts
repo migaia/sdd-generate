@@ -28,6 +28,7 @@ import { reviewCandidates, type ReviewSummary } from './v2-review.ts'
 import { listCandidates } from './v2-lists.ts'
 import { checkPreflight, HOST_PROTOCOL, packageGateScripts } from './v2-preflight.ts'
 import { checkSingleSource } from './v2-render.ts'
+import { dispatchOf, type Dispatch } from './v2-dispatch.ts'
 import { scopeCandidates } from './v2-scope.ts'
 import { symbolCandidates } from './v2-symbols.ts'
 import { ancestors, checkStepRecords, stepRecords } from './v2-tasks.ts'
@@ -86,6 +87,8 @@ export type V2Handoff = Readonly<{
   /** Program root only: child IDs in dependency layers. */
   parallel_children?: readonly (readonly string[])[]
   read_order: readonly string[]
+  /** STRUCTURALLY_READY only: cache-friendly subagent briefs ([dispatch](references/dispatch.md)). */
+  dispatch?: Dispatch
 }>
 
 export type V2Result = Readonly<{
@@ -845,13 +848,12 @@ export function validateV2Document(
     report
   )
 
-  const principles = [
-    ...(root ? checkDocumentNotes(root, 'sdd-program', repo, report) : []),
-    ...[...leaves.values()].flatMap((leaf) => {
-      const found = checkDocumentNotes(leaf, 'sdd-contract', repo, report)
-      return !selected || leaf.path === source ? found : []
-    })
-  ]
+  const rootPrinciples = root ? checkDocumentNotes(root, 'sdd-program', repo, report) : []
+  const leafPrinciples = [...leaves.values()].flatMap((leaf) => {
+    const found = checkDocumentNotes(leaf, 'sdd-contract', repo, report)
+    return !selected || leaf.path === source ? found : []
+  })
+  const principles = [...rootPrinciples, ...leafPrinciples]
   // Children in dependency layers: a layer may start once every earlier layer has delivered.
   const parallelChildren = layers(
     children.map((child) => child.id),
@@ -1040,6 +1042,34 @@ export function validateV2Document(
     !!root &&
     object(root.index.integration) &&
     (!selected || root.index.integration.owner === selected.id)
+  const readOrder = [
+    ...(repo ? principles : []),
+    ...(root && !selected ? [root.path] : [...direct.map((item) => item.path), source]),
+    ...selectedSourcePaths.map((item) => item.path)
+  ]
+  const slice = selected ? slices.get(root ? selected.id : 'self') : undefined
+  const { integration_acceptance } = presentation
+  const shared = [
+    ['Root', displayRoot.path],
+    ['Summary', presentation.summary],
+    ['Shared constraints', presentation.shared_constraints],
+    ['Principles', root ? rootPrinciples : leafPrinciples]
+  ] as const
+  const dispatch =
+    maturity !== 'STRUCTURALLY_READY'
+      ? undefined
+      : root && !selected
+        ? dispatchOf(shared, {
+            children: parallelChildren.map((layer) => layer.map((id) => childById.get(id)!))
+          })
+        : slice &&
+          dispatchOf(shared, {
+            leaf: { path: source, read_order: readOrder, slice },
+            scope: [
+              ['Leaf principles', root ? leafPrinciples : []],
+              ['Integration acceptance', (includeIntegration && integration_acceptance) || '']
+            ]
+          })
   return {
     sdd: source,
     valid: diagnostics.length === 0,
@@ -1071,7 +1101,7 @@ export function validateV2Document(
       selected_document: selected?.id ?? null,
       direct_dependencies: direct,
       selected_source_paths: selectedSourcePaths,
-      ...(selected ? { execution_slice: slices.get(root ? selected.id : 'self') } : {}),
+      ...(slice ? { execution_slice: slice } : {}),
       meta_source: meta.source,
       candidates,
       ...(review.summary ? { review: review.summary } : {}),
@@ -1088,11 +1118,8 @@ export function validateV2Document(
         : {}),
       ...(root && !selected ? { parallel_children: parallelChildren } : {}),
       // Principles first: the host reads the rules the design was checked against.
-      read_order: [
-        ...(repo ? principles : []),
-        ...(root && !selected ? [root.path] : [...direct.map((item) => item.path), source]),
-        ...selectedSourcePaths.map((item) => item.path)
-      ]
+      read_order: readOrder,
+      ...(dispatch ? { dispatch } : {})
     }
   }
 }
