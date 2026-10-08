@@ -73,12 +73,13 @@ test('two rules that fire on the same documents are flagged as possibly one rule
     sites: ['a.ts'],
     weight: { sites: 1, mentions: 1, test_mentions: 0 }
   }))
-  const entries = ['d1', 'd2', 'd3'].map((sha, index) => ({
+  // Co-firing counts only on enough shared documents: d1–d5 carry A and B, d5 also C.
+  const entries = ['d1', 'd2', 'd3', 'd4', 'd5'].map((sha, index) => ({
     run_id: `r${index}`,
     ts: '2026-01-01T00:00:00Z',
     tool: 't',
     sdd_sha: sha,
-    codes: sha === 'd3' ? ['A', 'B', 'C'] : ['A', 'B'],
+    codes: sha === 'd5' ? ['A', 'B', 'C'] : ['A', 'B'],
     candidate_codes: []
   }))
   const report = health(rules, entries, 50)

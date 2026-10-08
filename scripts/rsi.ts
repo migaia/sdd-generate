@@ -50,7 +50,7 @@ const USAGE = [
   '  rsi.ts open --kind <k> --goal <t>    start a round and commit to its case files',
   '  rsi.ts baseline                      record the champion result for the open round',
   '  rsi.ts evaluate                      re-run the suite and compare against the baseline',
-  '  rsi.ts prune                         check supersession and the budget ceilings',
+  '  rsi.ts prune                         check supersession and the budget limits',
   '  rsi.ts settle --id <OD-n> --as detector|lens|class|ruling|rejected --evidence <text>',
   '                                       settle a queued observation in the open round',
   '  rsi.ts close --confirm <token>       record the verdict and end the round'
@@ -194,7 +194,9 @@ export function health(
       .filter((other) => other.asset !== rule.asset)
       .filter((other) => {
         const otherDocs = docsByCode.get(other.asset.slice('code:'.length))
-        return otherDocs ? jaccard(docs, otherDocs) > 0.9 : false
+        if (!otherDocs) return false
+        const shared = [...docs].filter((doc) => otherDocs.has(doc)).length
+        return shared >= REDUNDANT_MIN_DOCUMENTS && jaccard(docs, otherDocs) > 0.9
       })
       .map((other) => other.asset)
     return {
@@ -225,8 +227,19 @@ export type DebtLevel = (typeof DEBT_LEVELS)[number]
 export const DEBT_THRESHOLDS = {
   additions_without_evidence: [1],
   undisposed_dormant_rules: [1],
-  unsettled_observations: [1]
+  unsettled_observations: [1],
+  /** Reference cards over REFERENCE_CARD_LIMIT: an agent loads a card whole, so it must stay small. */
+  oversized_references: [1],
+  /** Held-out cases missing below HELD_OUT_MIN: detection quality is unmeasurable on fewer. */
+  held_out_shortfall: [1]
 } as const satisfies Record<string, readonly number[]>
+
+/** Characters one reference card may hold before health flags it for splitting. */
+export const REFERENCE_CARD_LIMIT = 12_000
+/** Held-out cases below which a detection or lens claim has no out-of-sample evidence. */
+export const HELD_OUT_MIN = 10
+/** Shared documents two rules need before co-firing can mean they are one rule. */
+export const REDUNDANT_MIN_DOCUMENTS = 5
 export type DebtSignalName = keyof typeof DEBT_THRESHOLDS
 
 /**
@@ -356,6 +369,9 @@ export function debt(input: {
   undisposed: number
   /** Entries still queued in rsi/observed-defects.md; an update settles every one of them. */
   observations?: number
+  oversizedReferences?: number
+  /** Held-out case count; omitted means not measured. */
+  heldOut?: number
 }): { level: DebtLevel; signals: readonly DebtSignal[] } {
   const retired = new Set(
     (input.dispositions ?? [])
@@ -375,7 +391,9 @@ export function debt(input: {
         .map((entry) => entry.asset)
     ).size,
     undisposed_dormant_rules: input.undisposed,
-    unsettled_observations: input.observations ?? 0
+    unsettled_observations: input.observations ?? 0,
+    oversized_references: input.oversizedReferences ?? 0,
+    held_out_shortfall: input.heldOut === undefined ? 0 : Math.max(0, HELD_OUT_MIN - input.heldOut)
   }
   const signals = (Object.keys(DEBT_THRESHOLDS) as DebtSignalName[]).map((signal) => ({
     signal,
@@ -410,10 +428,9 @@ export function consolidationFindings(
 }
 
 /**
- * Cumulative growth allowed since the last accepted consolidation. A ceiling caps absolute size, but
- * a budget-change round can raise it one reasoned step at a time; this window caps the sum of those
- * steps. Each dimension may exceed its baseline by this share of it (at least 1, so small counts such
- * as behavior_cases can still move). A source constant, so changing it is a reviewed diff.
+ * Growth allowed since the last shrinking consolidation: each dimension may exceed its baseline by
+ * this share of it (at least 1, so small counts such as behavior_cases can still move). A source
+ * constant, so changing it is a reviewed diff.
  */
 export const GROWTH_RATIO = 0.02
 
@@ -441,23 +458,49 @@ export function growthBaseline(
 }
 
 /**
- * Dimensions beyond the window. Every round kind is held to it: past it only a consolidation can
- * close, and only by paying the overage back, after which its own measurement becomes the baseline.
- * Growth is therefore bounded per consolidation cycle and each cycle needs a real removal.
+ * The one size limit per dimension (no separate ceiling): the growth window over the last shrinking
+ * consolidation, raised only by `budget.json` raises of budget-change rounds closed since it, or of
+ * `own` (the open budget-change round). `raises: false` gives the bare window, which a consolidation
+ * must reach before its measurement may become the next baseline. Empty until such a baseline exists.
  */
-export function growthOver(
+export function budgetLimits(
+  rounds: readonly ClosedRound[] = closedRounds(),
+  { own, raises = true }: { own?: string; raises?: boolean } = {}
+): Record<string, number> {
+  const baseline = growthBaseline(rounds)
+  if (!baseline) return {}
+  const since = rounds.find((r) => r.id === baseline.round)?.closed_at ?? ''
+  const counted = new Set(
+    rounds
+      .filter((r) => r.kind === 'budget-change' && r.verdict !== 'REJECTED')
+      .filter((r) => String(r.closed_at) > String(since))
+      .map((r) => r.id)
+  )
+  if (own) counted.add(own)
+  const limits = Object.fromEntries(
+    Object.entries(baseline.measured).map(([key, base]) => [
+      key,
+      base + Math.max(1, Math.ceil(base * GROWTH_RATIO))
+    ])
+  )
+  const recorded = readJson<{ raises?: { dimension: string; to: number; round: string }[] }>(
+    BUDGET_FILE,
+    {}
+  ).raises
+  for (const raise of raises ? (recorded ?? []) : [])
+    if (counted.has(raise.round))
+      limits[raise.dimension] = Math.max(limits[raise.dimension] ?? 0, raise.to)
+  return limits
+}
+
+/** Dimensions measured above their limit. */
+export function overBudget(
   measured: Record<string, number>,
-  baseline = growthBaseline()
-): { dimension: string; baseline: number; allowed: number; measured: number }[] {
-  if (!baseline) return []
-  return Object.entries(baseline.measured)
-    .map(([dimension, base]) => ({
-      dimension,
-      baseline: base,
-      allowed: base + Math.max(1, Math.ceil(base * GROWTH_RATIO)),
-      measured: measured[dimension] ?? 0
-    }))
-    .filter((entry) => entry.measured > entry.allowed)
+  limits = budgetLimits()
+): { dimension: string; limit: number; measured: number }[] {
+  return Object.entries(limits)
+    .filter(([key, limit]) => (measured[key] ?? 0) > limit)
+    .map(([dimension, limit]) => ({ dimension, limit, measured: measured[dimension] ?? 0 }))
 }
 
 /**
@@ -506,9 +549,7 @@ export type SkillHealth = Readonly<{
   undisposed_dormant: readonly string[]
   redundant_pairs: readonly (readonly [string, string])[]
   measured: Record<string, number>
-  over_budget: readonly { dimension: string; ceiling: number; measured: number }[]
-  /** Dimensions past the growth window; non-empty means the next round must be a consolidation. */
-  over_growth?: ReturnType<typeof growthOver>
+  over_budget: ReturnType<typeof overBudget>
   /** Observations, queued or settled, whose root cause is a rule dormancy deleted. */
   ghost_hits?: ReturnType<typeof ghostHits>
   /** Queued observation IDs grouped by a root asset two or more of them share; merge each group. */
@@ -667,9 +708,10 @@ export function skillHealth(now = new Date()): SkillHealth {
     dispositions,
     currentAssets: new Set(rules.map((rule) => rule.asset)),
     undisposed: undisposed.length,
-    observations: queued
+    observations: queued,
+    oversizedReferences: cardSizes().filter(([, size]) => size > REFERENCE_CARD_LIMIT).length,
+    heldOut: heldOutCases().length
   })
-  const ceilings = readJson<{ ceilings?: Record<string, number> }>(BUDGET_FILE, {}).ceilings ?? {}
   const measured = measure()
   const pairs = new Map<string, readonly [string, string]>()
   for (const rule of report)
@@ -684,10 +726,7 @@ export function skillHealth(now = new Date()): SkillHealth {
     undisposed_dormant: undisposed,
     redundant_pairs: [...pairs.values()],
     measured,
-    over_budget: Object.entries(ceilings)
-      .filter(([key, limit]) => (measured[key] ?? 0) > limit)
-      .map(([key, limit]) => ({ dimension: key, ceiling: limit, measured: measured[key] ?? 0 })),
-    over_growth: growthOver(measured),
+    over_budget: overBudget(measured),
     shared_roots: sharedRoots(queue),
     ghost_hits: ghostHits(
       [
@@ -741,13 +780,6 @@ export function updateAgenda(
           .join('; ') || 'none'
       }) are one cause and settle with one fix; close archives them into the round record and empties the queue`
     })
-  if (h.over_growth?.length)
-    steps.push({
-      step: 'consolidation-required',
-      command:
-        'bun scripts/rsi.ts open --kind consolidation --goal <what is merged, retired or ablated>',
-      detail: `${h.over_growth.map((o) => `${o.dimension} ${o.measured}>${o.allowed} (baseline ${o.baseline})`).join(', ')}; past the growth window only a consolidation round may close`
-    })
   if (h.ghost_hits?.length)
     steps.push({
       step: 'review-deletions',
@@ -784,7 +816,7 @@ export function updateAgenda(
   if (h.over_budget.length)
     steps.push({
       step: 'over-budget',
-      detail: `${h.over_budget.map((o) => `${o.dimension} ${o.measured}>${o.ceiling}`).join(', ')}; a budget change must record its trade-off and still cannot claim a repair without a repaired case`
+      detail: `${h.over_budget.map((o) => `${o.dimension} ${o.measured}>${o.limit}`).join(', ')}; pay it back in a consolidation, or raise it in a budget-change round with its trade-off (a raise lasts until the next consolidation and claims no repair)`
     })
   return steps
 }
@@ -984,6 +1016,22 @@ export function defectCases(file = CASES_FILE): readonly DefectCase[] {
  * was not aimed at. It is detection, not prevention: the same account can open these files, and the
  * commitments taken at `open` make that visible rather than impossible.
  */
+/** Each reference card (a Markdown file under references/) with its size in characters. */
+export function cardSizes(dir = join(ROOT, 'references')): [string, number][] {
+  return readdirSync(dir, { withFileTypes: true }).flatMap((entry): [string, number][] =>
+    entry.isDirectory()
+      ? cardSizes(join(dir, entry.name))
+      : entry.name.endsWith('.md')
+        ? [
+            [
+              relative(ROOT, join(dir, entry.name)),
+              readFileSync(join(dir, entry.name), 'utf8').length
+            ]
+          ]
+        : []
+  )
+}
+
 export function heldOutCases(dir = HELD_OUT): readonly DefectCase[] {
   if (!existsSync(dir)) return []
   return readdirSync(dir)
@@ -1096,7 +1144,9 @@ type Round = {
   /** These inputs and the champion version are fixed when the round opens. */
   source_at_open: string
   rule_assets_at_open: string[]
-  ceilings_at_open: Record<string, number>
+  /** Limits when the round opened (`ceilings_at_open` in older records). */
+  limits_at_open?: Record<string, number>
+  ceilings_at_open?: Record<string, number>
   /** Rule count when the round opened; a consolidation must end below or at it. */
   rules_at_open?: number
   /** Advisory debt level when the round opened. */
@@ -1116,7 +1166,6 @@ type Round = {
   prune?: {
     source_version: string
     over_budget: readonly unknown[]
-    over_growth?: readonly unknown[]
     unjustified_additions: readonly string[]
     undecided_removals: readonly string[]
     not_net_negative: readonly string[]
@@ -1377,8 +1426,7 @@ function main(argv: readonly string[]): number {
       budget: measure(),
       source_at_open: skillVersion(),
       rule_assets_at_open: rules.map((rule) => rule.asset),
-      ceilings_at_open:
-        readJson<{ ceilings?: Record<string, number> }>(BUDGET_FILE, {}).ceilings ?? {},
+      limits_at_open: budgetLimits(),
       rules_at_open: rules.length,
       debt_at_open: current.level
     }
@@ -1501,20 +1549,28 @@ function main(argv: readonly string[]): number {
   }
   if (command === 'prune') {
     const round = openRound()
-    const ceilings = round.ceilings_at_open
-    if (!ceilings || !round.rule_assets_at_open) {
+    const frozen = round.limits_at_open ?? round.ceilings_at_open
+    if (!frozen || !round.rule_assets_at_open) {
       console.error('this round has no frozen rule and budget snapshot; open a new round')
       return 1
     }
     const now = measure()
-    const over = Object.entries(ceilings)
-      .map(([key, ceiling]) => ({
-        dimension: key,
-        ceiling,
-        opened: round.budget[key] ?? ceiling,
-        measured: now[key] ?? 0
-      }))
-      .filter(({ ceiling, opened, measured }) => measured > Math.max(ceiling, opened))
+    // A budget-change round is held to its own raises; a consolidation must reach the bare window,
+    // so a raise never becomes the next baseline; others keep the frozen limits or the opened size.
+    const over =
+      round.kind === 'budget-change'
+        ? overBudget(now, budgetLimits(closedRounds(), { own: round.id }))
+        : round.kind === 'consolidation'
+          ? overBudget(now, budgetLimits(closedRounds(), { raises: false }))
+          : overBudget(
+              now,
+              Object.fromEntries(
+                Object.entries(frozen).map(([key, limit]) => [
+                  key,
+                  Math.max(limit, round.budget[key] ?? limit)
+                ])
+              )
+            )
     // Compare with the opened rule set: rendering the current ledger cannot erase this delta.
     const currentAssets = new Set(catalog().map((rule) => rule.asset))
     const blessed = new Set(round.rule_assets_at_open)
@@ -1558,20 +1614,10 @@ function main(argv: readonly string[]): number {
             { measured: now, rules: catalog().length }
           )
         : []
-    // Every kind is held to the window: raising a ceiling is growth, and a consolidation must pay
-    // the overage back before its measurement may become the next baseline.
-    const grown = growthOver(now)
-    const blocking = [
-      ...(round.kind === 'budget-change' ? [] : over),
-      ...grown,
-      ...unjustified,
-      ...undecidedRemovals,
-      ...net
-    ]
+    const blocking = [...over, ...unjustified, ...undecidedRemovals, ...net]
     round.prune = {
       source_version: skillVersion(),
       over_budget: over,
-      over_growth: grown,
       unjustified_additions: unjustified,
       undecided_removals: undecidedRemovals,
       not_net_negative: net
@@ -1584,7 +1630,7 @@ function main(argv: readonly string[]): number {
           round: round.id,
           measured: now,
           over_budget: over,
-          ...(grown.length ? { code: 'RSI_GROWTH_WINDOW_EXCEEDED', over_growth: grown } : {}),
+          ...(over.length ? { code: 'RSI_GROWTH_WINDOW_EXCEEDED' } : {}),
           unjustified_additions: unjustified,
           undecided_removals: undecidedRemovals,
           ...(round.kind === 'consolidation'
@@ -1593,7 +1639,7 @@ function main(argv: readonly string[]): number {
                 not_net_negative: net
               }
             : {}),
-          note: 'Inherited overage remains in health; this list contains only dimensions worsened beyond the opened measurement and frozen ceiling. Only a budget-change round may move a ceiling.'
+          note: 'Inherited overage remains in health; this list contains only dimensions above the limit this round kind is held to. Only a budget-change round may raise a limit, and only until the next consolidation.'
         },
         null,
         2
@@ -1711,8 +1757,7 @@ function main(argv: readonly string[]): number {
     const { regressions, repairs, missing_cases } = caseDelta(round.baseline.results, results)
     const heldOutFailures = heldOut.filter((result) => !result.pass).map((result) => result.id)
     const pruneFindings = [
-      ...(round.kind === 'budget-change' ? [] : round.prune.over_budget),
-      ...(round.prune.over_growth ?? []),
+      ...round.prune.over_budget,
       ...round.prune.unjustified_additions,
       ...round.prune.undecided_removals,
       ...round.prune.not_net_negative

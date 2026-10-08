@@ -1,16 +1,7 @@
 {
   "protocol": "skill-budget/v1",
-  "note": "A round freezes these ceilings and its measured starting size when it opens. For ordinary rounds, `prune` rejects growth beyond the higher of those two values; inherited overage remains visible in `health` and cannot be worsened. An explicit budget-change round may revise ceilings and is RECORDED after clean checks, never credited with a repair. Historical raises and ratchets remain records; close no longer ratchets automatically.",
+  "note": "Size limits are derived, not stored: the growth window (GROWTH_RATIO) over the last consolidation that shrank a dimension by RESET_SHRINK, raised only by the `raises` of budget-change rounds closed since it. A raise lasts until the next such consolidation, which must reach the bare window. Earlier ceilings, raises and ratchets remain as records.",
   "set_at": "2026-09-23",
-  "ceilings": {
-    "SKILL.md.characters": 11600,
-    "references.characters": 190000,
-    "validator.lines": 5867,
-    "behavior_cases": 46,
-    "scripts.lines": 10065,
-    "tests.lines": 2599,
-    "review.md.characters": 3500
-  },
   "raises": [
     {
       "dimension": "references.lines",
@@ -587,6 +578,30 @@
       "at": "2026-10-07",
       "round": "R-20261007151107",
       "reason": "Raised to the 2% window over R-20261007150654, as the user authorized for the last four observations (OD-88, OD-93, OD-94, OD-98). That consolidation removed one validator line, so this window reset is an authorized raise, not space a removal freed; consolidation should be made to repay growth before it resets the baseline."
+    },
+    {
+      "dimension": "validator.lines",
+      "from": 5867,
+      "to": 5876,
+      "at": "2026-10-08",
+      "round": "R-20261008025945",
+      "reason": "Raised to the 2% window over consolidation R-20261008024550, as the user authorized, to hold handoff dispatch emission (v2-dispatch.ts, cache-friendly subagent briefs). A consolidation was evaluated first and found no evidenced validator removal: the co-firing semantic rules flagged as redundant each guard their own frozen defect case, and their Jaccard overlap comes from a one-document window."
+    },
+    {
+      "dimension": "validator.lines",
+      "from": 5876,
+      "to": 5934,
+      "at": "2026-10-08",
+      "round": "R-20261008032631",
+      "reason": "User-approved per-hunk replay ablation: each behaviour-bearing hunk of a proven replay is reverted alone, closure requires every hunk to be needed by some proven oracle or declared inert (hunk coverage 1). Repairs frozen CSDD-V2-REPLAY-203. Measured +58 validator lines over the limit; lasts until the next consolidation."
+    },
+    {
+      "dimension": "scripts.lines",
+      "from": 10084,
+      "to": 10089,
+      "at": "2026-10-08",
+      "round": "R-20261008033215",
+      "reason": "User-approved RSI sensitivity: health now flags reference cards over REFERENCE_CARD_LIMIT, a held-out corpus below HELD_OUT_MIN, and judges rule redundancy only on REDUNDANT_MIN_DOCUMENTS shared documents (OD-107). Lasts until the next consolidation."
     }
   ],
   "introduced": [
