@@ -6,23 +6,6 @@ create-sdd is an agent skill that turns a request into a **Software Design Docum
 
 This README explains the skill. [SKILL.md](SKILL.md) is the normative contract; where the two differ, SKILL.md wins.
 
-<p align="center">
-  <img src="assets/capability-radar.en.svg" alt="create-sdd capability map" width="720">
-</p>
-
-| Capability | Score | What it rests on |
-| --- | --- | --- |
-| Host implementability | 9 | A compact handoff: read order, ordered tasks with the files they touch, the MVP task set and a per-Bundle execution slice |
-| Requirement traceability | 9 | Every must-ship requirement is traced through Module, Chunk and Bundle to an observable acceptance and its declared oracle |
-| Verifiable convergence | 9 | Evidence reports, commit-checked causal proof, `--replay` ablation and a `preserve` class for properties that already hold |
-| Design-defect detection | 6 | Structural checks are exact. The semantic checks (acceptance quality, readers, symbols) are regex-based advice; a fresh-context review, measured outside the skill, reads for cross-clause conflicts and weak acceptance |
-| Context economy | 8 | The host reads one child and its direct dependencies; derived Metas keep the index short |
-| Repository fit | 8 | `AGENTS.md` and principle files, repository presets, shareable preset packs and custom `init` templates |
-| Host neutrality | 8 | Works with Claude Code, Codex or any agent that reads a skill folder; the scripts need Bun |
-| Ease of adoption | 6 | There are many concepts to learn and Bun is required; a skeleton and the handoff shorten the first run |
-
-The scores are the author's own judgement of the current version, on a 0–10 scale where higher is better, including for ease of adoption.
-
 ---
 
 ## Quick start
@@ -114,7 +97,7 @@ bun $SKILL/scripts/validate.ts validate --sdd /repo/docs/greeting.sdd.md --evide
 
 ## Platforms
 
-**Agent hosts.** The skill is host-neutral. Claude Code and Codex are the daily hosts, and any agent that can read a skill folder and run Bun works the same way. There is no delivery controller, lease or fixed agent role: the SDD and the `validate` handoff are the whole interface between design and implementation.
+**Agent hosts.** The skill is host-neutral. Claude Code and Codex are the daily hosts, and any agent that can read a skill folder and run Bun works the same way. There is no delivery controller, lease or fixed agent role: the SDD and the `validate` handoff are the whole interface between design and implementation. A host that can start subagents may hand each unit the brief the handoff's `dispatch` carries; whether parallelism pays stays the host's call ([dispatch](references/dispatch.md)).
 
 **Runtime.** Bun runs every script. Git is read, never written, for proofs and replays. `--replay` exports trees with `git archive` and runs the declared oracle with a runner derived from the repository (`bun test`, `vitest`, `jest`, `pytest`, `go test`) or named by the preset.
 
@@ -155,7 +138,7 @@ flowchart LR
 | **3 Design** | How, under the principles? | Normative behaviour, steps with `touches`, producer and consumer interfaces, supported failures, and one owner per change boundary | Two owners for one boundary; steps the host has to invent |
 | **4 Verify** | How would we notice it is missing? | A Given/When/Then or command case for each must-ship requirement, its deciding test in `oracles`, and the resolved acceptance-quality candidates | Acceptance that passes against the old code; unobservable assertions |
 | **5 Decompose** | In what order, and what can run in parallel? | The five-Meta graph; batches ordered by real dependencies; parallel waves derived, never hand-marked | Hand-maintained task lists that drift from the design |
-| **6 Review and report** | What would the host hit mid-delivery, and what can it rely on? | A fresh-context review with a disposition for every finding (when a must-ship requirement or a BC exists), then one `validate` run and a handoff with blockers, open decisions and evidence limits | Clauses that cannot all hold, acceptance a wrong implementation passes, and readiness claimed on unrun checks |
+| **6 Review and report** | What would the host hit mid-delivery, and what can it rely on? | A fresh-context review with a disposition for every finding (when `validate` recommends one or you ask), a passing preflight where one is required, then one `validate` run and a handoff with blockers, open decisions and evidence limits | Clauses that cannot all hold, acceptance a wrong implementation passes, and readiness claimed on unrun checks |
 
 A bug fix runs the same six phases, adding a reproduction, a root cause and `regression` cases that must fail before the fix. An assessment runs Harvest and Admit only, then decides go, no-go or reshape.
 
@@ -210,6 +193,9 @@ stateDiagram-v2
   - a read order;
   - ordered `tasks` with the files they touch and their safe parallelism;
   - the MVP task set;
+  - `gates`: the package scripts every written package's manifest declares;
+  - `preflight` status and the host protocol, when the leaf needs one;
+  - `dispatch`: subagent briefs, once the document is `STRUCTURALLY_READY`;
   - advisory `candidates`.
 - **Evidence.** The host writes an `sdd-evidence/v1` report outside the SDD, with one row per acceptance for the SDD's current `id@revision`. A report for another revision is stale.
 - **Proof.** A PASS row alone proves only that a check passed.
@@ -219,7 +205,8 @@ stateDiagram-v2
 - **Replay.** `--replay` stops trusting the host's runs. It runs the declared oracle itself in exported trees:
   - at base, where it must fail;
   - at the change, where it must pass;
-  - at the change with only this requirement's commits reverted, where it must fail again (the ablation).
+  - at the change with only this requirement's commits reverted, where it must fail again (the ablation);
+  - at the change with each behaviour-bearing hunk reverted alone: some proven oracle must fail for every hunk, or its row declares it in `inert_hunks` with a reason. Hunk coverage below 1 keeps the closure `OPEN`. It proves every change is needed, not that the change does everything the requirement asks.
 - **Revision.** A FAIL, or a changed expectation, becomes a new revision of the SDD, and the lifecycle starts again from the document.
 
 
@@ -230,7 +217,7 @@ The checks themselves follow a lifecycle, so they change only when a real run pr
 ```mermaid
 flowchart LR
   O["OD-n observed<br/>in a real run"] --> CA["case-amendment<br/>freeze a failing case"]
-  CA --> BC["budget-change<br/>only if a size ceiling must move"]
+  CA --> BC["budget-change<br/>only if a size limit must rise"]
   BC --> IM["improvement<br/>ACCEPTED only if the case flips<br/>and nothing regresses"]
   CA --> IM
   IM --> Q["queue drained,<br/>rule ledger updated"]
@@ -240,16 +227,16 @@ flowchart LR
 2. A `case-amendment` round freezes a failing case for it.
 3. If the size budget must move, a separate `budget-change` round records the measured need.
 4. An `improvement` round is `ACCEPTED` only if the frozen case flips and no earlier case regresses.
-5. Every new rule records what it supersedes, a counterexample, its scope and its trade-off.
+5. Every new rule records what it supersedes, a counterexample, its scope and its trade-off. A `consolidation` round merges or removes and must leave the skill smaller; growth is bounded per consolidation cycle.
 6. A semantic defect that no zero-false-positive regex can catch settles as a review `lens`, not as a detector. The settlement must name a review round that `sdd-bench` accepted (`settle --as lens --review-results <rounds.json>`); a written `ruling` or a `rejected` settlement records the other outcomes.
 
 ---
 
 ## Mechanisms
 
-**The `sdd/v2` contract.** A document is Markdown prose plus one compact JSON index between `<!-- sdd-contract:start -->` and `<!-- sdd-contract:end -->`. The index holds requirements, batches, steps, acceptance, `oracles`, `writes`, Metas, `exports`/`consumes`, `regression`, `preserve` and open user decisions. Each ID must be defined exactly once in the prose. ([contract](references/v2-contract.md))
+**The `sdd/v2` contract.** A document is Markdown prose plus one compact JSON index between `<!-- sdd-contract:start -->` and `<!-- sdd-contract:end -->`. The index holds requirements, batches, steps, acceptance, `oracles`, `writes`, Metas, `exports`/`consumes`, `regression`, `preserve` and open user decisions. Each ID must be defined exactly once in the prose. A producer's `exports` carry the `semantics` a consumer may rely on and a `fingerprint` that goes stale when those clauses change; a consumer cites them in `relies_on` and maps each one in `delegations` instead of restating them. `shared_writes` lets two writers share a file when each edits only its own key. `render.ts` writes the `sdd-generated` regions from the index, so the prose never holds a second copy. A leaf over 800 lines or 12 steps must be split into a program. ([contract](references/v2-contract.md))
 
-**The `validate` handoff.** A single command performs the structural check and emits the host handoff. The handoff contains the resolved paths, read order, ordered `tasks`, derived `waves`, the MVP and its minimal task set, the execution slice (Chunks, Modules, required and produced Assets) and `evidence_limits`.
+**The `validate` handoff.** A single command performs the structural check and emits the host handoff. The handoff contains the resolved paths, read order, ordered `tasks`, derived `waves`, the MVP and its minimal task set, the execution slice (Chunks, Modules, required and produced Assets), package `gates`, any `preflight`, `dispatch` and `evidence_limits`.
 
 **Advisory candidates.** Some findings are advice rather than blockers, because a regular expression cannot decide semantics. They come in six families:
 - *Readers:* tests asserting error text, or code depending on class shape.
@@ -269,10 +256,16 @@ flowchart LR
 
 A preset can promote any candidate to a blocker.
 
-**Pre-handoff review.** Structure cannot see clauses that contradict each other, or acceptance that a wrong implementation still passes. Before the handoff, one reviewer that did not write the document reads the SDD, the repository and [review](references/review.md), and nothing else. It applies three lenses:
+**Executable preflight.** A leaf with a behaviour change, a scaling gate or a consumed export declares `preflight` items, and `validate` blocks until `preflight.ts run` has a passing report for the current revision. Each item runs in a disposable copy of the repository, optionally with a patch applied: a BC's candidate change, or a perturbation a scaling gate must catch (`expect: "fail"`). A command that writes outside the leaf's `writes` fails its item. `--affected` re-runs only the items whose clauses changed. The host runs the preflight before its first step and reports every conflict in one batch.
+
+**Dispatch to subagents.** A `STRUCTURALLY_READY` handoff carries `dispatch`: a `shared_prefix` identical for every unit of the program, a `scope_prefix` shared inside one leaf, and units in dependency `layers` (program children, or a leaf's Chunks by wave). A unit's brief is the three concatenated unchanged. Text runs most-stable first, with sorted lists and no timestamps, so sibling briefs share leading bytes a prefix-matching prompt cache can reuse; briefs carry paths and IDs, never copied text. Run one unit of a layer before its siblings so they find the cache written, and generate the briefs once in the parent, since paths are absolute. Units hand over through delivered Assets and evidence reports on disk; one fresh reviewer and `validate --evidence` close the delivery. ([dispatch](references/dispatch.md))
+
+**Pre-handoff review.** Structure cannot see clauses that contradict each other, or acceptance that a wrong implementation still passes. `validate` recommends it (`SDD_V2_REVIEW_RECOMMENDED`) for a behaviour change, a consumed export or many must-ship requirements; skipping it is a reported choice. One reviewer that did not write the document reads the SDD, the repository and [review](references/review.md), and nothing else. It applies three lenses, plus two that apply only when their risk surface exists:
 - *L1 behaviour-change sweep:* for every BC or rewritten branch, find every test and branch that asserts the old behaviour, and check each pair of clauses on the same cell (for example "the other tests stay unchanged" against a sibling test that asserts the changed behaviour).
 - *L2 discrimination:* for every must-ship acceptance, including ones an earlier revision left unchanged, describe a plausible wrong implementation that passes it.
 - *L3 implementation dry-run:* walk each step against the code and list every decision the SDD leaves to the host.
+- *L4 trust boundary* (the leaf parses peer, user or file input): every sink an input can reach is allowlist-projected, and an acceptance plants a sentinel to prove no sink shows it.
+- *L5 stale handle* (the leaf defines replace, restart, generation or re-adopt): for each handle a caller can hold, what it may do after each transition, and which acceptance proves an old handle is refused.
 
 Findings go to an `sdd-review-findings/v1` file (`id`, `lens`, `clauses`, `evidence`, `claim`). The author closes each one as `fixed`, `ruled-invalid:<reason>` or `out-of-scope` in the index (`"review": {"findings": …, "dispositions": {"F1": "fixed"}}`), and re-reviews only the changed clauses, once. `validate` reports an undisposed finding or an unknown clause as a candidate, never a blocker. The handoff and the local telemetry carry disposition counts per lens, and `rsi.ts health` turns them into per-lens precision (fixed ÷ (fixed + ruled-invalid)).
 
@@ -298,10 +291,12 @@ It returns `CLOSED`, `OPEN` or `FAILED`, together with `behaviour_proven` and `m
 
 **Self-improvement ledger.** `rsi/` holds:
 - the derived rule catalogue (`rules.json`);
-- size ceilings with every recorded raise (`budget.json`);
+- every recorded size raise (`budget.json`);
 - the justification of each rule (`supersession.json`);
 - decisions on dormant rules (`dispositions.json`);
 - every round record (`rounds/`).
+
+Each dimension has one derived size limit: 2% over the last consolidation that shrank something by at least 0.5%. A budget-change round may raise it with a reason, until the next consolidation, which must reach the bare window. Closing any round needs a human `--confirm`.
 
 ## Commands
 
@@ -316,7 +311,10 @@ Run from anywhere as `bun <create-sdd-root>/scripts/<script>`; the flags are doc
 | `validate.ts validate --sdd <abs SDD> [--repository <abs root>]` | Structural check plus the host handoff |
 | `validate.ts validate --sdd <SDD> --evidence <report.json> [--replay]` | Convergence (`closure`) |
 | `validate.ts validate-draft --draft-file <path>` | The same checks before a document is written |
+| `preflight.ts run --sdd <abs SDD> [--affected \| --only P1,P2]` | Run the leaf's preflight items in disposable copies and write the report `validate` checks |
+| `render.ts --sdd <abs SDD> [--check]` | Rewrite (or check) the `sdd-generated` regions from the index |
 | `type-probe.ts check --sdd <SDD>` | Optional: type-check exported TypeScript fences |
+| `rsi.ts update` | Maintainers: self-check and the agenda for the next round |
 
 ## What the checks do not prove
 
@@ -326,11 +324,11 @@ Structure, evidence links and replays do not prove that a design is good, that a
 
 - [SKILL.md](SKILL.md): the normative skill contract.
 - [references/v2-contract.md](references/v2-contract.md), [v2-authoring.md](references/v2-authoring.md), [v2-program.md](references/v2-program.md), [v2-presets.md](references/v2-presets.md): the v2 format, the practice for each phase, multi-SDD programs, presets and `init`.
-- [references/loading.md](references/loading.md): which guide to read for a platform, a language or a diagnostic.
-- `scripts/`: `validate.ts`, `init.ts`, `preset.ts`, `type-probe.ts`, `rsi.ts`, and the validator under `scripts/validator/`.
+- [references/loading.md](references/loading.md): which card or guide to read for a phase, a platform, a language or a diagnostic. `references/authoring/` holds one card per authoring phase; `references/contract/` the interface and inventory parts of the contract, loaded only when they apply.
+- [references/review.md](references/review.md): the pre-handoff review lenses. [references/dispatch.md](references/dispatch.md): mapping the handoff onto subagents.
+- `scripts/`: `validate.ts`, `init.ts`, `preflight.ts`, `render.ts`, `preset.ts`, `type-probe.ts`, `rsi.ts`, and the validator under `scripts/validator/`.
 - `cases/`: frozen defect cases and their fixtures. `tests/`: logic tests (`bun test tests`).
 - `rsi/`: the skill's own improvement ledger.
-- `assets/`: the capability map.
 - `install.sh`: the installer; `bin/sdd-generate.mjs` runs it for `npx`, `pnpm dlx`, `bunx` and `aubx`.
 
 ## Maintaining the skill
@@ -340,11 +338,11 @@ The skill improves itself only through recorded rounds ([behavior evaluation](re
 - Record a defect that a real run found and the checks missed as an `OD-<n>` entry in [rsi/observed-defects.md](rsi/observed-defects.md). The file is a queue: each update settles every entry (`rsi.ts settle`), and closing the round archives it.
 - `bun scripts/rsi.ts update` gives the agenda. Changes run as rounds:
   - `case-amendment` freezes a failing case;
-  - `budget-change` raises a size ceiling with a reason;
+  - `budget-change` raises a size limit with a reason;
   - `improvement` repairs it, and is accepted only when a frozen case flips and nothing regresses;
   - `consolidation` shrinks the skill.
-- A change to `references/review.md` is measured in `sdd-bench` first, and its size is held by the `review.md.characters` ceiling.
-- Before finishing a change, run `bun test tests`, `bun run typecheck`, `bun run lint` and `bun scripts/rsi.ts suite`.
+- A change to `references/review.md` is measured in `sdd-bench` first, and its size is held by the `review.md.characters` limit.
+- Before finishing a change, run `bun run review:release`: tests, format, lint, typecheck, links, behaviour and defect cases, and the size budget.
 
 ## License
 

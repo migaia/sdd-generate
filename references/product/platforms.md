@@ -1,6 +1,6 @@
 # Delivery platforms
 
-Load for every implementation SDD after [archetypes](archetypes.md). The archetype says what value the product delivers; the platform says where it runs and which runtime rules, review gates and toolchains bind the design. Both are decided in [harvest card](../v2-authoring.md#1-harvest--facts-and-principles) pass 1 and recorded in the contract as `product_archetype` and `delivery_platforms`.
+Load for every implementation SDD after [archetypes](archetypes.md). The archetype says what value the product delivers; the platform says where it runs and which runtime rules, review gates and toolchains bind the design. Both are decided in [harvest card](../authoring/harvest.md) pass 1 and recorded in the contract as `product_archetype` and `delivery_platforms`.
 
 ## Classify
 

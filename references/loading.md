@@ -4,12 +4,12 @@ Harvest → Admit → Design → Verify → Decompose → Report is the authorin
 
 | Phase | Read when needed | Produce |
 | --- | --- | --- |
-| Harvest | User request, live repository instructions, relevant source and public interfaces; consult a product or language guide only for a supported platform in scope | Observed facts, assumptions, repository/output paths and normative Source locations |
-| Admit | [multi-SDD](v2-program.md) when a split can reduce context; [migration](v2-migration.md) when a public surface changes | Owned scope, Entry-to-Module requirement map, selected cut, material open user decisions |
-| Design | [writing](writing.md) and [sdd/v2](v2-contract.md); source contracts for real producers and consumers | Normative behavior, steps, interfaces, failures, write boundaries, current Module sources and original origins |
-| Verify | The SDD's own claims and the repository's actual verification commands | An observable acceptance for each Must-Ship claim and honest evidence limits; planned Asset validation remains planned |
-| Decompose | The five-Meta graph, child dependencies, coherent batches and exact producer outputs | Module-to-Chunk-to-Bundle ownership and versioned Assets; each child needs only root summary and direct dependencies |
-| Report | Existing validate command; semantic source review from Harvest | One resolved host handoff with graph diagnostics or named blockers |
+| Harvest | [card](authoring/harvest.md); user request, live repository instructions, relevant source and public interfaces; consult a product or language guide only for a supported platform in scope | Observed facts, assumptions, repository/output paths and normative Source locations |
+| Admit | [card](authoring/admit.md); [multi-SDD](v2-program.md) when a split can reduce context; [migration](v2-migration.md) when a public surface changes | Owned scope, Entry-to-Module requirement map, selected cut, material open user decisions |
+| Design | [card](authoring/design.md); [writing](writing.md) and [sdd/v2](v2-contract.md); [interfaces](contract/interfaces.md) only for an export or consume, [inventories](contract/inventories.md) only for a guarded, migrated or rewritten requirement; source contracts for real producers and consumers | Normative behavior, steps, interfaces, failures, write boundaries, current Module sources and original origins |
+| Verify | [card](authoring/verify.md); the SDD's own claims and the repository's actual verification commands | An observable acceptance for each Must-Ship claim and honest evidence limits; planned Asset validation remains planned |
+| Decompose | [card](authoring/decompose.md); the five-Meta graph, child dependencies, coherent batches and exact producer outputs | Module-to-Chunk-to-Bundle ownership and versioned Assets; each child needs only root summary and direct dependencies |
+| Report | [card](authoring/report.md); existing validate command; semantic source review from Harvest | One resolved host handoff with graph diagnostics or named blockers |
 
 ## Guides that supply facts
 
@@ -33,15 +33,15 @@ Each code is a family; the message starts with the specific relation that failed
 | --- | --- |
 | `SDD_V2_INDEX_SHAPE_INVALID`, `SDD_V2_REQUIRED_FIELD_EMPTY`, `SDD_V2_ID_DUPLICATE` | [compact index](v2-contract.md#compact-index) |
 | `SDD_V2_PROSE_DEFINITION_MISSING`, `SDD_V2_PROSE_DEFINITION_DUPLICATE` | [ID definitions](v2-contract.md#compact-index) and [writing](writing.md) |
-| `SDD_V2_REFERENCE_MISSING`, `SDD_V2_DEPENDENCY_CYCLE`, `SDD_V2_MUST_SHIP_CHAIN_INCOMPLETE`, `SDD_V2_COVERAGE_MISSING` | [compact index](v2-contract.md#compact-index), then [decompose](v2-authoring.md#5-decompose--tasks-as-a-derived-view) |
+| `SDD_V2_REFERENCE_MISSING`, `SDD_V2_DEPENDENCY_CYCLE`, `SDD_V2_MUST_SHIP_CHAIN_INCOMPLETE`, `SDD_V2_COVERAGE_MISSING` | [compact index](v2-contract.md#compact-index), then [decompose](authoring/decompose.md) |
 | `SDD_V2_META_SOURCE_MISMATCH`, `SDD_V2_OWNER_CONFLICT` | [five-Meta graph](v2-program.md#five-meta-relation-graph) |
 | `SDD_V2_INTERFACE_MISMATCH`, `SDD_V2_PROGRAM_LINK_INVALID`, `SDD_V2_INTEGRATION_OWNER_REQUIRED`, `SDD_V2_SECTION_MISSING` | [multi-SDD](v2-program.md) |
 | `SDD_V2_PATH_INVALID`, `SDD_V2_PATH_ESCAPE`, `SDD_V2_PATH_NOT_FOUND`, `REPOSITORY_NOT_FOUND` | [host handoff](v2-contract.md#direct-host-handoff) |
 | `SDD_V2_PRESET_INVALID`, `SDD_V2_PRESET_BLOCKED`, `preset-*` subtypes | [presets](v2-presets.md) |
-| `SDD_V2_CLARIFICATION_UNTRACKED` | [clarify](v2-authoring.md#2-admit--what-and-why) |
-| Candidates `SDD_V2_ACCEPTANCE_FORWARD_DEPENDENCY`, `SDD_V2_ERROR_TEXT_READER_UNDECLARED`, `SDD_V2_SHAPE_READER_UNDECLARED` | [design](v2-authoring.md#3-design--how-under-the-principles), [decompose](v2-authoring.md#5-decompose--tasks-as-a-derived-view) |
-| `SDD_V2_CLOSURE_OPEN`, `SDD_V2_CLOSURE_FAILED` (under `closure`) | [converge](v2-authoring.md#6-report--analyze-hand-off-converge) |
-| Codes from an `intent: bug` leaf or an `sdd-assessment/v1` document | [bug fix](v2-authoring.md#bug-fix--the-same-six-phases-proving-the-defect), [assessment](v2-authoring.md#assessment--deciding-before-specifying) |
+| `SDD_V2_CLARIFICATION_UNTRACKED` | [clarify](authoring/admit.md) |
+| Candidates `SDD_V2_ACCEPTANCE_FORWARD_DEPENDENCY`, `SDD_V2_ERROR_TEXT_READER_UNDECLARED`, `SDD_V2_SHAPE_READER_UNDECLARED` | [design](authoring/design.md), [decompose](authoring/decompose.md) |
+| `SDD_V2_CLOSURE_OPEN`, `SDD_V2_CLOSURE_FAILED` (under `closure`) | [converge](authoring/report.md) |
+| Codes from an `intent: bug` leaf or an `sdd-assessment/v1` document | [bug fix](authoring/bug-fix.md), [assessment](authoring/assessment.md) |
 
 Keep the repository's current rules authoritative. Do not copy its instructions into a second template. Do not turn a guide's possible platform dimensions into universal requirements when the user-owned path cannot reach them.
 

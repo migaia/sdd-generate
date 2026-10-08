@@ -1,6 +1,6 @@
 # Product archetypes
 
-Classify the product before designing it. The archetype decides which dimensions control the design; missing one of them produces a technically complete SDD for the wrong product. Classification happens in [harvest card](../v2-authoring.md#1-harvest--facts-and-principles) pass 1 and is recorded in the contract as `product_archetype`.
+Classify the product before designing it. The archetype decides which dimensions control the design; missing one of them produces a technically complete SDD for the wrong product. Classification happens in [harvest card](../authoring/harvest.md) pass 1 and is recorded in the contract as `product_archetype`.
 
 ## Classify
 

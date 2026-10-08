@@ -1,6 +1,6 @@
 # Closure Evidence
 
-Read this reference only for implementation-completeness or closure audits, or when the repository explicitly requires quantitative acceptance metrics. For an sdd/v2 leaf, first run `validate --evidence --replay` ([converge](v2-authoring.md#6-report--analyze-hand-off-converge)): it settles the mechanical part (every acceptance reported at the current revision, evidence locations present); this page covers what it cannot judge.
+Read this reference only for implementation-completeness or closure audits, or when the repository explicitly requires quantitative acceptance metrics. For an sdd/v2 leaf, first run `validate --evidence --replay` ([converge](authoring/report.md)): it settles the mechanical part (every acceptance reported at the current revision, evidence locations present); this page covers what it cannot judge.
 
 ## Evidence rules
 

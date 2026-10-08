@@ -78,9 +78,9 @@ strength and the difference is stated here rather than implied:
 | Sandboxing or a read-only mount | **Not provided.** A published self-improving system has been observed hacking its own reward function and fabricating logs, so this gap is real and is recorded rather than papered over |
 
 `prune` is not optional. An addition must name what it supersedes or say why it supersedes nothing
-(`rsi/supersession.json`), and six measured ceilings in `rsi/budget.json` bound SKILL.md, the
-references, the validator, scripts, tests and the behaviour-case count. A ceiling moves only in a `--kind
-budget-change` round, so every raise is a decision somebody made rather than a drift nobody saw.
+(`rsi/supersession.json`), and one derived limit per dimension (SKILL.md, references, validator,
+scripts, tests, behaviour cases): 2% over the last shrinking consolidation. Only a `--kind
+budget-change` raise lifts it, until the next consolidation, so growth is a decision, not a drift.
 
 Defects observed in real runs queue in `rsi/observed-defects.md`. Each update settles every queued entry inside a round (`rsi.ts settle`: a detector names its frozen case, or a ruling or rejection says why not); `close` archives the settled text into the round record and drains the queue, and `health` reports `unsettled_observations` until it is empty.
 

@@ -1,0 +1,7 @@
+# 2 Admit — WHAT and WHY
+
+- Write the outcome without technology: who needs what, and why. HOW belongs to Design.
+- Each **Entry** is a user story with a priority (`"priority": "P1"`, `"P2"`, …). P1 is the smallest slice that delivers value alone. Give every Entry at least one acceptance that proves it independently — an Entry that can only be observed together with another is not independent, so merge the two. The highest-priority Entries become the handoff's `mvp`.
+- Success criteria are measurable and technology-agnostic ("a user completes checkout in under 3 minutes", not "the API answers in 200 ms"). Record each as an acceptance case under the Entry it proves. There is no separate ID type.
+- List the edge cases and failure paths the supported scope can reach. Each one either becomes a requirement or is named as out of scope.
+- **Clarify.** Mark each unresolved point in place as `[NEEDS CLARIFICATION: D1 <question>]` (or `[需澄清: D1 …]`), define `D1` in prose, and list it in `unresolved_user_decisions`. `validate` blocks a marker whose decision is not listed, and reports `AWAITING_USER` while any decision is open. Ask at most five questions in one batch. Order them by impact (scope, then security and privacy, then user experience, then technical detail), and give each question options with a recommendation. Record every answer in a `## Clarifications` log (`- YYYY-MM-DD Q: … → A: …`). Then apply it to the affected clause and remove the marker and the list entry.
