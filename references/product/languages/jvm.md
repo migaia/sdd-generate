@@ -37,7 +37,7 @@ Load when in-scope packages are Java or Kotlin on the JVM (services, libraries, 
 
 ## Contract grounding probe
 
-When a key decision depends on version, types or call shape and no applicable contract, documentation or existing consumer settles it, make one focused probe: create a minimal Gradle or Maven project in a temporary directory with the exact coordinates, and compile a class that uses the APIs the SDD calls (`compileJava`, `compileKotlin` or `mvn compile`). Compiling or type-checking is design evidence; running the scratch program to observe behavior is testing and follows the user's test authorization. Persist the command, exact versions, toolchain and an output excerpt in the SDD's evidence companion; a temporary directory may host the probe but is not the record.
+Per [the probe rule](../platforms.md#contract-grounding-probe): Create a minimal Gradle or Maven project in a temporary directory with the exact coordinates, and compile a class that uses the APIs the SDD calls (`compileJava`, `compileKotlin` or `mvn compile`).
 
 ## Anti-patterns
 

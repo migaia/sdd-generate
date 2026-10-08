@@ -36,7 +36,7 @@ Load when in-scope packages are Python. Follow the repository's project manager,
 
 ## Contract grounding probe
 
-When a key decision depends on version, types or call shape and no applicable contract, documentation or existing consumer settles it, make one focused probe: create a temporary virtual environment, install the exact versions, import the modules and call the signatures the SDD uses, and run the repository's type checker on the scratch file when the project uses one. Compiling or type-checking is design evidence; running the scratch program to observe behavior is testing and follows the user's test authorization. Persist the command, exact versions, toolchain and an output excerpt in the SDD's evidence companion; a temporary directory may host the probe but is not the record.
+Per [the probe rule](../platforms.md#contract-grounding-probe): Create a temporary virtual environment, install the exact versions, import the modules and call the signatures the SDD uses, and run the repository's type checker on the scratch file when the project uses one.
 
 ## Anti-patterns
 

@@ -35,7 +35,7 @@ Load when in-scope packages run on Bun or Node.js. Build and publication respons
 
 ## Contract grounding probe
 
-When a key decision depends on version, types or call shape and no applicable contract, documentation or existing consumer settles it, make one focused probe: create a temporary consumer with the exact versions and the repository's package manager, write a `.ts` file with the exact import specifiers, type imports and call combinations the SDD uses, and run `tsc --noEmit` with the repository's module resolution. A successful install or `import.meta.resolve` is not grounding. Compiling or type-checking is design evidence; running the scratch program to observe behavior is testing and follows the user's test authorization. Persist the command, exact versions, toolchain and an output excerpt in the SDD's evidence companion; a temporary directory may host the probe but is not the record.
+Per [the probe rule](../platforms.md#contract-grounding-probe): Create a temporary consumer with the exact versions and the repository's package manager, write a `.ts` file with the exact import specifiers, type imports and call combinations the SDD uses, and run `tsc --noEmit` with the repository's module resolution. A successful install or `import.meta.resolve` is not grounding.
 
 ## Anti-patterns
 

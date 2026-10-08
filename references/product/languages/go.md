@@ -36,7 +36,7 @@ Load when in-scope packages are Go modules. Follow the repository's module layou
 
 ## Contract grounding probe
 
-When a key decision depends on version, types or call shape and no applicable contract, documentation or existing consumer settles it, make one focused probe: create a temporary module (`go mod init`, `go get <module>@<exact version>`), write the calls and types the SDD uses, and run `go build ./...` or `go vet ./...`. Compiling or type-checking is design evidence; running the scratch program to observe behavior is testing and follows the user's test authorization. Persist the command, exact versions, toolchain and an output excerpt in the SDD's evidence companion; a temporary directory may host the probe but is not the record.
+Per [the probe rule](../platforms.md#contract-grounding-probe): Create a temporary module (`go mod init`, `go get <module>@<exact version>`), write the calls and types the SDD uses, and run `go build ./...` or `go vet ./...`.
 
 ## Anti-patterns
 
