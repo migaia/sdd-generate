@@ -35,6 +35,11 @@ export type Replay = Readonly<{
   /** `requirement`: only this case's step commits were undone; `file`: files only its steps own. */
   granularity?: 'requirement' | 'file'
   reason?: string
+  /**
+   * Proven replays only: each behaviour-bearing hunk of the ablated change (`path:line` at the
+   * change) reverted alone; `killed` made the oracle fail. Comment- and blank-only hunks are inert.
+   */
+  hunks?: Readonly<{ total: number; killed: readonly string[]; survivors: readonly string[] }>
 }>
 
 const git = (repository: string, args: readonly string[]) =>
@@ -130,6 +135,27 @@ const idPattern = (ids: readonly string[], leaf?: string) =>
   new RegExp(
     `(?:(?<![\\w/-])|(?<=(?:^|[^\\w-])${leaf ? escape(leaf) : '\\0'}/))(?:${ids.map(escape).join('|')})\\b`
   )
+
+/** Changed lines that are blank or comments only: reverting them cannot change behaviour. */
+const INERT = /^[+-]\s*(?:(?:\/\/|#|\*|\/\*).*)?$/
+
+/** The ablated change as standalone one-hunk patches, keyed `path:line` at the change. */
+function hunksOf(root: string): { id: string; patch: string }[] {
+  const diff = Bun.spawnSync(['git', 'diff', '--no-index', '--no-color', 'ablation', 'head'], {
+    cwd: root,
+    stdout: 'pipe'
+  }).stdout.toString()
+  return diff
+    .split(/^(?=diff --git )/m)
+    .filter((file) => file.includes('\n@@'))
+    .flatMap((file) => {
+      const [header, ...parts] = file.split(/^(?=@@ )/m)
+      const path = /^\+\+\+ b\/head\/(.+)$/m.exec(header!)?.[1] ?? 'deleted file'
+      return parts
+        .filter((hunk) => hunk.split('\n').some((l) => /^[+-]/.test(l) && !INERT.test(l)))
+        .map((hunk) => ({ id: `${path}:${/\+(\d+)/.exec(hunk)![1]}`, patch: header + hunk }))
+    })
+}
 
 /** Package directories (holding a package.json) in an exported tree, relative to it. */
 function packages(tree: string, dir = ''): string[] {
@@ -297,6 +323,7 @@ export function replay(input: {
           exportTree(repository, base, trees.ablation, path)
       }
     }
+    const hunks = hunksOf(root)
     linkInstalled(repository, Object.values(trees))
     // A test runs from its own package, as the host ran it, so package config applies.
     const home = oracleFile
@@ -328,12 +355,35 @@ export function replay(input: {
         granularity,
         reason: `the oracle does not pass at the change in the exported tree (${got}); check dependencies, config and generated files`
       }
+    // Quantified coverage: revert each hunk alone at the change; the oracle must fail for it to count.
+    const apply = (patch: string, reverse: boolean) =>
+      Bun.spawnSync(['git', 'apply', '-p2', ...(reverse ? ['-R'] : []), '--whitespace=nowarn'], {
+        cwd: trees.head,
+        stdin: Buffer.from(patch)
+      }).exitCode === 0
+    const killed = proven
+      ? hunks.filter(({ patch }) => {
+          if (!apply(patch, true)) return false
+          const result = run(join(trees.head, home), runner, oracle)
+          apply(patch, false)
+          return result === 'FAIL'
+        })
+      : []
     return {
       acceptance,
       runner,
       ...results,
       verdict: proven ? 'proven' : 'not-proven',
       granularity,
+      ...(proven
+        ? {
+            hunks: {
+              total: hunks.length,
+              killed: killed.map((h) => h.id),
+              survivors: hunks.filter((h) => !killed.includes(h)).map((h) => h.id)
+            }
+          }
+        : {}),
       ...(proven ? {} : { reason: `expected base FAIL, head PASS, ablation FAIL; got ${got}` })
     }
   } finally {

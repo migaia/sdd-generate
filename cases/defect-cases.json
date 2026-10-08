@@ -2831,6 +2831,60 @@
       "observed_at": "2026-09-30",
       "owning_test": "tests/v2-consume.test.ts",
       "introduced_detector_at": "2026-10-07"
+    },
+    {
+      "id": "CSDD-V2-REPLAY-203",
+      "defect_class": "replay-hunk-unneeded",
+      "statement": "S1 changes greet and farewell in two hunks; with R2 not must-ship, only A1 (greet) is replayed, and reverting the farewell hunk alone leaves A1 passing, yet the replay proves the requirement and the closure is CLOSED.",
+      "root_cause": "The ablation reverts the requirement's whole change at once, so it proves the oracle depends on some of the change, never that every behaviour-bearing hunk is needed by some oracle.",
+      "evidence": {
+        "file": "scripts/validator/domain/v2-replay.ts",
+        "line": 318,
+        "quote": "const proven = results.base === 'FAIL' && results.head === 'PASS' && results.ablation === 'FAIL'"
+      },
+      "repository": "cases/fixtures/v2-replay-hunks",
+      "fixture": {
+        "base": "cases/fixtures/v2-replay-hunks.md",
+        "overlay": {}
+      },
+      "negative_fixture": {
+        "base": "cases/fixtures/v2-replay-hunks.md",
+        "overlay": {
+          "requirements": [
+            {
+              "id": "R1",
+              "kind": "must-ship",
+              "implementation": [
+                "S1"
+              ],
+              "acceptance": [
+                "A1"
+              ]
+            },
+            {
+              "id": "R2",
+              "kind": "should",
+              "implementation": [
+                "S1"
+              ],
+              "acceptance": [
+                "A2"
+              ]
+            }
+          ]
+        }
+      },
+      "negative_expectation": {
+        "must_fire": true
+      },
+      "detector": {
+        "command": "bun scripts/validate.ts validate --sdd <fixture> --evidence <repository>/evidence.json --replay",
+        "expected_code": "SDD_V2_CLOSURE_OPEN",
+        "must_fire": false
+      },
+      "observed_at": "2026-10-08",
+      "owning_test": "tests/v2-converge.test.ts",
+      "source_delivery": "create-sdd capability review 2026-10-08: replay proves dependence on the change, not coverage of it"
     }
   ],
   "held_out": [

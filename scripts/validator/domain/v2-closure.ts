@@ -327,6 +327,23 @@ export function checkClosure(
     } else if (required.has(id))
       report('SDD_V2_CLOSURE_OPEN', id, value === 'BLOCKED' ? 'blocked' : 'evidence-missing')
   }
+  // A hunk counts as covered when any proven oracle fails without it, or its row declares it inert
+  // (`inert_hunks: {"path:line": "reason"}`); coverage below 1 keeps the closure OPEN.
+  const killed = new Set(replays.flatMap((r) => r.hunks?.killed ?? []))
+  const uncovered = new Set<string>()
+  for (const r of replays) {
+    const inert = rows.get(r.acceptance)?.inert_hunks
+    const missed = (r.hunks?.survivors ?? []).filter(
+      (h) => !killed.has(h) && !(object(inert) && text(inert[h]))
+    )
+    if (!missed.length) continue
+    report(
+      'SDD_V2_CLOSURE_OPEN',
+      `${r.acceptance}: ${missed.length} of ${r.hunks!.total} hunk(s) no oracle needs (${missed.join(', ')}); add an acceptance that fails without each, or declare it in inert_hunks with a reason`,
+      'replay-hunk-unneeded'
+    )
+    uncovered.add(r.acceptance)
+  }
   // Converge: the delivered code must still match the design, not only the reported checks.
   // At the reported commit when the report names one, otherwise in the working tree.
   const present = (path: string) =>
@@ -412,12 +429,13 @@ export function checkClosure(
         proof.some((p) => p.acceptance === id && p.level === 'verified') &&
         (!options.replay ||
           preserved.has(id) ||
-          replays.some((r) => r.acceptance === id && r.verdict === 'proven'))
+          (replays.some((r) => r.acceptance === id && r.verdict === 'proven') &&
+            !uncovered.has(id)))
     ),
     mvp_closed: mvp.length ? mvp.every((id) => entries.find((e) => e.id === id)?.closed) : null,
     evidence_limits: [
       'Without --replay the rows are the host’s claim: commits, order, causal diff and oracle link are checked, not the runs themselves.',
-      'With --replay the validator runs only the declared oracle; a proven ablation shows the pass depends on the implementing files, not that the oracle covers every behaviour of the requirement.'
+      'With --replay each behaviour-bearing hunk must be needed by some oracle (hunk coverage 1); behaviour the requirement asks for but the change never implemented is not seen.'
     ]
   }
 }
