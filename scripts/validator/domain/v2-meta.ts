@@ -44,6 +44,9 @@ export type ExecutionSlice = Readonly<{
   mvp_tasks: readonly string[]
 }>
 
+/** A phrase that names an earlier value on purpose ("revision 5 及之前为版本 1", "formerly"). */
+export const HISTORICAL =
+  /及之前|此前|以前|旧版|formerly|previously|before revision|until revision/i
 /** Shared v2 guards: a plain object, a non-blank string, and an array or empty list. */
 export const object = (value: unknown): value is Item =>
   !!value && typeof value === 'object' && !Array.isArray(value)

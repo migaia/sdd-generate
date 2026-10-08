@@ -1769,6 +1769,156 @@
       "tradeoff": "A usage error path of the skill's own tooling; telemetry records validate runs only, so it can never count as fired.",
       "revisions_at_decision": 1269,
       "review_after_revisions": 1000
+    },
+    {
+      "asset": "code:EVIDENCE_REQUIRES_V2_LEAF",
+      "disposition": "retain",
+      "decided_in": "R-20261008034341",
+      "counterexample": "`validate --evidence` pointed at a program root or a non-v2 document would otherwise read its acceptance as empty and report a meaningless closure instead of refusing.",
+      "scope": "scripts/validate.ts, every `validate --evidence` call.",
+      "tradeoff": "Telemetry records validate runs on documents, so a CLI argument guard on a correctly invoked command can never appear in it; dormancy is the wrong signal for an entry-point precondition.",
+      "revisions_at_decision": 1318,
+      "review_after_revisions": 1000
+    },
+    {
+      "asset": "code:INIT_BRANCH_REQUIRES_GIT",
+      "disposition": "retain",
+      "decided_in": "R-20261008034341",
+      "counterexample": "`init --branch` in a directory with no repository would otherwise run `git branch` against no git dir and fail after the skeleton checks, or create the branch elsewhere.",
+      "scope": "scripts/init.ts, `--branch` only, before any file is written.",
+      "tradeoff": "Telemetry records validate runs on documents, so a CLI argument guard on a correctly invoked command can never appear in it; dormancy is the wrong signal for an entry-point precondition.",
+      "revisions_at_decision": 1318,
+      "review_after_revisions": 1000
+    },
+    {
+      "asset": "code:INIT_EVIDENCE_REQUIRES_V2_LEAF",
+      "disposition": "retain",
+      "decided_in": "R-20261008034341",
+      "counterexample": "`init --kind evidence` on a program root or a v1 document would otherwise write an evidence report with no acceptance rows, which a host would then fill as if it were complete.",
+      "scope": "scripts/init.ts `--kind evidence`.",
+      "tradeoff": "Telemetry records validate runs on documents, so a CLI argument guard on a correctly invoked command can never appear in it; dormancy is the wrong signal for an entry-point precondition.",
+      "revisions_at_decision": 1318,
+      "review_after_revisions": 1000
+    },
+    {
+      "asset": "code:INIT_OUT_ABSOLUTE_REQUIRED",
+      "disposition": "retain",
+      "decided_in": "R-20261008034341",
+      "counterexample": "A relative `--out` resolves against whatever directory the agent's shell is in, so a skeleton lands outside the target repository and the later validate checks another file.",
+      "scope": "scripts/init.ts, every kind except oracles.",
+      "tradeoff": "Telemetry records validate runs on documents, so a CLI argument guard on a correctly invoked command can never appear in it; dormancy is the wrong signal for an entry-point precondition.",
+      "revisions_at_decision": 1318,
+      "review_after_revisions": 1000
+    },
+    {
+      "asset": "code:INIT_SDD_ABSOLUTE_REQUIRED",
+      "disposition": "retain",
+      "decided_in": "R-20261008034341",
+      "counterexample": "A relative `--sdd` for evidence or oracle stubs would read a different SDD than the one the author meant, and seed rows for the wrong acceptance set.",
+      "scope": "scripts/init.ts `--kind evidence|oracles`.",
+      "tradeoff": "Telemetry records validate runs on documents, so a CLI argument guard on a correctly invoked command can never appear in it; dormancy is the wrong signal for an entry-point precondition.",
+      "revisions_at_decision": 1318,
+      "review_after_revisions": 1000
+    },
+    {
+      "asset": "code:INIT_STUBS_REQUIRE_REPOSITORY",
+      "disposition": "retain",
+      "decided_in": "R-20261008034341",
+      "counterexample": "Without a resolved repository, oracle stubs would be written to paths relative to nothing, outside the declared oracles' tree, and the oracle link check could never find them.",
+      "scope": "scripts/init.ts `--oracle-stubs` and `--kind oracles`.",
+      "tradeoff": "Telemetry records validate runs on documents, so a CLI argument guard on a correctly invoked command can never appear in it; dormancy is the wrong signal for an entry-point precondition.",
+      "revisions_at_decision": 1318,
+      "review_after_revisions": 1000
+    },
+    {
+      "asset": "code:INIT_TEMPLATE_UNRECOGNIZED",
+      "disposition": "retain",
+      "decided_in": "R-20261008034341",
+      "counterexample": "A preset's custom init template without an sdd/v2, program or assessment block would otherwise be written unvalidated and handed over as a skeleton.",
+      "scope": "scripts/init.ts, custom preset templates.",
+      "tradeoff": "It fires only when a repository ships a broken template; no repository in the telemetry corpus ships custom templates, so silence measures the corpus, not the guard.",
+      "revisions_at_decision": 1318,
+      "review_after_revisions": 1000
+    },
+    {
+      "asset": "code:PRESET_PATH_ABSOLUTE_REQUIRED",
+      "disposition": "retain",
+      "decided_in": "R-20261008034341",
+      "counterexample": "`preset.ts pack` with a relative repository or output would package the preset of the current directory instead of the named repository.",
+      "scope": "scripts/preset.ts pack.",
+      "tradeoff": "Telemetry records validate runs on documents, so a CLI argument guard on a correctly invoked command can never appear in it; dormancy is the wrong signal for an entry-point precondition.",
+      "revisions_at_decision": 1318,
+      "review_after_revisions": 1000
+    },
+    {
+      "asset": "code:SDD_ID_DUPLICATE",
+      "disposition": "retain",
+      "decided_in": "R-20261008034341",
+      "counterexample": "A non-implementation document (document-check) defining the same requirement ID in two table rows would let a reader cite either definition; nothing else in document-check catches it.",
+      "scope": "scripts/validator/domain/document-check.ts, document-only checks.",
+      "tradeoff": "document-check runs rarely compared with v2 validate, so its dormancy window is mostly other tools' revisions.",
+      "revisions_at_decision": 1318,
+      "review_after_revisions": 1000
+    },
+    {
+      "asset": "code:SDD_V2_CLOSURE_FAILED",
+      "disposition": "retain",
+      "decided_in": "R-20261008034341",
+      "counterexample": "An evidence row with status FAIL must turn the closure FAILED; without this code a failed must-ship acceptance would read as merely OPEN and invite another implementation pass instead of a new revision.",
+      "scope": "scripts/validator/domain/v2-closure.ts, every evidence row.",
+      "tradeoff": "Hosts rarely submit FAIL rows (they fix first), so telemetry under-samples it; removing it would erase the FAILED state of the lifecycle.",
+      "revisions_at_decision": 1318,
+      "review_after_revisions": 1000
+    },
+    {
+      "asset": "code:SDD_V2_DEPENDENCY_CYCLE",
+      "disposition": "retain",
+      "decided_in": "R-20261008034341",
+      "counterexample": "A batch, child or step order cycle (C1 after C2 after C1) would otherwise make derived waves and parallel_children undefined, and dispatch layers would loop or drop units.",
+      "scope": "v2-document.ts batches and children, v2-tasks.ts step order.",
+      "tradeoff": "Telemetry sees only documents that were already well formed enough to validate; a structural guard is dormant exactly while authors comply, which is its purpose, not evidence it is unused.",
+      "revisions_at_decision": 1318,
+      "review_after_revisions": 1000
+    },
+    {
+      "asset": "code:SDD_V2_ID_DUPLICATE",
+      "disposition": "retain",
+      "decided_in": "R-20261008034341",
+      "counterexample": "Two requirements, batches, Metas, exports or children with one ID would make every reference to that ID ambiguous, so traceability and the five-Meta chain could resolve to the wrong definition.",
+      "scope": "v2-document.ts, v2-meta.ts, v2-assessment.ts.",
+      "tradeoff": "Telemetry sees only documents that were already well formed enough to validate; a structural guard is dormant exactly while authors comply, which is its purpose, not evidence it is unused.",
+      "revisions_at_decision": 1318,
+      "review_after_revisions": 1000
+    },
+    {
+      "asset": "code:SDD_V2_MUST_SHIP_CHAIN_INCOMPLETE",
+      "disposition": "retain",
+      "decided_in": "R-20261008034341",
+      "counterexample": "A must-ship requirement without an implementation step or acceptance, or without a Module-Chunk-Bundle route, would be handed over with no path to proof; this is the traceability guarantee itself.",
+      "scope": "v2-document.ts requirements and batches, v2-meta.ts graph routes.",
+      "tradeoff": "Telemetry sees only documents that were already well formed enough to validate; a structural guard is dormant exactly while authors comply, which is its purpose, not evidence it is unused.",
+      "revisions_at_decision": 1318,
+      "review_after_revisions": 1000
+    },
+    {
+      "asset": "code:SDD_V2_PATH_INVALID",
+      "disposition": "retain",
+      "decided_in": "R-20261008034341",
+      "counterexample": "An absolute, escaping or malformed path in Bundle reads, Asset paths or step touches would make existence checks, write-scope checks and dispatch briefs point outside the repository.",
+      "scope": "v2-meta.ts reads and assets, v2-tasks.ts touches.",
+      "tradeoff": "Telemetry sees only documents that were already well formed enough to validate; a structural guard is dormant exactly while authors comply, which is its purpose, not evidence it is unused.",
+      "revisions_at_decision": 1318,
+      "review_after_revisions": 1000
+    },
+    {
+      "asset": "code:SDD_V2_PRESET_INVALID",
+      "disposition": "retain",
+      "decided_in": "R-20261008034341",
+      "counterexample": "A malformed `.create-sdd/preset.json` would otherwise be ignored silently, so a repository's promoted blockers and required sections would stop applying without anyone noticing.",
+      "scope": "scripts/validator/domain/v2-preset.ts, any repository with a preset.",
+      "tradeoff": "Few repositories in the corpus have a preset, and those are well formed; the guard's value is refusing silent loss of repository rules.",
+      "revisions_at_decision": 1318,
+      "review_after_revisions": 1000
     }
   ]
 }

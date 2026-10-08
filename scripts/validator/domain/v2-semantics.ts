@@ -1,7 +1,7 @@
 import { createHash } from 'node:crypto'
 import { existsSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
-import { list, object, text, type Item, type Report } from './v2-meta.ts'
+import { HISTORICAL, list, object, text, type Item, type Report } from './v2-meta.ts'
 import { sourceCorpus, stepText } from './v2-symbols.ts'
 
 type Doc = Readonly<{ id: string; path: string; body: string; index: Item }>
@@ -178,8 +178,6 @@ const DISPOSITION = /^(?:propagate|unreachable|wrap:[A-Z][A-Z0-9_]*)$/
  */
 /** A version token after an export name: `v2`, `version 2`, `版本 2`. */
 const VERSION_AFTER = /^[^|\n]{0,30}?(?:\bv|\bversion\s*|版本\s*)(\d+)\b/i
-/** A phrase that talks about an earlier version on purpose ("revision 5 及之前为版本 1", "formerly"). */
-const HISTORICAL = /及之前|此前|以前|旧版|formerly|previously|before revision|until revision/i
 
 /**
  * OD-56: an export version restated in prose (a leaf header, a root table row, plan text) that

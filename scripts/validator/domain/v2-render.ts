@@ -1,4 +1,4 @@
-import { list, object, text, type Item, type Report } from './v2-meta.ts'
+import { HISTORICAL, list, object, text, type Item, type Report } from './v2-meta.ts'
 import { preflightItems } from './v2-preflight.ts'
 
 /**
@@ -61,8 +61,6 @@ export function renderRegions(documentText: string, index: Item): string {
 export const withoutRegions = (body: string) =>
   body.replace(REGION, (whole) => whole.replace(/[^\n]/g, ''))
 
-/** A phrase that names an earlier value on purpose ("revision 5 及之前为版本 1", "formerly"). */
-const HISTORICAL = /及之前|此前|以前|旧版|formerly|previously|before revision|until revision/i
 /** A version token right after an interface name. */
 const VERSION_AFTER = /^[^|\n]{0,30}?(?:\bv|\bversion\s*|版本\s*)\d+\b/i
 /** A prose preserve list ("Preserve acceptance: A3, A7", "保持验收：A3、A7"), not "无保持验收". */
