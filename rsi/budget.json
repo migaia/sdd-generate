@@ -602,6 +602,14 @@
       "at": "2026-10-08",
       "round": "R-20261008033215",
       "reason": "User-approved RSI sensitivity: health now flags reference cards over REFERENCE_CARD_LIMIT, a held-out corpus below HELD_OUT_MIN, and judges rule redundancy only on REDUNDANT_MIN_DOCUMENTS shared documents (OD-107). Lasts until the next consolidation."
+    },
+    {
+      "dimension": "scripts.lines",
+      "from": 10089,
+      "to": 10141,
+      "at": "2026-10-08",
+      "round": "R-20261008145650",
+      "reason": "OD-108: validate.ts splits its printed result by reader. Advisory candidates move out of the host handoff into a top-level list grouped by code (count and three examples, every detail with --all-candidates), and the handoff carries the selected leaf's host contract fields with a read_skip for the contract block. On migai rpc-remote the printed result fell from 624K to 35K characters. The 52 lines are the measured need; validator.lines is unchanged."
     }
   ],
   "introduced": [

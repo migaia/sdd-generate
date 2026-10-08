@@ -57,7 +57,7 @@ Run as `bun <create-sdd-root>/scripts/<script>`; flags are in each script's head
 
 | Command | Use |
 |---|---|
-| `validate.ts validate --sdd <absolute-SDD>` | Check v2 structure; return the host handoff |
+| `validate.ts validate --sdd <absolute-SDD> [--all-candidates]` | Check v2 structure; pass only `handoff` to the host; grouped `candidates` are the author's |
 | `validate.ts validate --sdd <SDD> --evidence <report> [--replay]` | Converge: causal, oracle-linked proof and design-to-code gaps |
 | `validate.ts validate-draft` / `document-check` | Check a proposed SDD / a non-implementation document |
 | `init.ts --kind feature\|bug\|assessment\|program\|evidence --out <path>` | Write a skeleton that validates as AWAITING_USER |

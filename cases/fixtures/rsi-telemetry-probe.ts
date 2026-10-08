@@ -6,7 +6,8 @@
  * enabled, reads the line it appended, restores the ledger byte for byte, and reports one code when
  * the line carries every code the run reported in the inspected place:
  *
- *   candidates  handoff.candidates[].code  must appear in the line's candidate_codes
+ *   candidates  candidates[].code (handoff.candidates before OD-108)  must appear in the line's
+ *               candidate_codes
  *   closure     closure.findings[].code    must appear in the line's codes
  *
  * Usage: bun cases/fixtures/rsi-telemetry-probe.ts <candidates|closure> <fixture> <repository>
@@ -35,6 +36,7 @@ const args =
 const before = existsSync(LEDGER) ? readFileSync(LEDGER) : null
 /** Parsed validate output. */
 let output: {
+  candidates?: { code?: string }[]
   handoff?: { candidates?: { code?: string }[] }
   closure?: { findings?: { code?: string }[] }
 } = {}
@@ -69,7 +71,9 @@ try {
 
 /** Codes the run reported in the inspected place. */
 const reported = (
-  mode === 'closure' ? (output.closure?.findings ?? []) : (output.handoff?.candidates ?? [])
+  mode === 'closure'
+    ? (output.closure?.findings ?? [])
+    : (output.candidates ?? output.handoff?.candidates ?? [])
 )
   .map((item) => item.code)
   .filter((code): code is string => typeof code === 'string')
