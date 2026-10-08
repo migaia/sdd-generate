@@ -460,12 +460,11 @@ export function growthBaseline(
 /**
  * The one size limit per dimension (no separate ceiling): the growth window over the last shrinking
  * consolidation, raised only by `budget.json` raises of budget-change rounds closed since it, or of
- * `own` (the open budget-change round). `raises: false` gives the bare window, which a consolidation
- * must reach before its measurement may become the next baseline. Empty until such a baseline exists.
+ * `own` (the open budget-change round). Empty until such a baseline exists.
  */
 export function budgetLimits(
   rounds: readonly ClosedRound[] = closedRounds(),
-  { own, raises = true }: { own?: string; raises?: boolean } = {}
+  own?: string
 ): Record<string, number> {
   const baseline = growthBaseline(rounds)
   if (!baseline) return {}
@@ -487,7 +486,7 @@ export function budgetLimits(
     BUDGET_FILE,
     {}
   ).raises
-  for (const raise of raises ? (recorded ?? []) : [])
+  for (const raise of recorded ?? [])
     if (counted.has(raise.round))
       limits[raise.dimension] = Math.max(limits[raise.dimension] ?? 0, raise.to)
   return limits
@@ -1555,22 +1554,20 @@ function main(argv: readonly string[]): number {
       return 1
     }
     const now = measure()
-    // A budget-change round is held to its own raises; a consolidation must reach the bare window,
-    // so a raise never becomes the next baseline; others keep the frozen limits or the opened size.
+    // A budget-change round is held to its own raises; others keep the frozen limits or the opened
+    // size. A consolidation that shrinks by RESET_SHRINK then carries approved raises into the baseline.
     const over =
       round.kind === 'budget-change'
-        ? overBudget(now, budgetLimits(closedRounds(), { own: round.id }))
-        : round.kind === 'consolidation'
-          ? overBudget(now, budgetLimits(closedRounds(), { raises: false }))
-          : overBudget(
-              now,
-              Object.fromEntries(
-                Object.entries(frozen).map(([key, limit]) => [
-                  key,
-                  Math.max(limit, round.budget[key] ?? limit)
-                ])
-              )
+        ? overBudget(now, budgetLimits(closedRounds(), round.id))
+        : overBudget(
+            now,
+            Object.fromEntries(
+              Object.entries(frozen).map(([key, limit]) => [
+                key,
+                Math.max(limit, round.budget[key] ?? limit)
+              ])
             )
+          )
     // Compare with the opened rule set: rendering the current ledger cannot erase this delta.
     const currentAssets = new Set(catalog().map((rule) => rule.asset))
     const blessed = new Set(round.rule_assets_at_open)

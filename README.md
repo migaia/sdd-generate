@@ -296,7 +296,7 @@ It returns `CLOSED`, `OPEN` or `FAILED`, together with `behaviour_proven` and `m
 - decisions on dormant rules (`dispositions.json`);
 - every round record (`rounds/`).
 
-Each dimension has one derived size limit: 2% over the last consolidation that shrank something by at least 0.5%. A budget-change round may raise it with a reason, until the next consolidation, which must reach the bare window. Closing any round needs a human `--confirm`.
+Each dimension has one derived size limit: 2% over the last consolidation that shrank something by at least 0.5%. A budget-change round may raise it with a reason, until the next shrinking consolidation, which carries the approved raise into its baseline. Closing any round needs a human `--confirm`.
 
 ## Commands
 

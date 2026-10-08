@@ -296,7 +296,7 @@ preset 可以把任何候选项升级为阻塞项。
 - 对休眠规则的处置决定（`dispositions.json`）；
 - 每一轮的记录（`rounds/`）。
 
-每个维度只有一个推导出的体积限额：比上一次有效 consolidation（至少把某个维度缩小 0.5%）多 2%。budget-change 轮可以带理由调高它，有效期到下一次 consolidation 为止；consolidation 必须回到不含调高的窗口内。关闭任何轮次都需要人工 `--confirm`。
+每个维度只有一个推导出的体积限额：比上一次有效 consolidation（至少把某个维度缩小 0.5%）多 2%。budget-change 轮可以带理由调高它，有效期到下一次有效 consolidation 为止，届时已批准的调高会并入新基线。关闭任何轮次都需要人工 `--confirm`。
 
 ## 命令
 

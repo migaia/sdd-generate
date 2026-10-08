@@ -1,6 +1,6 @@
 {
   "protocol": "skill-budget/v1",
-  "note": "Size limits are derived, not stored: the growth window (GROWTH_RATIO) over the last consolidation that shrank a dimension by RESET_SHRINK, raised only by the `raises` of budget-change rounds closed since it. A raise lasts until the next such consolidation, which must reach the bare window. Earlier ceilings, raises and ratchets remain as records.",
+  "note": "Size limits are derived, not stored: the growth window (GROWTH_RATIO) over the last consolidation that shrank a dimension by RESET_SHRINK, raised only by the `raises` of budget-change rounds closed since it. A raise lasts until the next such consolidation, which then carries it into its baseline. Earlier ceilings, raises and ratchets remain as records.",
   "set_at": "2026-09-23",
   "raises": [
     {
