@@ -10,6 +10,7 @@ import {
   updateAgenda,
   type ClosedRound,
   type RuleHealth,
+  type DebtSignalName,
   type SkillHealth
 } from '../scripts/rsi'
 
@@ -132,10 +133,20 @@ test('a dormant rule counts until someone decides, and again once its review is 
 })
 
 test('update suggests consolidation under debt but never withholds enhancement', () => {
-  const health = (level: SkillHealth['level']): SkillHealth => ({
-    protocol: 'skill-rsi-health/v1',
+  // Debt routes by signal: a held-out shortfall asks for real cases, never for a consolidation.
+  const signal = (name: DebtSignalName, level: SkillHealth['level']) => ({
+    signal: name,
+    value: 1,
+    thresholds: [1],
+    level
+  })
+  const health = (
+    level: SkillHealth['level'],
+    name: DebtSignalName = 'undisposed_dormant_rules'
+  ) => ({
+    protocol: 'skill-rsi-health/v1' as const,
     level,
-    signals: [],
+    signals: level === 'NONE' ? [] : [signal(name, level)],
     undisposed_dormant: [],
     redundant_pairs: [],
     review_lenses: {},
@@ -148,6 +159,12 @@ test('update suggests consolidation under debt but never withholds enhancement',
   expect(steps('FREEZE')).toEqual(['consider-consolidation', 'consider-enhancement'])
   expect(steps('NOTICE')).toEqual(['consider-consolidation', 'consider-enhancement'])
   expect(steps('NONE')).toEqual(['consider-enhancement'])
+  expect(
+    updateAgenda({
+      health: health('NOTICE', 'held_out_shortfall'),
+      catalog_drifted: false
+    }).map((entry) => entry.step)
+  ).toEqual(['grow-held-out', 'consider-enhancement'])
   expect(
     updateAgenda({ health: health('NONE'), open_round: 'R-9', catalog_drifted: true }).map(
       (entry) => entry.step

@@ -791,16 +791,20 @@ export function updateAgenda(
       detail:
         'the rule ledger disagrees with the sources; every new code also needs a supersession entry'
     })
-  if (h.level !== 'NONE')
+  const shortfall = h.signals.find((s) => s.signal === 'held_out_shortfall' && s.level !== 'NONE')
+  const others = h.signals.filter((s) => s.level !== 'NONE' && s !== shortfall)
+  if (shortfall)
+    steps.push({
+      step: 'grow-held-out',
+      detail: `held_out_shortfall=${shortfall.value}, which no consolidation fixes (OD-107): when a real delivery exposes a design defect the checks missed, queue it as an OD and freeze it as a held-out case in cases/held-out/`
+    })
+  if (others.length)
     steps.push({
       step: 'consider-consolidation',
       command:
         'bun scripts/rsi.ts open --kind consolidation --goal <what is merged, retired or ablated>',
       detail: [
-        `level ${h.level}: ${h.signals
-          .filter((s) => s.level !== 'NONE')
-          .map((s) => `${s.signal}=${s.value}`)
-          .join(', ')}`,
+        `level ${h.level}: ${others.map((s) => `${s.signal}=${s.value}`).join(', ')}`,
         `${h.undisposed_dormant.length} dormant rule(s) to delete, replace or retain with a per-rule counterexample, scope and trade-off in rsi/dispositions.json`,
         `${h.redundant_pairs.length} rule pair(s) firing on the same documents`,
         'a consolidation also needs a demonstrated repair and no regression; a smaller file alone does not settle earlier decisions'
