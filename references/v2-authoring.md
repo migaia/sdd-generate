@@ -11,7 +11,8 @@ Each phase is one card; read only the card for the phase at hand.
 | 3 Design — HOW, under the principles | [design](authoring/design.md) |
 | 4 Verify — observable acceptance | [verify](authoring/verify.md) |
 | 5 Decompose — tasks as a derived view | [decompose](authoring/decompose.md) |
-| 6 Report — analyze, hand off, converge | [report](authoring/report.md) |
+| 6 Report — analyze, hand off | [report](authoring/report.md) |
+| 6 Converge — evidence and closure | [converge](authoring/converge.md) |
 | Bug fix — the same six phases, proving the defect | [bug-fix](authoring/bug-fix.md) |
 | Assessment — deciding before specifying | [assessment](authoring/assessment.md) |
 

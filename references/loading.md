@@ -40,7 +40,7 @@ Each code is a family; the message starts with the specific relation that failed
 | `SDD_V2_PRESET_INVALID`, `SDD_V2_PRESET_BLOCKED`, `preset-*` subtypes | [presets](v2-presets.md) |
 | `SDD_V2_CLARIFICATION_UNTRACKED` | [clarify](authoring/admit.md) |
 | Candidates `SDD_V2_ACCEPTANCE_FORWARD_DEPENDENCY`, `SDD_V2_ERROR_TEXT_READER_UNDECLARED`, `SDD_V2_SHAPE_READER_UNDECLARED` | [design](authoring/design.md), [decompose](authoring/decompose.md) |
-| `SDD_V2_CLOSURE_OPEN`, `SDD_V2_CLOSURE_FAILED` (under `closure`) | [converge](authoring/report.md) |
+| `SDD_V2_CLOSURE_OPEN`, `SDD_V2_CLOSURE_FAILED` (under `closure`) | [converge](authoring/converge.md) |
 | Codes from an `intent: bug` leaf or an `sdd-assessment/v1` document | [bug fix](authoring/bug-fix.md), [assessment](authoring/assessment.md) |
 
 Keep the repository's current rules authoritative. Do not copy its instructions into a second template. Do not turn a guide's possible platform dimensions into universal requirements when the user-owned path cannot reach them.
