@@ -15,7 +15,7 @@ Produce a design contract at the requested maturity: proposed design, document r
 
 ## Design standard
 
-Optimize for the host that will implement the document: it should read less context, make fewer unstated decisions, follow requirements through steps to acceptance, and see the owner of every supported boundary. Keep one authority for each fact or contract. Trade off as **usability/implementability > measured performance > feature breadth > test machinery >> optional hardening**; add abstraction or defensive machinery only for a current requirement or a demonstrated failure, and justify it in the principle check ([authoring](references/v2-authoring.md)). Load [invariants](references/invariants.md) only for an audit or a real conflict; do not turn its catalog into extra document sections.
+Optimize for the host that will implement the document: it should read less context, make fewer unstated decisions, follow requirements through steps to acceptance, and see the owner of every supported boundary. Keep one authority for each fact or contract. Interfaces grant authority by possession, never by declared claim. Trade off as **usability/implementability > measured performance > feature breadth > test machinery >> optional hardening**; add abstraction or defensive machinery only for a current requirement or a demonstrated failure, and justify it in the principle check ([authoring](references/v2-authoring.md)). Load [invariants](references/invariants.md) only for an audit or a real conflict; do not turn its catalog into extra document sections.
 
 ## Repository fit
 

@@ -34,6 +34,10 @@ acceptance plants a sentinel in every input position and asserts no sink shows i
 caller can hold, state what it may do after each transition and which acceptance proves the old
 handle is refused rather than acting on the new state.
 
+**L6 Design soundness** (each export). Is its authority a possessed capability or a caller's
+claim? Flag hidden effects and host-bound or flag-grown signatures
+([design](authoring/design.md)); hiding an unsound interface is itself a finding.
+
 ## Findings
 
 Write one JSON file:
