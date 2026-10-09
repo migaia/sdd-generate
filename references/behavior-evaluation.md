@@ -82,6 +82,8 @@ strength and the difference is stated here rather than implied:
 scripts, tests, behaviour cases): 2% over the last shrinking consolidation. Only a `--kind
 budget-change` raise lifts it, until the next consolidation, so growth is a decision, not a drift.
 
+A consolidation that cuts prose checks each line for a no-op (behaviour the model shows by default), a duplicate (one meaning in two places), sediment (a rule the current behaviour no longer needs) and a restated lookup (what a file or command already answers), and deletes the whole sentence that fails.
+
 Defects observed in real runs queue in `rsi/observed-defects.md`. Each update settles every queued entry inside a round (`rsi.ts settle`: a detector names its frozen case, or a ruling or rejection says why not); `close` archives the settled text into the round record and drains the queue, and `health` reports `unsettled_observations` until it is empty.
 
 Only an `improvement` round with a changed source version and a failing frozen case repaired can
