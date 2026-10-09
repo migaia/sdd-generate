@@ -1102,6 +1102,16 @@
       "counterexample": "migai I15 audit (OD-100, ledger K199): bench:mutation PHV3-T10 ratios 10.28, 10.92, 10.97 against a limit of 10 and bench:resume 2.80 against 2 on a host at load 16-20, after moving to dedicated serial scripts; CSDD-V2-TIMING-102.",
       "scope": "Advisory candidate, once per acceptance, when its first line gates a measured timing quantity (a multiple, ratio, mean, median, percentile or rate) with a threshold and names no warm-up, repetition count, statistic or interleaved in-run comparison; a computed deadline or header value (timeoutMs <= 200) is not a measurement and does not fire.",
       "tradeoff": "Regex on the acceptance line: a protocol stated in the oracle file or another line still fires, and any word like median silences it without checking the protocol is sound."
+    },
+    {
+      "asset": "code:SDD_V2_CLOSURE_UNREQUESTED",
+      "added_at": "2026-10-09",
+      "round": "R-20261009011538",
+      "supersedes": [],
+      "supersedes_nothing_because": "Closure design gaps compare the code with what the design promised (missing assets and touched files, requirements whose files never changed); nothing compared it with what the design did not ask for.",
+      "counterexample": "spec-kit converge classifies code outside the stated intent as an unrequested gap; create-sdd closed such a change silently. CSDD-V2-CLOSURE-UNREQUESTED-101: S1 also adds packages/other/extra.ts, outside writes, and the closure said CLOSED.",
+      "scope": "Advisory entries in closure.unrequested for each file changed between the evidence's baseline and change commits that no write covers, except the SDD file and its companions; it never changes the closure status.",
+      "tradeoff": "Without step-ID commit filtering, a sibling leaf sharing the same commit range is reported too, which is why it stays advisory; a generated or lock file the change legitimately touched must be added to writes to silence it."
     }
   ]
 }

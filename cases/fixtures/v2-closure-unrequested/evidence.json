@@ -1,0 +1,31 @@
+{
+  "protocol": "sdd-evidence/v1",
+  "sdd": "greet",
+  "revision": "1",
+  "results": [
+    {
+      "acceptance": "A1",
+      "status": "PASS",
+      "evidence": "packages/greet/greet.test.ts",
+      "command": "bun test packages/greet/greet.test.ts",
+      "commit": "HEAD",
+      "baseline": {
+        "status": "FAIL",
+        "evidence": "ci base",
+        "commit": "HEAD~2"
+      }
+    },
+    {
+      "acceptance": "A2",
+      "status": "PASS",
+      "evidence": "packages/greet/farewell.test.ts",
+      "command": "bun test packages/greet/farewell.test.ts",
+      "commit": "HEAD",
+      "baseline": {
+        "status": "FAIL",
+        "evidence": "ci base",
+        "commit": "HEAD~2"
+      }
+    }
+  ]
+}

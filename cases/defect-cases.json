@@ -2885,6 +2885,40 @@
       "observed_at": "2026-10-08",
       "owning_test": "tests/v2-converge.test.ts",
       "source_delivery": "create-sdd capability review 2026-10-08: replay proves dependence on the change, not coverage of it"
+    },
+    {
+      "id": "CSDD-V2-CLOSURE-UNREQUESTED-101",
+      "defect_class": "closure-unrequested-change",
+      "statement": "The change between the evidence's baseline and change commits also adds packages/other/extra.ts, which no write of the leaf covers; the closure reports CLOSED with no word about work the SDD never asked for.",
+      "root_cause": "Convergence compared the code with what the design promised (missing assets, untouched requirements) but never with what it did not ask for.",
+      "evidence": {
+        "file": "scripts/validator/domain/v2-closure.ts",
+        "line": 350,
+        "quote": "Converge: the delivered code must still match the design"
+      },
+      "repository": "cases/fixtures/v2-closure-unrequested",
+      "fixture": {
+        "base": "cases/fixtures/v2-replay-hunks.md",
+        "overlay": {}
+      },
+      "negative_fixture": {
+        "base": "cases/fixtures/v2-replay-hunks.md",
+        "overlay": {
+          "writes": [
+            "packages/greet",
+            "packages/other"
+          ]
+        }
+      },
+      "detector": {
+        "command": "bun scripts/validate.ts validate --sdd <fixture> --evidence <repository>/evidence.json",
+        "expected_code": "SDD_V2_CLOSURE_UNREQUESTED",
+        "must_fire": true
+      },
+      "source_delivery": "spec-kit converge comparison 2026-10-09: its unrequested gap type has no create-sdd counterpart",
+      "observed_at": "2026-10-09",
+      "owning_test": "tests/v2-converge.test.ts",
+      "introduced_detector_at": "2026-10-09"
     }
   ],
   "held_out": [

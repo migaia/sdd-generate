@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from 'node:fs'
-import { resolve } from 'node:path'
+import { relative, resolve } from 'node:path'
 import type { V2Result } from './v2-document.ts'
-import { list, object, text, type Item, type Report } from './v2-meta.ts'
+import { list, object, text, under, type Item, type Report } from './v2-meta.ts'
 import { loadPreset } from './v2-preset.ts'
 import { TEST } from './v2-readers.ts'
 import { replay, scriptRunner, type Oracle, type Replay } from './v2-replay.ts'
@@ -374,6 +374,14 @@ export function checkClosure(
       .map((item) => `step call not in code: ${item.detail}`)
   ]
   for (const gap of gaps) report('SDD_V2_CLOSURE_OPEN', gap, 'design-gap')
+  // What the design never asked for (spec-kit converge's `unrequested`): a changed file no write
+  // covers, besides the SDD and its companions. Advisory: a sibling sharing the range lands here too.
+  const sdd = repository ? relative(repository, result.handoff.sdd) : ''
+  const writes = list(index.writes).filter(text)
+  const unrequested = [...(changed?.keys() ?? [])]
+    .filter((path) => path !== sdd && !path.startsWith(`${sdd}.`))
+    .filter((path) => !writes.some((write) => under(write.replace(/\/$/, ''), path)))
+    .map((path) => ({ code: 'SDD_V2_CLOSURE_UNREQUESTED', path }))
   // A test title removed or renamed in the change hides whatever it guarded unless the index says
   // where that guarantee went (OD-39): `replaced-by:<title>`, `superseded-by:BC<n>`, `obsolete-with:<reason>`.
   const dispositions = object(index.title_dispositions) ? index.title_dispositions : {}
@@ -419,6 +427,7 @@ export function checkClosure(
     entries,
     proof,
     gaps,
+    unrequested,
     replays,
     // Proven means a causal, commit-checked FAIL-then-PASS of the declared oracle (and, with
     // --replay, the oracle observed failing again when the implementation is removed); for a

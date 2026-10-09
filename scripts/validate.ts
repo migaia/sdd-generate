@@ -208,11 +208,15 @@ function withValidator(output: unknown, allCandidates = false): unknown {
     count: all.length,
     examples: allCandidates ? all : all.slice(0, CANDIDATE_EXAMPLES)
   }))
-  const { candidates: _, ...host } = handoff
+  // Blockers are the author's too; a leaf host needs its slice and direct dependencies, not siblings.
+  const { candidates: _, blockers, available_documents, ...host } = handoff
+  result.blockers = blockers
   result.handoff = {
     ...host,
-    protocol: 'create-sdd-handoff/v3',
+    protocol: 'create-sdd-handoff/v4',
     candidate_count: listed.length,
+    blocker_count: Array.isArray(blockers) ? blockers.length : 0,
+    ...(host.execution_slice ? {} : { available_documents }),
     defect_duty: DEFECT_DUTY
   }
   return result

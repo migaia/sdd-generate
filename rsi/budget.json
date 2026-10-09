@@ -610,6 +610,14 @@
       "at": "2026-10-08",
       "round": "R-20261008145650",
       "reason": "OD-108: validate.ts splits its printed result by reader. Advisory candidates move out of the host handoff into a top-level list grouped by code (count and three examples, every detail with --all-candidates), and the handoff carries the selected leaf's host contract fields with a read_skip for the contract block. On migai rpc-remote the printed result fell from 624K to 35K characters. The 52 lines are the measured need; validator.lines is unchanged."
+    },
+    {
+      "dimension": "validator.lines",
+      "from": 5934,
+      "to": 5946,
+      "at": "2026-10-09",
+      "round": "R-20261009011158",
+      "reason": "The closure gains an unrequested-change check (files changed between the evidence's baseline and change commits that no write covers), the counterpart of spec-kit converge's unrequested gap; it needs about ten lines and validator.lines had no room. No validator code is dead or duplicated enough to free them by consolidation (sweeps of 2026-10-07 and 2026-10-09); moving api-section.ts out of validator/ would only relabel lines, so the room is approved here instead."
     }
   ],
   "introduced": [

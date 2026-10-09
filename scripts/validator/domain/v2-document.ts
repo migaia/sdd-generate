@@ -48,7 +48,7 @@ const LEAF_LINE_LIMIT = 800
 const LEAF_STEP_LIMIT = 12
 /** Keep machine fields to identity, paths, versions and relations; the Markdown body is normative. */
 export type V2Handoff = Readonly<{
-  /** In-process shape, candidates included; `validate.ts` prints `create-sdd-handoff/v3`. */
+  /** In-process shape, candidates included; `validate.ts` prints `create-sdd-handoff/v4`. */
   protocol: 'create-sdd-domain/v2'
   sdd: string
   repository: string | null
