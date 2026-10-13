@@ -634,6 +634,22 @@
       "at": "2026-10-13",
       "round": "R-20261013063510",
       "reason": "Usage harvest (scripts/usage.ts, 735 lines): reads Claude Code and Codex transcripts and attributes each model call's tokens and active time to the SDD's six Meta levels (Bundle, Entry, Module, Chunk, step, Asset) by activity (design, implement, test, review, other), with block signals (failed checks and rework until a check passes, tool errors, interrupts, compactions, human wait). It is the observed-cost record a later quote model fits; nothing in the skill measured implementation cost before. validator.lines is unchanged."
+    },
+    {
+      "dimension": "validator.lines",
+      "from": 5946,
+      "to": 5959,
+      "at": "2026-10-13",
+      "round": "R-20261013073942",
+      "reason": "OD-111: trackedSources() (v2-symbols.ts) lists source files Git does not ignore, once per repository, and the symbol and reader scans use it instead of every file walk() lists; ignored() (v2-boundaries.ts) gets a maxBuffer so a large ignore list no longer fails as ENOBUFS and returns nothing. On migai one validate fell from 6.8 GB / 9.5 s to 0.66 GB / 2.8 s, and scratch copies stop hiding PSEUDOCODE_SYMBOL_UNRESOLVED (CSDD-V2-SYMBOL-105). rsi.ts also leaves rsi/usage.jsonl out of skillVersion, as it already did telemetry.jsonl."
+    },
+    {
+      "dimension": "scripts.lines",
+      "from": 10890,
+      "to": 10905,
+      "at": "2026-10-13",
+      "round": "R-20261013073942",
+      "reason": "OD-111: trackedSources() (v2-symbols.ts) lists source files Git does not ignore, once per repository, and the symbol and reader scans use it instead of every file walk() lists; ignored() (v2-boundaries.ts) gets a maxBuffer so a large ignore list no longer fails as ENOBUFS and returns nothing. On migai one validate fell from 6.8 GB / 9.5 s to 0.66 GB / 2.8 s, and scratch copies stop hiding PSEUDOCODE_SYMBOL_UNRESOLVED (CSDD-V2-SYMBOL-105). rsi.ts also leaves rsi/usage.jsonl out of skillVersion, as it already did telemetry.jsonl."
     }
   ],
   "introduced": [

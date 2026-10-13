@@ -1,8 +1,8 @@
 import { existsSync, statSync } from 'node:fs'
 import { join, posix } from 'node:path'
-import { read, walk } from '../../facts/repository.ts'
+import { read } from '../../facts/repository.ts'
 import { list, object, pathForm, text, under, type Item } from './v2-meta.ts'
-import { SOURCE, stepText } from './v2-symbols.ts'
+import { SOURCE, stepText, trackedSources } from './v2-symbols.ts'
 import { stepOrder, stepRecords } from './v2-tasks.ts'
 
 type Candidate = { code: string; detail: string }
@@ -88,8 +88,8 @@ export function readerCandidates(
   }
   const declared = (path: string) => body.includes(path) || reads.some((root) => under(root, path))
   const found: Candidate[] = []
-  for (const path of walk(repository)) {
-    if (!SOURCE.test(path) || writes.some((root) => under(root, path)) || declared(path)) continue
+  for (const path of trackedSources(repository)) {
+    if (writes.some((root) => under(root, path)) || declared(path)) continue
     const source = read(join(repository, path))
     if (TEST.test(path))
       for (const message of messages)

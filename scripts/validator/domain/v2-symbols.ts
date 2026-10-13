@@ -3,6 +3,7 @@ import { dirname, join, relative } from 'node:path'
 import { PSEUDOCODE_BUILTINS, read, walk } from '../../facts/repository.ts'
 import { escape, list, object, pathForm, text, under, type Item } from './v2-meta.ts'
 import { stepRecords } from './v2-tasks.ts'
+import { ignored } from './v2-boundaries.ts'
 
 /** Source files a step's calls may resolve to. */
 export const SOURCE = /\.(ts|tsx|js|jsx|mjs|cjs|go|rs|py|java|kt|swift)$/
@@ -25,10 +26,24 @@ const definition = (name: string) =>
     `(?:function|class|def|fn|func)\\s+${name}\\b|(?:const|let|var)\\s+${name}\\b|\\b${name}\\s*[:=]\\s*(?:async\\s+)?(?:function\\b|\\()`
   )
 
+/** Source files Git does not ignore, per repository: ignored copies are not the workspace (OD-111). */
+const tracked = new Map<string, string[]>()
+export function trackedSources(repository: string): string[] {
+  if (!tracked.has(repository)) {
+    const sources = walk(repository).filter((file) => SOURCE.test(file))
+    const skip = ignored(repository, sources)
+    tracked.set(
+      repository,
+      sources.filter((file) => !skip.has(file))
+    )
+  }
+  return tracked.get(repository)!
+}
+
 /** The text of every source file under `roots` (repository-relative), except `skip`. */
 export const sourceCorpus = (repository: string, roots: readonly string[], skip?: string) =>
-  walk(repository)
-    .filter((file) => file !== skip && SOURCE.test(file) && roots.some((root) => under(root, file)))
+  trackedSources(repository)
+    .filter((file) => file !== skip && roots.some((root) => under(root, file)))
     .map((file) => read(join(repository, file)))
     .join('\n')
 
@@ -129,9 +144,9 @@ export function symbolCandidates(
   let files: (readonly [string, string])[] | undefined
   let joined: string | undefined
   const workspace = () =>
-    (files ??= walk(repository)
-      .filter((file) => SOURCE.test(file))
-      .map((file) => [file, read(join(repository, file))] as const))
+    (files ??= trackedSources(repository).map(
+      (file) => [file, read(join(repository, file))] as const
+    ))
   const anywhere = () =>
     (joined ??= workspace()
       .map(([, source]) => source)

@@ -21,7 +21,8 @@ export function ignored(repository: string, paths: readonly string[]): Set<strin
     spawnSync('git', [...args, 'check-ignore', '--no-index', '--stdin'], {
       cwd: repository,
       input: paths.join('\n'),
-      encoding: 'utf8'
+      encoding: 'utf8',
+      maxBuffer: 1 << 30 // a large tree's ignored list exceeds the 1 MB default (OD-111)
     })
   let result = check([])
   if (result.status === 128) {

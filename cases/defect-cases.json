@@ -2919,6 +2919,29 @@
       "observed_at": "2026-10-09",
       "owning_test": "tests/v2-converge.test.ts",
       "introduced_detector_at": "2026-10-09"
+    },
+    {
+      "id": "CSDD-V2-SYMBOL-105",
+      "defect_class": "symbol-resolved-by-ignored-copy",
+      "statement": "S1 calls loadGreeting(), declared nowhere in tracked source; a gitignored scratch copy declares it, so the step reaches the host as resolved. On migai the same scan read 1.2 GB of ignored scratch source and one validate held 7.8 GB.",
+      "root_cause": "The symbol check's workspace corpus is every SOURCE file walk() lists, including gitignored scratch, copies and worktrees.",
+      "evidence": {
+        "file": "rsi/observed-defects.md",
+        "line": 1,
+        "quote": "OD-111"
+      },
+      "repository": "cases/fixtures/v2-repo-ignored",
+      "fixture": "cases/fixtures/v2-symbol-missing.md",
+      "negative_fixture": "cases/fixtures/v2-symbol-ok.md",
+      "detector": {
+        "command": "bun scripts/validate.ts validate --sdd <fixture> --repository <repository>",
+        "expected_code": "PSEUDOCODE_SYMBOL_UNRESOLVED",
+        "must_fire": true
+      },
+      "source_delivery": "migai usage harvest 2026-10-13, OD-111",
+      "observed_at": "2026-10-13",
+      "owning_test": "tests/v2-document.test.ts",
+      "introduced_detector_at": "2026-10-13"
     }
   ],
   "held_out": [

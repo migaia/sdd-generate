@@ -1,0 +1,11 @@
+{
+  "commits": [
+    {
+      "message": "ignore scratch copies",
+      "files": {
+        ".gitignore": "scratch/\n",
+        "scratch/copy/feature-a.ts": "export function loadGreeting(locale: string): string {\n  return locale\n}\n"
+      }
+    }
+  ]
+}
