@@ -1919,6 +1919,46 @@
       "tradeoff": "Few repositories in the corpus have a preset, and those are well formed; the guard's value is refusing silent loss of repository rules.",
       "revisions_at_decision": 1318,
       "review_after_revisions": 1000
+    },
+    {
+      "asset": "code:SDD_V1_UNSUPPORTED",
+      "disposition": "retain",
+      "decided_in": "R-20261009021533",
+      "counterexample": "Fired on 21 distinct documents, last 2026-10-01: validating a retired sdd-loop-delivery/v1 document (migai still keeps them) returns one clear 'rewrite as sdd/v2' diagnostic instead of a cascade of v2 shape errors.",
+      "scope": "document.controller.ts, every validate of a document with a contract block that is not sdd/v2.",
+      "tradeoff": "Dormant only because the recent 50-revision window holds v2 leaves; a v1 document validated again fires it.",
+      "revisions_at_decision": 1365,
+      "review_after_revisions": 500
+    },
+    {
+      "asset": "code:SDD_V2_INTEGRATION_OWNER_REQUIRED",
+      "disposition": "retain",
+      "decided_in": "R-20261009021533",
+      "counterexample": "Fired on 3 program roots, last 2026-10-07 (the v2-program-writes fixtures among them): a root whose integration acceptance has no owning child leaves the end-to-end check with no host.",
+      "scope": "v2-document.ts, program roots only.",
+      "tradeoff": "Program roots are rare among validated revisions, so a window of leaf runs always reads it as dormant.",
+      "revisions_at_decision": 1365,
+      "review_after_revisions": 500
+    },
+    {
+      "asset": "code:SDD_V2_REVIEW_CLAUSE_UNKNOWN",
+      "disposition": "retain",
+      "decided_in": "R-20261009021533",
+      "counterexample": "Fired 136 times on 58 documents, last 2026-10-09: a review finding citing a clause the SDD does not define is counted against the wrong lens and cannot be disposed in place.",
+      "scope": "v2-review.ts, documents that record a review.",
+      "tradeoff": "Only reviewed documents can fire it; the window filled with unreviewed leaves validated for measurement.",
+      "revisions_at_decision": 1365,
+      "review_after_revisions": 500
+    },
+    {
+      "asset": "code:SDD_V2_TIMING_DIFFERENCE_GATE",
+      "disposition": "retain",
+      "decided_in": "R-20261009021533",
+      "counterexample": "Fired once, 2026-09-25 (OD-61): an acceptance gating the difference of two similar timed spans decides on noise; the rule names the fix (gate one isolating operation).",
+      "scope": "v2-scope.ts, acceptance lines with a timing threshold.",
+      "tradeoff": "One real fire in the corpus; kept because deleting it reopens OD-61 and ghost-hit reporting would only notice after a second delivery failed.",
+      "revisions_at_decision": 1365,
+      "review_after_revisions": 500
     }
   ]
 }

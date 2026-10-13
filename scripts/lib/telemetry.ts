@@ -28,6 +28,8 @@ export type TelemetryEntry = Readonly<{
   candidate_codes: readonly string[]
   /** Per-lens dispositions of a recorded pre-handoff review, when the document records one. */
   review?: Readonly<Record<string, Readonly<Record<string, number>>>>
+  /** The document's kind (`v1`, `program`, `reviewed`, `bug`, `leaf`); absent before OD-110. */
+  kind?: string
 }>
 
 /** One id per process, so several checks over one document group into a single observation. */
@@ -53,6 +55,7 @@ export function record(entry: {
   readonly codes: readonly string[]
   readonly candidateCodes?: readonly string[]
   readonly review?: Readonly<Record<string, Readonly<Record<string, number>>>>
+  readonly kind?: string
 }): void {
   // `bun test` sets NODE_ENV=test and child checks inherit it. Without this, the skill's own test
   // suite filled the ledger with fixture runs, and a dormancy window of fifty runs measured nothing
@@ -67,7 +70,8 @@ export function record(entry: {
       sdd_sha: entry.sddSha,
       codes: [...new Set(entry.codes)].sort(),
       candidate_codes: [...new Set(entry.candidateCodes ?? [])].sort(),
-      ...(entry.review ? { review: entry.review } : {})
+      ...(entry.review ? { review: entry.review } : {}),
+      ...(entry.kind ? { kind: entry.kind } : {})
     }
     appendFileSync(TELEMETRY_FILE, `${JSON.stringify(line)}\n`)
   } catch {

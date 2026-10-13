@@ -618,6 +618,14 @@
       "at": "2026-10-09",
       "round": "R-20261009011158",
       "reason": "The closure gains an unrequested-change check (files changed between the evidence's baseline and change commits that no write covers), the counterpart of spec-kit converge's unrequested gap; it needs about ten lines and validator.lines had no room. No validator code is dead or duplicated enough to free them by consolidation (sweeps of 2026-10-07 and 2026-10-09); moving api-section.ts out of validator/ would only relabel lines, so the room is approved here instead."
+    },
+    {
+      "dimension": "scripts.lines",
+      "from": 10141,
+      "to": 10154,
+      "at": "2026-10-09",
+      "round": "R-20261009022032",
+      "reason": "OD-110: each telemetry entry records the document kind (validate.ts, lib/telemetry.ts) and health() judges a rule's dormancy over the last revisions of the kinds it fires on, so a bulk sweep of one kind no longer marks kind-specific rules dead. The 13 lines are the measured need; validator.lines is unchanged."
     }
   ],
   "introduced": [

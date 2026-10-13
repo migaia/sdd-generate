@@ -13,7 +13,7 @@ import './lib/require-bun.ts'
 import { existsSync, readFileSync } from 'node:fs'
 import { isAbsolute, resolve } from 'node:path'
 import { documentDigest, record } from './lib/telemetry'
-import { contractBlock } from './lib/contract-source.ts'
+import { contractBlock, programBlock } from './lib/contract-source.ts'
 import { checkClosure } from './validator/domain/v2-closure.ts'
 import type { V2Result } from './validator/domain/v2-document.ts'
 import {
@@ -182,6 +182,15 @@ function validatorVersion(): { commit: string | null; dirty: boolean } {
 const DEFECT_DUTY =
   'If this skill or its checks pass a wrong result, block a correct design or implementation, or make you invent a marker, override, wrapper or threshold change, or stop with no defined path: append an OD-<n> entry to <create-sdd-root>/rsi/observed-defects.md with what happened, the evidence and a **Root cause:** line naming the skill file, script line or rule code whose gap allowed it (not the symptom); add to an existing entry with the same root cause instead of opening another.'
 
+/** The kind of document a run saw, so dormancy compares a rule with documents it can fire on (OD-110). */
+function kindOf(text: string): string {
+  if (programBlock(text).value) return 'program'
+  const index = contractBlock(text).value
+  if (!index) return 'other'
+  if (index.protocol !== 'sdd/v2') return 'v1'
+  return index.review ? 'reviewed' : index.intent === 'bug' ? 'bug' : 'leaf'
+}
+
 /** Examples printed per candidate code; `--all-candidates` prints every detail. */
 const CANDIDATE_EXAMPLES = 3
 
@@ -235,7 +244,8 @@ if (import.meta.main) {
         codes: codesOf(output),
         candidateCodes: candidatesOf(output),
         review: (output as { handoff?: { review?: Record<string, Record<string, number>> } })
-          ?.handoff?.review
+          ?.handoff?.review,
+        kind: kindOf(readFileSync(sdd, 'utf8'))
       })
     console.log(JSON.stringify(withValidator(output, argv.includes('--all-candidates'))))
     process.exit(exit)

@@ -153,6 +153,8 @@ export type RuleHealth = Readonly<{
   documents_window: number
   last_seen?: string
   age_without_fire: number
+  /** Revisions in the window of the kinds this rule fires on: its chances to fire (OD-110). */
+  chances?: number
   cost_per_fire: number | null
   redundant_with: readonly string[]
 }>
@@ -179,6 +181,16 @@ export function health(
       docsByCode.get(code)!.add(entry.sdd_sha)
       if (!lastByCode.has(code) || lastByCode.get(code)! < entry.ts) lastByCode.set(code, entry.ts)
     }
+  // OD-110: a rule can only fire on the kinds of document it has fired on (v1, program, reviewed,
+  // bug, leaf), so its window is the last revisions of those kinds; with no kind recorded, all.
+  const kindOf = new Map(entries.filter((e) => e.kind).map((e) => [e.sdd_sha, e.kind!]))
+  const kindsOf = new Map<string, Set<string>>()
+  const firedOn = new Map<string, Set<string>>()
+  for (const entry of entries)
+    for (const code of [...entry.codes, ...entry.candidate_codes]) {
+      firedOn.set(code, (firedOn.get(code) ?? new Set()).add(entry.sdd_sha))
+      if (entry.kind) kindsOf.set(code, (kindsOf.get(code) ?? new Set()).add(entry.kind))
+    }
   const jaccard = (a: Set<string>, b: Set<string>) => {
     if (!a.size || !b.size) return 0
     let shared = 0
@@ -188,7 +200,11 @@ export function health(
   return rules.map((rule) => {
     const code = rule.asset.slice('code:'.length)
     const docs = docsByCode.get(code) ?? new Set<string>()
-    const fires = docs.size
+    const kinds = kindsOf.get(code)
+    const chances = kinds
+      ? revisions.filter((sha) => kinds.has(kindOf.get(sha) ?? '')).slice(-window)
+      : [...recentRevisions]
+    const fires = chances.filter((sha) => firedOn.get(code)?.has(sha)).length
     const cost = rule.weight.mentions + rule.weight.test_mentions
     const redundant = rules
       .filter((other) => other.asset !== rule.asset)
@@ -204,7 +220,8 @@ export function health(
       fires_window: fires,
       documents_window: docs.size,
       ...(lastByCode.get(code) ? { last_seen: lastByCode.get(code)! } : {}),
-      age_without_fire: fires ? 0 : recentRevisions.size,
+      age_without_fire: fires ? 0 : chances.length,
+      chances: chances.length,
       cost_per_fire: fires ? Number((cost / fires).toFixed(2)) : null,
       redundant_with: redundant
     }
@@ -336,7 +353,7 @@ export function undisposedDormant(input: {
       .map((entry) => [entry.asset, entry])
   )
   return input.health
-    .filter((rule) => rule.fires_window === 0)
+    .filter((rule) => rule.fires_window === 0 && (rule.chances ?? input.window) >= input.window)
     .filter((rule) => !input.pinned.has(rule.asset.slice('code:'.length)))
     .filter((rule) => {
       const added = youngest.get(rule.asset)
