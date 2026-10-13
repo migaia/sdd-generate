@@ -1070,7 +1070,9 @@ function skillVersion(): string {
   const add = (path: string) => {
     if (!existsSync(path)) return
     const name = relative(ROOT, path)
-    if (name === 'rsi/telemetry.jsonl' || name === 'rsi/open-round.json' || name === 'rsi/rounds')
+    if (
+      ['rsi/telemetry.jsonl', 'rsi/usage.jsonl', 'rsi/open-round.json', 'rsi/rounds'].includes(name)
+    )
       return
     if (statSync(path).isDirectory()) {
       for (const entry of readdirSync(path).sort()) {

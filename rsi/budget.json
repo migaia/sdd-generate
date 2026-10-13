@@ -626,6 +626,14 @@
       "at": "2026-10-09",
       "round": "R-20261009022032",
       "reason": "OD-110: each telemetry entry records the document kind (validate.ts, lib/telemetry.ts) and health() judges a rule's dormancy over the last revisions of the kinds it fires on, so a bulk sweep of one kind no longer marks kind-specific rules dead. The 13 lines are the measured need; validator.lines is unchanged."
+    },
+    {
+      "dimension": "scripts.lines",
+      "from": 10154,
+      "to": 10890,
+      "at": "2026-10-13",
+      "round": "R-20261013063510",
+      "reason": "Usage harvest (scripts/usage.ts, 735 lines): reads Claude Code and Codex transcripts and attributes each model call's tokens and active time to the SDD's six Meta levels (Bundle, Entry, Module, Chunk, step, Asset) by activity (design, implement, test, review, other), with block signals (failed checks and rework until a check passes, tool errors, interrupts, compactions, human wait). It is the observed-cost record a later quote model fits; nothing in the skill measured implementation cost before. validator.lines is unchanged."
     }
   ],
   "introduced": [

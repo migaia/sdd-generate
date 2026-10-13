@@ -64,6 +64,7 @@ Run as `bun <create-sdd-root>/scripts/<script>`; flags are in each script's head
 | `preflight.ts run --sdd <SDD> [--affected]` | Run the leaf's `preflight` items in disposable copies; testing authorized for such leaves |
 | `render.ts --sdd <SDD>` | Rewrite `sdd-generated` regions from the contract |
 | `type-probe.ts check --sdd <SDD>` | Optional: flag degenerate exported TypeScript types |
+| `usage.ts harvest --sdd <SDD>` | Optional: transcript cost per Meta and activity |
 | `rsi.ts update` | Maintain this skill's own rules; independent of SDD readiness |
 
 ## Output

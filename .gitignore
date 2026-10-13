@@ -4,3 +4,4 @@ coverage/
 __pycache__/
 *.pyc
 rsi/telemetry.jsonl
+rsi/usage.jsonl

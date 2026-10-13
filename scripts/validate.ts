@@ -29,7 +29,7 @@ const USAGE =
   'usage: validate.ts validate|validate-draft|document-check --sdd <path> [--repository <absolute-root>] [--evidence <sdd-evidence.json> [--replay]] | validate-draft --draft-file <path> | validate-draft --sdd <abs> --documents-file <json> | document-next-id --sdd <path> --prefix <XX>'
 
 /** Read `--flag value` pairs; a bare flag reads as present with no value. */
-function flags(argv: readonly string[]): Map<string, string | undefined> {
+export function flags(argv: readonly string[]): Map<string, string | undefined> {
   const out = new Map<string, string | undefined>()
   for (let index = 0; index < argv.length; index += 1) {
     const key = argv[index]!
