@@ -1959,6 +1959,36 @@
       "tradeoff": "One real fire in the corpus; kept because deleting it reopens OD-61 and ghost-hit reporting would only notice after a second delivery failed.",
       "revisions_at_decision": 1365,
       "review_after_revisions": 500
+    },
+    {
+      "asset": "code:SDD_V2_INDEX_SHAPE_INVALID",
+      "disposition": "retain",
+      "decided_in": "R-20261014021657",
+      "counterexample": "A leaf whose requirements are written as an object ({\"bad\": [...]}) instead of a list: validate reports SDD_V2_INDEX_SHAPE_INVALID leaf-index-invalid. Without it every list reader (list() returns []) would see no requirements, and the leaf would read as an empty, structurally clean document instead of a malformed one.",
+      "scope": "Every sdd/v2 leaf, program root and assessment index (v2-document.ts, v2-meta.ts, v2-assessment.ts); it fires only on malformed JSON shapes, which init skeletons and well-formed documents never produce.",
+      "tradeoff": "Dormant whenever documents are well formed; it costs no false positives and guards the reader of every other rule.",
+      "revisions_at_decision": 1507,
+      "review_after_revisions": 500
+    },
+    {
+      "asset": "code:SDD_V2_PROGRAM_LINK_INVALID",
+      "disposition": "retain",
+      "decided_in": "R-20261014021657",
+      "counterexample": "A program child whose root link points at another root (child-root-mismatch), whose contract id differs from the root's child id (child-id-mismatch), or a child that is not indexed: without the check the root would derive Modules for a child that does not belong to it, or silently drop one. Pinned by tests/v2-document.test.ts (dropped child) and fired by the OD-32 stale-root fixture.",
+      "scope": "sdd-program/v2 roots and their children, and assessment links; programs are few, so the window rarely sees one malformed.",
+      "tradeoff": "Rare in the corpus because programs are rare, not because the failure is unreachable; keeping it costs nothing on valid programs.",
+      "revisions_at_decision": 1507,
+      "review_after_revisions": 500
+    },
+    {
+      "asset": "code:SDD_V2_PROSE_DEFINITION_MISSING",
+      "disposition": "retain",
+      "decided_in": "R-20261014021657",
+      "counterexample": "A leaf whose index lists A1 while the prose has no '- A1 …' anchor: validate reports SDD_V2_PROSE_DEFINITION_MISSING. Without it the index would name an acceptance the host cannot read, and every clause-based check (fingerprints, preflight clause hashes, stepText) would hash or quote an empty string.",
+      "scope": "Every index ID of an sdd/v2 leaf or root: requirements, batches, steps, acceptance, Entries.",
+      "tradeoff": "Dormant because authors fix anchors while drafting; it is the guard that makes the Markdown body the single authority for each ID.",
+      "revisions_at_decision": 1507,
+      "review_after_revisions": 500
     }
   ]
 }
