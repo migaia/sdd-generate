@@ -68,4 +68,6 @@ Write one JSON file:
 Close each finding as `fixed`, `ruled-invalid:<reason>` or `out-of-scope` in the SDD index:
 `"review": {"findings": "<file relative to the SDD>", "dispositions": {"F1": "fixed"}}`. `validate`
 reports undisposed findings and unknown clauses as candidates and counts dispositions per lens. A
-normative fix gets one re-review of the changed clauses only.
+normative fix gets one re-review of the changed clauses only. Before fixing, group the findings by
+the missing design material or wrong assumption behind them, add that material so the class cannot
+recur, and record an `OD` for each class `validate` or this workflow let through.
