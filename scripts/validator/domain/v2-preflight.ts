@@ -114,8 +114,8 @@ export function packageGateScripts(repository: string, writes: readonly string[]
   return [...scripts]
 }
 
-/** A declared behaviour change: a list item that starts with its ID (`- BC3 old behaviour: …`). */
-const DECLARED_BC = /^\s*[-*]\s+(BC\d+[a-z]?)\b/gm
+/** A declared behaviour change: a list item that starts with its ID, bold or not (`- **BC3** …`). */
+const DECLARED_BC = /^\s*[-*]\s+(?:\*\*)?(BC\d+[a-z]?)\b/gm
 /** Every BC the prose declares, in order. */
 export const declaredChanges = (body: string) => [
   ...new Set([...body.matchAll(DECLARED_BC)].map((match) => match[1]!))
@@ -202,7 +202,8 @@ export function preflightItems(index: Item, report?: Report, path = ''): Preflig
       report?.('SDD_V2_INDEX_SHAPE_INVALID', `${path}: ${JSON.stringify(value)}`, 'preflight-item')
       continue
     }
-    items.push(value as unknown as PreflightItem)
+    // A gate item may omit `covers`: it covers nothing (OD-124).
+    items.push({ ...value, covers: list(value.covers) } as unknown as PreflightItem)
   }
   return items
 }

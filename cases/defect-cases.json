@@ -3004,6 +3004,28 @@
       "source_delivery": "migai Tray program codex review round 3 (CR-49), OD-121",
       "observed_at": "2026-10-13",
       "owning_test": "tests/v2-document.test.ts"
+    },
+    {
+      "id": "CSDD-V2-PREFLIGHT-BOLD-BC-101",
+      "defect_class": "bold-bc-declaration-ignored",
+      "statement": "The leaf declares `- **BC1** old behaviour ... new behaviour ...` and no preflight items; validate reports preflight not required, so the BC's candidate patch is never demanded.",
+      "root_cause": "DECLARED_BC matches only an unformatted ID right after the bullet, so Markdown emphasis on the ID hides the BC from declaredChanges().",
+      "evidence": {
+        "file": "scripts/validator/domain/v2-preflight.ts",
+        "line": 120,
+        "quote": "const DECLARED_BC = /^\\s*[-*]\\s+(BC\\d+[a-z]?)\\b/gm"
+      },
+      "fixture": "cases/fixtures/v2-preflight/bold-bc.md",
+      "detector": {
+        "command": "bun scripts/validate.ts validate --sdd <fixture> --repository <repository>",
+        "expected_code": "SDD_V2_PREFLIGHT_REQUIRED",
+        "must_fire": true
+      },
+      "source_delivery": "migai docs/repo/error-source-domains.sdd.md revisions 2-4, 2026-10-23, OD-135",
+      "negative_fixture": "cases/fixtures/v2-preflight/ok.md",
+      "repository": "cases/fixtures/v2-preflight/repo",
+      "observed_at": "2026-10-23",
+      "owning_test": "tests/v2-preflight.test.ts"
     }
   ],
   "held_out": [
