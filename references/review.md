@@ -14,7 +14,8 @@ a step that deletes or rewrites a branch):
 - check that every clause touching the same cell (preserve acceptance, steps, failure clauses,
   "other … unchanged" claims) can hold with it;
 - for a deleted branch, state which scenarios its condition separated and whether a preserved
-  clause still needs that.
+  clause still needs that;
+- when an exclusion or scope boundary changed, re-check every global quantifier against it.
 
 **L2 Discrimination.** For every Must-Ship acceptance, including ones an earlier revision left
 verified, try to write a plausible wrong implementation that passes it: one handling only the
@@ -36,7 +37,17 @@ handle is refused rather than acting on the new state.
 
 **L6 Design soundness** (each export). Is its authority a possessed capability or a caller's
 claim? Flag hidden effects and host-bound or flag-grown signatures
-([design](authoring/design.md)); hiding an unsound interface is itself a finding.
+([design](authoring/design.md)); hiding an unsound interface is itself a finding, and so is a fix
+that adds state or obligations where a deletion or a narrower rule would close its finding.
+
+**L7 Typing and call sites** (each export). Write the three commonest call sites from the Entries
+and compile them strictly against the declared signatures with the real peers; report inferred
+`unknown` or `any`, lost literals, ambiguous overloads, and parameter shapes, defaults or names
+that differ from sibling APIs.
+
+**L8 Scenario completeness.** For each Entry and stated scenario, write the call sequence it needs;
+report a step the surface cannot express and a deferral that contradicts the trade-off order in
+`SKILL.md`.
 
 ## Findings
 
@@ -63,11 +74,20 @@ Write one JSON file:
 - L2 covers every Must-Ship acceptance; the other lenses report defects in the user-owned delta
   only. Edit only the findings file; propose no rewrites.
 
+## Rounds
+
+Round `n` writes `<sdd>.review-<n>.json` with `"round"` and `"revision"` (the SDD revision read). A
+finding may carry `"severity": "high" | "medium" | "low"`. A lens the user adds takes the next free
+`L<n>`, defined once in the file (`"lenses": {"L9": "<question>"}`). Rounds the user asks for are
+fresh full reads; stop after a round with no `high` finding unless the user set another rule. A
+program gets one consistency round over the root and all children, with `sdd` the root.
+
 ## Disposition (author)
 
 Close each finding as `fixed`, `ruled-invalid:<reason>` or `out-of-scope` in the SDD index:
 `"review": {"findings": "<file relative to the SDD>", "dispositions": {"F1": "fixed"}}`. `validate`
 reports undisposed findings and unknown clauses as candidates and counts dispositions per lens. A
 normative fix gets one re-review of the changed clauses only. Before fixing, group the findings by
-the missing design material or wrong assumption behind them, add that material so the class cannot
-recur, and record an `OD` for each class `validate` or this workflow let through.
+the missing design material or wrong assumption behind them and close each class with the smallest
+change, a deletion or narrower rule before new mechanism. End every round with an OD decision:
+record an `OD` for each class `validate` or this workflow let through, or state that there is none.

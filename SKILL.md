@@ -61,7 +61,7 @@ Run as `bun <create-sdd-root>/scripts/<script>`; flags are in each script's head
 | `validate.ts validate --sdd <SDD> --evidence <report> [--replay]` | Converge: causal, oracle-linked proof and design-to-code gaps |
 | `validate.ts validate-draft` / `document-check` | Check a proposed SDD / a non-implementation document |
 | `init.ts --kind feature\|bug\|assessment\|program\|evidence --out <path>` | Write a skeleton that validates as AWAITING_USER |
-| `preflight.ts run --sdd <SDD> [--affected]` | Run the leaf's `preflight` items in disposable copies; testing authorized for such leaves |
+| `preflight.ts run --sdd <SDD> [--affected]` | Run the leaf's `preflight` items in disposable copies (private repositories; their commits are not project commits); testing authorized for such leaves |
 | `render.ts --sdd <SDD>` | Rewrite `sdd-generated` regions from the contract |
 | `type-probe.ts check --sdd <SDD>` | Optional: flag degenerate exported TypeScript types |
 | `usage.ts harvest --sdd <SDD>` | Optional: transcript cost per Meta and activity |

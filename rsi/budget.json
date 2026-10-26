@@ -658,6 +658,46 @@
       "at": "2026-10-14",
       "round": "R-20261014020425",
       "reason": "OD-116: references/review.md gains the author's consumption rule for review findings: group them by the missing design material or wrong assumption, add that material so the class cannot recur, and record an OD for each class validate or the workflow let through. Measured 3701 characters with the rule; the raise covers that plus slack for formatting."
+    },
+    {
+      "dimension": "review.md.characters",
+      "from": 3710,
+      "to": 5100,
+      "at": "2026-10-27",
+      "round": "R-20261026162541",
+      "reason": "OD-125, OD-129, OD-130, OD-131, OD-133, OD-139 all root in references/review.md: it gains a typing and call-site lens, a scenario-completeness lens, a fix-convergence check, a multi-round protocol (file naming, round fields, optional severity, stop rule, program consistency pass), an end-of-round OD decision and a re-sweep of global quantifiers when a scope exclusion changes. Measured 3703 before; the rules need about 1300 characters."
+    },
+    {
+      "dimension": "references.characters",
+      "from": 189678,
+      "to": 196500,
+      "at": "2026-10-27",
+      "round": "R-20261026162541",
+      "reason": "OD-126..OD-150 rulings land in references: decision authority (dispatch.md, admit.md), superseding Clarifications rewrite their clause (report.md), program rulings and named cross-leaf imports (v2-program.md), whole-repository removal inventory and old capability matrix (v2-migration.md), axis-complete witnesses and conflict checks for new acceptance (verify.md), and preflight rules for covers, build-output inputs, host wrappers, the private repository and budget provenance (v2-contract.md). About 5000 characters on 188837 measured."
+    },
+    {
+      "dimension": "SKILL.md.characters",
+      "from": 9796,
+      "to": 9950,
+      "at": "2026-10-27",
+      "round": "R-20261026162541",
+      "reason": "OD-145: SKILL.md states that preflight's scaffolding commits live in a private throwaway repository, so no project hook is skipped; hosts read SKILL.md before the code comment (OD-84). Measured 9794."
+    },
+    {
+      "dimension": "validator.lines",
+      "from": 5959,
+      "to": 5972,
+      "at": "2026-10-27",
+      "round": "R-20261026162541",
+      "reason": "OD-124 (covers normalised), OD-135 (bold BC IDs), OD-132 (a shared write against a parent-directory claim), OD-140 (children bounded by the document tree) and the OD-136 task-state exclusion already in v2-replay.ts. Measured 5962 before the fixes."
+    },
+    {
+      "dimension": "scripts.lines",
+      "from": 10905,
+      "to": 10920,
+      "at": "2026-10-27",
+      "round": "R-20261026162541",
+      "reason": "The validator lines above plus OD-141 (preflight.ts disables pnpm's dependency verification in disposable trees) and the OD-137 commit pinning already in preflight.ts. Measured 10908 before the fixes."
     }
   ],
   "introduced": [
