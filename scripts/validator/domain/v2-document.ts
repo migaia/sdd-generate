@@ -191,8 +191,8 @@ function rootPresentation(text: string): {
 }
 
 /**
- * A relative SDD path must name a Markdown file under the program directory or, when a repository
- * is resolved, anywhere inside it — the same bound the link and step-source checks use. Repositories
+ * A relative SDD path must name a Markdown file in the program's document tree (OD-140) or, when
+ * a repository is resolved, anywhere inside it — the same bound the link and step-source checks use. Repositories
  * that keep each package's design in its own directory (`docs/<package>/`) put a program's children
  * beside the root rather than below it (OD-29).
  */
@@ -207,8 +207,8 @@ function childPath(
     report('SDD_V2_PATH_INVALID', String(raw), 'child-path-invalid')
     return null
   }
-  const base = canonical(dirname(root))
-  const path = canonical(resolve(base, raw))
+  const base = canonical(dirname(dirname(root)))
+  const path = canonical(resolve(dirname(root), raw))
   if (!within(base, path) && !(repo && within(repo, path))) {
     report('SDD_V2_PATH_ESCAPE', raw, 'child-path-escape')
     return null
