@@ -402,3 +402,14 @@ test('repeated evidence rows block closure in either order', () => {
     rmSync(root, { recursive: true, force: true })
   }
 })
+
+test('OD-121: a shell command in oracles is not accepted as a path', () => {
+  const index = (oracle: string) =>
+    `# T\n\n- A1 Docs.\n\n<!-- sdd-contract:start -->\n\`\`\`json\n${JSON.stringify({ protocol: 'sdd/v2', id: 't', revision: '1', acceptance: ['A1'], oracles: { A1: oracle } })}\n\`\`\`\n<!-- sdd-contract:end -->\n`
+  const invalid = (oracle: string) =>
+    validateV2Document('/x/t.md', index(oracle))!.diagnostics.some((d) =>
+      d.message.startsWith('oracle-invalid')
+    )
+  expect(invalid('rg -n -F guarantee USEGUIDE.md')).toBe(true)
+  expect(invalid('packages/a/a1.test.ts')).toBe(false)
+})

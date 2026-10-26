@@ -483,7 +483,7 @@ function checkLeaf(
       (nonempty(oracle.exists)
         ? pathForm(oracle.exists) && oracle.stdout === undefined
         : nonempty(oracle.stdout))
-    if (!command && (!nonempty(oracle) || !pathForm(oracle)))
+    if (!command && (!nonempty(oracle) || !pathForm(oracle) || /\s/.test(oracle)))
       report('SDD_V2_PATH_INVALID', `${path}: ${id} -> ${JSON.stringify(oracle)}`, 'oracle-invalid')
   }
   if (index.regression !== undefined && !Array.isArray(index.regression))

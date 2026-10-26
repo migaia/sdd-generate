@@ -2,6 +2,7 @@ import { expect, test } from 'bun:test'
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { validateV2Document } from '../scripts/validator/domain/v2-document'
+import { SCALING } from '../scripts/validator/domain/v2-scope'
 
 const DIR = join(import.meta.dir, '..', 'cases', 'fixtures', 'v2-scope')
 const codes = (file: string, text?: string) =>
@@ -54,4 +55,9 @@ test('a dedicated oracle script counts as isolation, and a design status is not 
     '- 文档状态：**verified / SHIP**（修复轮 revision 2）'
   )
   expect(codes('status.ok.md', zh)).toContain('SDD_V2_STATUS_CLAIM_UNCHECKED')
+})
+
+test('OD-112: call syntax ending in o is not a big-O claim', () => {
+  expect(SCALING.test('the client gives `to(host, id)`')).toBe(false)
+  expect(SCALING.test('runs in O(n) time')).toBe(true)
 })

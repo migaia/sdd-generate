@@ -2942,6 +2942,68 @@
       "observed_at": "2026-10-13",
       "owning_test": "tests/v2-document.test.ts",
       "introduced_detector_at": "2026-10-13"
+    },
+    {
+      "id": "CSDD-V2-SCALING-CALL-101",
+      "defect_class": "scaling-false-positive-call-syntax",
+      "statement": "R1 says the client gives `to(host, id)`; the scaling pattern reads `o(host, id)` as a big-O claim, reports SDD_V2_SCALING_ORACLE_UNSCOPED and escalates to a blocking scaling preflight, although R1 states no complexity outcome.",
+      "root_cause": "SCALING's big-O alternative has no left word boundary and inherits the i flag, so the tail of any identifier ending in o followed by a call matches.",
+      "evidence": {
+        "file": "scripts/validator/domain/v2-scope.ts",
+        "line": 12,
+        "quote": "|O\\([^)]*\\)|"
+      },
+      "fixture": "cases/fixtures/v2-scaling-claim.md",
+      "negative_fixture": "cases/fixtures/v2-scaling-call.md",
+      "detector": {
+        "command": "bun scripts/validate.ts validate --sdd <fixture>",
+        "expected_code": "SDD_V2_SCALING_ORACLE_UNSCOPED",
+        "must_fire": true
+      },
+      "negative_expectation": {
+        "must_fire": false
+      },
+      "source_delivery": "migai tray-host-instances authoring 2026-10-13, OD-112",
+      "observed_at": "2026-10-13",
+      "owning_test": "tests/v2-scope.test.ts"
+    },
+    {
+      "id": "CSDD-V2-ORACLE-COMMAND-101",
+      "defect_class": "command-string-oracle-accepted",
+      "statement": "oracles maps A1 to a shell command (`rg -n -F guarantee USEGUIDE.md`); validate accepts it as a path, the quality checks then ignore it, and the documentation requirement reads as covered by an oracle nothing checks.",
+      "root_cause": "The oracle shape check accepts any string pathForm allows, and pathForm does not reject whitespace, so a command passes as a file path.",
+      "evidence": {
+        "file": "scripts/validator/domain/v2-document.ts",
+        "line": 486,
+        "quote": "if (!command && (!nonempty(oracle) || !pathForm(oracle)))"
+      },
+      "fixture": {
+        "base": "cases/fixtures/v2-leaf.md",
+        "overlay": {
+          "oracles": {
+            "A1": "rg -n -F guarantee USEGUIDE.md"
+          }
+        }
+      },
+      "negative_fixture": {
+        "base": "cases/fixtures/v2-leaf.md",
+        "overlay": {
+          "oracles": {
+            "A1": "packages/feature-a/feature.test.ts"
+          }
+        }
+      },
+      "detector": {
+        "command": "bun scripts/validate.ts validate --sdd <fixture>",
+        "expected_code": "SDD_V2_PATH_INVALID",
+        "must_fire": true
+      },
+      "negative_expectation": {
+        "must_fire": false
+      },
+      "source_delivery": "migai Tray program codex review round 3 (CR-49), OD-121",
+      "observed_at": "2026-10-13",
+      "owning_test": "tests/v2-document.test.ts"
     }
   ],
   "held_out": [
