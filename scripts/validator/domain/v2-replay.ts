@@ -197,11 +197,14 @@ export function linkInstalled(repository: string, trees: readonly string[]): voi
         symlinkSync(pkg === null ? join(source, name) : join(tree, pkg), join(target, name))
       }
       mkdirSync(target)
-      for (const entry of readdirSync(source, { withFileTypes: true }))
+      for (const entry of readdirSync(source, { withFileTypes: true })) {
+        // pnpm owns this writable run state; each disposable tree must create its own directory.
+        if (entry.name === '.pnpm-task-run-state-v1') continue
         if (entry.name.startsWith('@') && entry.isDirectory())
           for (const scoped of readdirSync(join(source, entry.name)))
             link(`${entry.name}/${scoped}`)
         else link(entry.name)
+      }
     }
   }
 }

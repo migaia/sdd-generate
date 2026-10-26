@@ -61,13 +61,20 @@ import { exportTree, linkInstalled } from './validator/domain/v2-replay.ts'
 const DEFAULT_TIMEOUT_S = 600
 
 const sh = (cwd: string, argv: readonly string[], timeout?: number) =>
-  Bun.spawnSync([...argv], { cwd, stdout: 'pipe', stderr: 'pipe', timeout })
+  // pnpm's dependency check would rewrite the repository's linked .bin shims (OD-141).
+  Bun.spawnSync([...argv], {
+    cwd,
+    stdout: 'pipe',
+    stderr: 'pipe',
+    timeout,
+    env: { ...process.env, pnpm_config_verify_deps_before_run: 'false' }
+  })
 
-/** A fresh copy of the repository to run one item in, as a throwaway Git repository. */
-function materialise(repository: string, inputs: readonly string[] = []): string {
+/** A fresh copy of the captured commit, so concurrent repository commits cannot change an item. */
+function materialise(repository: string, inputs: readonly string[] = [], head = 'HEAD'): string {
   const tree = mkdtempSync(join(tmpdir(), 'sdd-preflight-'))
   const isGit = existsSync(join(repository, '.git'))
-  if (!isGit || !exportTree(repository, 'HEAD', tree))
+  if (!isGit || !exportTree(repository, head, tree))
     cpSync(repository, tree, {
       recursive: true,
       filter: (src) => !/\/(?:\.git|node_modules)(?:\/|$)/.test(src)
@@ -126,7 +133,7 @@ function runItem(
       : {})
   }
   const base = { id: item.id, covers: item.covers, expect: item.expect, run }
-  const tree = materialise(repository, item.inputs ?? [])
+  const tree = materialise(repository, item.inputs ?? [], at.head ?? 'HEAD')
   try {
     if (item.patch) {
       const applied = sh(tree, ['git', 'apply', '--whitespace=nowarn', patchFile])
@@ -238,7 +245,7 @@ function main(argv: readonly string[]): number {
   }
   const writes = list(index.writes).filter(text)
   const head = existsSync(join(repository, '.git'))
-    ? sh(repository, ['git', 'rev-parse', '--short', 'HEAD']).stdout.toString().trim() || null
+    ? sh(repository, ['git', 'rev-parse', 'HEAD']).stdout.toString().trim() || null
     : null
   const dirty = head
     ? sh(repository, ['git', 'status', '--porcelain', '--untracked-files=no']).stdout.length > 0
