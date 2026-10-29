@@ -698,6 +698,30 @@
       "at": "2026-10-27",
       "round": "R-20261026162541",
       "reason": "The validator lines above plus OD-141 (preflight.ts disables pnpm's dependency verification in disposable trees) and the OD-137 commit pinning already in preflight.ts. Measured 10908 before the fixes."
+    },
+    {
+      "dimension": "validator.lines",
+      "from": 5972,
+      "to": 5995,
+      "at": "2026-10-29",
+      "round": "R-20261029002414",
+      "reason": "OD-151..OD-163: the per-item run digest and its stale check (OD-161), rename-history literals skipped by the outcome check (OD-157), the plain 状态 terminal label (OD-156) and the host's directory-Asset guard already in v2-semantics.ts (OD-158). Measured 5970 before the fixes."
+    },
+    {
+      "dimension": "scripts.lines",
+      "from": 10920,
+      "to": 10960,
+      "at": "2026-10-29",
+      "round": "R-20261029002414",
+      "reason": "The validator lines above plus preflight.ts: Git alternates so gates can read historical objects (OD-151), inputs copied before dependencies are linked and without their node_modules (OD-159), per-item digests and partial-run clause hashes (OD-161). Measured 10923 before the fixes, 3 over from the OD-158 guard."
+    },
+    {
+      "dimension": "references.characters",
+      "from": 196500,
+      "to": 198500,
+      "at": "2026-10-29",
+      "round": "R-20261029002414",
+      "reason": "OD-152..OD-163 rulings: authors compile new-export type fences before handoff (report.md), preservation and zero-reader claims cite source (design.md), migration lists old observable outputs and deleted internal edges (v2-migration.md), restated program constraints carry a per-child scope and path-set oracles are checked against sibling writes (v2-program.md), static complexity rules stay off a requirement's first line (v2-contract.md), and Clarify options are checked for feasibility (admit.md). About 3000 characters on 194560 measured."
     }
   ],
   "introduced": [
