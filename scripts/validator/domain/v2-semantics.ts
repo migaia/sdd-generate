@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto'
-import { existsSync, readFileSync } from 'node:fs'
+import { existsSync, readFileSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import { HISTORICAL, list, object, text, type Item, type Report } from './v2-meta.ts'
 import { sourceCorpus, stepText } from './v2-symbols.ts'
@@ -29,10 +29,14 @@ function lookup(leaves: readonly Doc[]) {
   return { byId, exportOf }
 }
 
-/** Names a producer's delivered file exports: the symbols a consumer could restate. */
+/**
+ * Names a producer's delivered file exports: the symbols a consumer could restate. A directory
+ * Asset (a package) has no single export list and yields none (OD-158).
+ */
 function exportedNames(repository: string | null, path: unknown): string[] {
-  if (!repository || !text(path) || !existsSync(join(repository, path))) return []
-  const source = readFileSync(join(repository, path), 'utf8')
+  const file = repository && text(path) ? join(repository, path) : ''
+  if (!file || !statSync(file, { throwIfNoEntry: false })?.isFile()) return []
+  const source = readFileSync(file, 'utf8')
   const pattern = /export\s+(?:async\s+)?(?:function|const|let|class|type|interface)\s+(\w+)/g
   return [...source.matchAll(pattern)].map((match) => match[1]!)
 }
