@@ -48,6 +48,7 @@ import {
   clauseHashes,
   digest,
   inputsDigest,
+  itemDigest,
   preflightItems,
   reportPath,
   type PreflightItem,
@@ -140,7 +141,8 @@ function runItem(
     ...at,
     ...(patchFile && existsSync(patchFile)
       ? { patch_sha: digest(readFileSync(patchFile, 'utf8')) }
-      : {})
+      : {}),
+    item_sha: itemDigest(item)
   }
   const base = { id: item.id, covers: item.covers, expect: item.expect, run }
   const tree = materialise(repository, item.inputs ?? [], at.head ?? 'HEAD')
@@ -250,7 +252,11 @@ function main(argv: readonly string[]): number {
     const touched = new Set([...changed, ...citing])
     const kept = new Map((previous.items ?? []).map((item) => [item.id, item]))
     selected = items.filter(
-      (item) => item.gate || !kept.has(item.id) || item.covers.some((id) => touched.has(id))
+      (item) =>
+        item.gate ||
+        !kept.has(item.id) ||
+        kept.get(item.id)?.run?.item_sha !== itemDigest(item) ||
+        item.covers.some((id) => touched.has(id))
     )
   }
   const writes = list(index.writes).filter(text)
@@ -280,14 +286,25 @@ function main(argv: readonly string[]): number {
         reason: 'not run'
       }
   )
+  // OD-161: a clause whose covering items did not run keeps the hash its last run saw, so a partial
+  // run does not mark its changes as checked, and the report stays bound to the older document.
+  const ran = new Set([...fresh.values()].flatMap((result) => result.covers))
+  const covered = new Set(items.flatMap((item) => item.covers))
+  const current = clauseHashes(index, body)
+  const clause_hashes: Record<string, string> = {}
+  for (const [id, hash] of Object.entries(current)) {
+    const kept = previous && !ran.has(id) && covered.has(id) ? previous.clause_hashes?.[id] : hash
+    if (kept) clause_hashes[id] = kept
+  }
+  const held = Object.keys(current).some((id) => clause_hashes[id] !== current[id])
   const report: PreflightReport = {
     protocol: 'sdd-preflight/v1',
     sdd,
-    sdd_sha: digest(documentText),
+    sdd_sha: held && previous ? previous.sdd_sha : digest(documentText),
     repository,
     repository_head: head,
     dirty,
-    clause_hashes: clauseHashes(index, body),
+    clause_hashes,
     inputs_sha: inputsDigest(index),
     items: results,
     status: results.every((result) => result.outcome === 'PASS') ? 'PASSED' : 'FAILED'

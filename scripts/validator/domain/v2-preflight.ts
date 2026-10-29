@@ -40,7 +40,8 @@ export type PreflightItem = Readonly<{
 /**
  * When and against what one item ran. Each item keeps its own record, so a partial re-run never
  * restamps results it did not produce and a start-of-leaf base run survives a completion run
- * (OD-87, OD-91); `patch_sha` binds a PASS to the patch bytes it applied (OD-92); `log` is the full
+ * (OD-87, OD-91); `patch_sha` binds a PASS to the patch bytes it applied (OD-92) and `item_sha` to
+ * the item it ran (OD-161); `log` is the full
  * output beside the report, relative to it (OD-97).
  */
 export type PreflightRun = Readonly<{
@@ -48,6 +49,7 @@ export type PreflightRun = Readonly<{
   head: string | null
   dirty: boolean
   patch_sha?: string
+  item_sha?: string
   log?: string
   log_sha?: string
 }>
@@ -82,6 +84,8 @@ export type PreflightReport = Readonly<{
 /** The document digest a report is bound to; the same function `telemetry.ts` uses. */
 export const digest = (value: string) =>
   createHash('sha256').update(value).digest('hex').slice(0, 12)
+/** What an item's result is bound to: its command, coverage, expectation, patch path and inputs. */
+export const itemDigest = (item: PreflightItem) => digest(JSON.stringify(item))
 
 /** What a run depends on besides clause prose: the items as declared and the write scope. */
 export const inputsDigest = (index: Item) =>
@@ -322,15 +326,19 @@ export function checkPreflight(
   }
   const results = new Map((recorded.items ?? []).map((item) => [item.id, item]))
   // OD-92: a result is bound to the patch bytes it applied; an edited patch needs a new run.
+  // OD-161: and to the item itself, so a partial run that restamps the report cannot hide an edit.
   const repatched = items.filter((item) => {
-    const ran = results.get(item.id)?.run?.patch_sha
+    const run = results.get(item.id)?.run
     const file = item.patch ? resolve(dirname(sdd), item.patch) : ''
-    return !!ran && existsSync(file) && ran !== digest(readFileSync(file, 'utf8'))
+    if (run?.item_sha && run.item_sha !== itemDigest(item)) return true
+    return (
+      !!run?.patch_sha && existsSync(file) && run.patch_sha !== digest(readFileSync(file, 'utf8'))
+    )
   })
   if (repatched.length) {
     report(
       'SDD_V2_PREFLIGHT_STALE',
-      `${sdd}: patch changed since its run: ${repatched.map((item) => `${item.id} ${item.patch}`).join(', ')}; run preflight.ts run --only ${repatched.map((item) => item.id).join(',')}`
+      `${sdd}: item or patch changed since its run: ${repatched.map((item) => `${item.id}${item.patch ? ` ${item.patch}` : ''}`).join(', ')}; run preflight.ts run --only ${repatched.map((item) => item.id).join(',')}`
     )
     summary.status = 'STALE'
     return summary
