@@ -79,14 +79,24 @@ function materialise(repository: string, inputs: readonly string[] = [], head = 
       recursive: true,
       filter: (src) => !/\/(?:\.git|node_modules)(?:\/|$)/.test(src)
     })
-  linkInstalled(repository, [tree])
-  // Git-ignored inputs a gate reads (generated docs, local registries) are copied as they are (OD-78).
+  // Git-ignored inputs a gate reads (generated docs, local registries) are copied as they are (OD-78),
+  // before linking and without their node_modules, so a new input package is linked too (OD-159).
   for (const path of inputs)
     if (existsSync(join(repository, path)))
-      cpSync(join(repository, path), join(tree, path), { recursive: true })
+      cpSync(join(repository, path), join(tree, path), {
+        recursive: true,
+        filter: (src) => !/\/node_modules(?:\/|$)/.test(src.slice(join(repository, path).length))
+      })
+  linkInstalled(repository, [tree])
   // A private repository in the copy, so what the command writes can be read back with status.
   // Linked dependencies stay out of it, and its commits run no hooks without `--no-verify` (OD-84).
   commit(tree, ['init', '-q'])
+  // The repository's objects stay readable, so a gate can check out a historical commit (OD-151).
+  const objects = isGit
+    ? sh(repository, ['git', 'rev-parse', '--path-format=absolute', '--git-path', 'objects'])
+    : null
+  if (objects?.exitCode === 0)
+    writeFileSync(join(tree, '.git', 'objects', 'info', 'alternates'), objects.stdout.toString())
   writeFileSync(join(tree, '.git', 'info', 'exclude'), 'node_modules\n')
   commit(tree, ['add', '-A'])
   commit(tree, ['commit', '-q', '-m', 'preflight base'])
