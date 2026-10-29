@@ -2219,6 +2219,36 @@
       "tradeoff": "One real fire in the corpus; kept because deleting it reopens OD-61 and ghost-hit reporting would only notice after a second delivery failed. Re-reviewed in R-20261026163141 at 2945 revisions: still unfired in the window; no current rule covers its counterexample, so deleting it would reopen that defect silently.",
       "revisions_at_decision": 2945,
       "review_after_revisions": 500
+    },
+    {
+      "asset": "code:SDD_V1_UNSUPPORTED",
+      "disposition": "retain",
+      "decided_in": "R-20261029003130",
+      "counterexample": "A program root still in sdd-loop-delivery/v1 (migai storage-program, OD-126) validated as SDD_V1_UNSUPPORTED in 43 rounds; telemetry holds 71 records with it, the last on 2026-10-24. Without it a v1 root would validate as an unknown document and its children would look like a validated program.",
+      "scope": "document.controller.ts, every validate of a document whose contract block is not sdd/v2.",
+      "tradeoff": "Dormant in the 50-revision window only because recent revisions are v2 leaves; it fired five days before this decision, and v2-program.md now tells authors to migrate such a root first, which relies on this code to find it.",
+      "revisions_at_decision": 3117,
+      "review_after_revisions": 500
+    },
+    {
+      "asset": "code:SDD_V2_COVERAGE_MISSING",
+      "disposition": "retain",
+      "decided_in": "R-20261029003130",
+      "counterexample": "A Module with no Entry, a Chunk with no Bundle, or a child requirement or batch with no Module or Chunk breaks the Entry → Module → Chunk → Bundle → Asset chain the handoff orders tasks by; telemetry holds 734 records with it, the last on 2026-10-28.",
+      "scope": "v2-meta.ts and v2-document.ts: hand-written metas in leaves and program roots, six subtypes (module-entry-missing, chunk-bundle-missing, module-chunk-missing, bundle-missing, module-coverage-missing, chunk-coverage-missing).",
+      "tradeoff": "First decision for this rule. Leaves that let validate derive metas cannot fire it, so a window of derived-meta leaves reads as dormant; it still fires on hand-written program graphs, and deleting it would let a requirement drop out of every task wave silently.",
+      "revisions_at_decision": 3117,
+      "review_after_revisions": 500
+    },
+    {
+      "asset": "code:SDD_V2_REVIEW_CLAUSE_UNKNOWN",
+      "disposition": "retain",
+      "decided_in": "R-20261029003130",
+      "counterexample": "A review finding citing a clause ID the SDD does not define is counted against no clause, so its disposition proves nothing; telemetry holds 295 records with it, the last on 2026-10-24, and tests/v2-review.test.ts pins it.",
+      "scope": "v2-review.ts, documents that record a review findings file.",
+      "tradeoff": "Only reviewed documents can fire it and the recent window is mostly unreviewed leaves; multi-round reviews (review.md Rounds) make it more reachable, not less.",
+      "revisions_at_decision": 3117,
+      "review_after_revisions": 500
     }
   ]
 }
