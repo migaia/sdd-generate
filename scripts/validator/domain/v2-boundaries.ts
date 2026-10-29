@@ -12,7 +12,7 @@ type Candidate = { code: string; detail: string }
 const PATH = /(?<![\w.@/:-])([\w@.-]+(?:\/[\w@.-]+)+)/g
 /** A header that marks a document finished or retired; such a document owns nothing any more. */
 const TERMINAL =
-  /(?:文档状态|交付状态|Status)\s*[:：][^\n]*(?:SHIP|已交付|verified|complete|retired|superseded|deprecated)/i
+  /(?:状态|Status)\s*[:：][^\n]*(?:SHIP|已交付|verified|complete|retired|superseded|deprecated)/i
 
 /** Paths Git reports as ignored; a workspace without a usable `.git` borrows an empty one. */
 export function ignored(repository: string, paths: readonly string[]): Set<string> {
