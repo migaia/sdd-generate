@@ -3026,6 +3026,30 @@
       "repository": "cases/fixtures/v2-preflight/repo",
       "observed_at": "2026-10-23",
       "owning_test": "tests/v2-preflight.test.ts"
+    },
+    {
+      "id": "CSDD-V2-OUTCOME-RENAME-101",
+      "defect_class": "rename-history-literal-as-outcome",
+      "statement": "R1 rejects with `FORWARD_SELF`, \"renamed from the old `EXTENDS_SELF`\"; A1 asserts `FORWARD_SELF`. validate reports `R1: EXTENDS_SELF` as an uncovered outcome, so covering it would mean asserting a code the design removes.",
+      "root_cause": "The OD-22 outcome check treats every code literal in a requirement clause as an enumerated outcome, including one cited as the old name of a rename.",
+      "evidence": {
+        "file": "scripts/validator/domain/v2-quality.ts",
+        "line": 173,
+        "quote": "for (const [, literal] of clause.matchAll(LITERAL)) {"
+      },
+      "fixture": "cases/fixtures/v2-rename-uncovered.md",
+      "negative_fixture": "cases/fixtures/v2-rename-history.md",
+      "detector": {
+        "command": "bun scripts/validate.ts validate --sdd <fixture>",
+        "expected_code": "SDD_V2_REQUIREMENT_OUTCOME_UNCOVERED",
+        "must_fire": true
+      },
+      "negative_expectation": {
+        "must_fire": false
+      },
+      "source_delivery": "migai docs/log-host/log-host.sdd.md R6, 2026-10-28, OD-157",
+      "observed_at": "2026-10-28",
+      "owning_test": "tests/v2-quality.test.ts"
     }
   ],
   "held_out": [

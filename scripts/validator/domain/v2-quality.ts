@@ -15,6 +15,8 @@ type Candidate = { code: string; detail: string }
 
 /** Enumerated outcomes a requirement names: SCREAMING codes and quoted literals in code spans. */
 const LITERAL = /`([A-Z][A-Z0-9_]{3,}|'[^'`]+')`/g
+/** Words that cite a literal as the name a rename or removal replaces, not as an outcome (OD-157). */
+const RENAMED = /renamed from|\bthe old\b|\bformerly\b|原名|旧名|改名自/i
 /** Words whose weaker reading (direct only, single element) a fixture must be able to reject. */
 const QUANTIFIER = /\b(?:all|every|transitive(?:ly)?)\b|全部|所有|每个|传递/i
 /** Fixtures that separate a quantifier from its weaker reading: lists, chains, counts (OD-31). */
@@ -169,8 +171,10 @@ export function qualityCandidates(
     const linked = list(requirement.acceptance)
     const acceptance = accepted(linked)
     // OD-22: each enumerated outcome needs an acceptance that mentions it.
-    for (const [, literal] of clause.matchAll(LITERAL)) {
+    for (const { 1: literal, index: at } of clause.matchAll(LITERAL)) {
       const token = literal!.replace(/^'|'$/g, '')
+      const sentences = clause.slice(0, at).split(/[.;。；]\s/)
+      if (RENAMED.test(sentences.at(-1)!)) continue
       if (!acceptance.includes(token))
         found.push({ code: 'SDD_V2_REQUIREMENT_OUTCOME_UNCOVERED', detail: `${id}: ${literal}` })
     }
